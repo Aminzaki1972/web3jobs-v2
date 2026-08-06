@@ -84,9 +84,10 @@ async function loadJobs() {
 
 
             <a class="btn"
-            href="job.html?id=${job.id}">
-            Apply Now
-            </a>
+href="${job.apply_link}"
+target="_blank">
+Apply Now
+</a>
 
 
         </div>
