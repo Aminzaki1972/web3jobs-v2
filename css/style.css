@@ -73,3 +73,64 @@ nav a:hover{
 .hero button:hover{
     background:#0f766e;
 }
+/* Search Box */
+
+.search-box{
+
+    margin-top:40px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+.search-box input{
+
+    width:420px;
+
+    max-width:90%;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:17px;
+
+    outline:none;
+
+}
+
+.search-box button{
+
+    padding:16px 28px;
+
+    background:#14b8a6;
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+    transition:.3s;
+
+}
+
+.search-box button:hover{
+
+    background:#0f766e;
+
+    }
