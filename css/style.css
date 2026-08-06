@@ -1,83 +1,122 @@
+/* ===================================
+   Web3Jobs v2
+   Main Stylesheet
+=================================== */
+
 /* Reset */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-body{
-    font-family:Arial,sans-serif;
-    background:#f5f7fb;
-    color:#222;
+html{
+    scroll-behavior:smooth;
 }
 
-/* Header */
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#222;
+    line-height:1.6;
+}
+
+/* ==========================
+   Header
+========================== */
 
 header{
+
     display:flex;
     justify-content:space-between;
     align-items:center;
+
     padding:20px 8%;
+
     background:#111827;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
 }
 
 header h1{
-    color:#fff;
+
+    color:#ffffff;
+
     font-size:30px;
+
 }
 
 nav{
+
     display:flex;
-    gap:20px;
+
+    gap:25px;
+
 }
 
 nav a{
-    color:#fff;
+
+    color:#ffffff;
+
     text-decoration:none;
+
     font-weight:bold;
+
+    transition:.3s;
+
 }
 
 nav a:hover{
+
     color:#3b82f6;
+
 }
 
-/* Hero */
+/* ==========================
+   Hero
+========================== */
 
 .hero{
-    text-align:center;
-    padding:120px 20px;
+
     background:linear-gradient(135deg,#2563eb,#0f172a);
-    color:#fff;
+
+    color:#ffffff;
+
+    text-align:center;
+
+    padding:120px 20px;
+
 }
 
 .hero h2{
-    font-size:52px;
+
+    font-size:54px;
+
     margin-bottom:20px;
+
 }
 
 .hero p{
+
     font-size:22px;
-    margin-bottom:35px;
+
+    max-width:700px;
+
+    margin:auto;
+
+    margin-bottom:40px;
+
 }
 
-.hero button{
-    background:#14b8a6;
-    color:#fff;
-    border:none;
-    padding:16px 35px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:18px;
-}
-
-.hero button:hover{
-    background:#0f766e;
-}
-/* Search Box */
+/* ==========================
+   Search Box
+========================== */
 
 .search-box{
-
-    margin-top:40px;
 
     display:flex;
 
@@ -93,7 +132,7 @@ nav a:hover{
 
 .search-box input{
 
-    width:420px;
+    width:430px;
 
     max-width:90%;
 
@@ -103,15 +142,13 @@ nav a:hover{
 
     border-radius:8px;
 
-    font-size:17px;
-
     outline:none;
+
+    font-size:17px;
 
 }
 
 .search-box button{
-
-    padding:16px 28px;
 
     background:#14b8a6;
 
@@ -120,6 +157,8 @@ nav a:hover{
     border:none;
 
     border-radius:8px;
+
+    padding:16px 28px;
 
     cursor:pointer;
 
@@ -133,14 +172,17 @@ nav a:hover{
 
     background:#0f766e;
 
-    }
+}
+
 /* ==========================
    Featured Jobs
 ========================== */
 
 .featured-jobs{
 
-    padding:80px 8%;
+    padding:90px 8%;
+
+    background:#ffffff;
 
     text-align:center;
 
@@ -148,9 +190,9 @@ nav a:hover{
 
 .featured-jobs h2{
 
-    font-size:40px;
+    font-size:42px;
 
-    margin-bottom:10px;
+    margin-bottom:15px;
 
 }
 
@@ -158,7 +200,7 @@ nav a:hover{
 
     color:#666;
 
-    margin-bottom:40px;
+    margin-bottom:45px;
 
 }
 
@@ -168,19 +210,19 @@ nav a:hover{
 
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 
-    gap:25px;
+    gap:30px;
 
 }
 
 .job-card{
 
-    background:#fff;
+    background:#ffffff;
 
-    border-radius:12px;
+    border-radius:15px;
 
     padding:30px;
 
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 
     transition:.3s;
 
@@ -196,15 +238,17 @@ nav a:hover{
 
     margin-bottom:12px;
 
+    color:#111827;
+
 }
 
 .job-card p{
 
     color:#2563eb;
 
-    margin-bottom:10px;
-
     font-weight:bold;
+
+    margin-bottom:10px;
 
 }
 
@@ -212,13 +256,17 @@ nav a:hover{
 
     display:block;
 
-    margin-bottom:20px;
-
     color:#666;
+
+    margin-bottom:20px;
 
 }
 
 .job-card button{
+
+    width:100%;
+
+    padding:14px;
 
     background:#2563eb;
 
@@ -226,16 +274,36 @@ nav a:hover{
 
     border:none;
 
-    padding:12px 25px;
-
     border-radius:8px;
 
     cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
 
 }
 
 .job-card button:hover{
 
     background:#1d4ed8;
+
+}
+
+/* ==========================
+   Footer
+========================== */
+
+footer{
+
+    background:#111827;
+
+    color:#ffffff;
+
+    text-align:center;
+
+    padding:30px;
+
+    margin-top:80px;
 
 }
