@@ -3,8 +3,8 @@
 // =========================
 
 
-const SUPABASE_URL = "ضع_رابط_Supabase_هنا";
-const SUPABASE_KEY = "ضع_مفتاح_Supabase_هنا";
+const SUPABASE_URL = "https://lmkfieqwkrbdbtemhsyr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
 
 
 const db = supabase.createClient(
