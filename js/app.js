@@ -1,47 +1,51 @@
-
 // =========================
-// Web3Jobs App.js
-// Supabase Jobs Loader
+// Web3Jobs app.js
+// Supabase Jobs System
 // =========================
 
 
-// Supabase Configuration
+// Supabase Settings
 
-const SUPABASE_URL = "https://lmkfieqwkrbdbtemhsyr.supabase.co";
-const SUPABASE_KEY = "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
+const SUPABASE_URL = "ضع_رابط_Supabase_هنا";
+const SUPABASE_KEY = "ضع_مفتاح_Supabase_هنا";
 
 
-const client = supabase.createClient(
+const db = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
 
+// =========================
 // Load Jobs
+// =========================
 
 async function loadJobs() {
 
-    const jobsContainer = document.getElementById("jobs-container");
+    const container =
+    document.getElementById("jobs-container");
 
-    if (!jobsContainer) return;
+
+    if (!container) return;
 
 
-    const { data, error } = await client
-        .from("jobs")
-        .select("*")
-        .order("created_at", {
-            ascending: false
-        });
+    const { data, error } =
+    await db
+    .from("jobs")
+    .select("*")
+    .order("created_at", {
+        ascending: false
+    });
 
 
     if (error) {
 
-        console.log(error);
+        console.error(error);
 
-        jobsContainer.innerHTML =
+        container.innerHTML =
         `
         <p>
-        Unable to load jobs
+        Error loading jobs
         </p>
         `;
 
@@ -49,13 +53,13 @@ async function loadJobs() {
     }
 
 
-    jobsContainer.innerHTML = "";
+    container.innerHTML = "";
 
 
     data.forEach(job => {
 
 
-        jobsContainer.innerHTML +=
+        container.innerHTML +=
 
         `
         <div class="job-card">
@@ -66,28 +70,30 @@ async function loadJobs() {
 
 
             <p>
-            Company:
-            ${job.company}
+            🏢 ${job.company}
             </p>
 
 
             <p>
-            Location:
-            ${job.location}
+            📍 ${job.location}
             </p>
 
 
             <p>
-            Type:
-            ${job.type}
+            💼 ${job.type}
+            </p>
+
+
+            <p>
+            ${job.description || ""}
             </p>
 
 
             <a class="btn"
-href="${job.apply_link}"
-target="_blank">
-Apply Now
-</a>
+            href="${job.apply_link}"
+            target="_blank">
+            Apply Now
+            </a>
 
 
         </div>
@@ -100,65 +106,72 @@ Apply Now
 }
 
 
+// =========================
 // Search Jobs
+// =========================
 
-function searchJobs(){
-
-
-const input =
-document.getElementById("searchInput");
+function searchJobs() {
 
 
-const cards =
-document.querySelectorAll(".job-card");
+    const input =
+    document.getElementById("searchInput");
 
 
-input.addEventListener(
-"keyup",
-function(){
+    if (!input) return;
 
 
-let value =
-input.value.toLowerCase();
+    input.addEventListener(
+    "keyup",
+    function(){
 
 
-cards.forEach(card=>{
+        const value =
+        input.value.toLowerCase();
 
 
-let text =
-card.innerText.toLowerCase();
+        const cards =
+        document.querySelectorAll(".job-card");
 
 
-if(text.includes(value)){
+        cards.forEach(card => {
 
-card.style.display="block";
 
-}else{
+            const text =
+            card.innerText.toLowerCase();
 
-card.style.display="none";
+
+            if(text.includes(value)) {
+
+                card.style.display =
+                "block";
+
+            } else {
+
+                card.style.display =
+                "none";
+
+            }
+
+
+        });
+
+
+    });
+
 
 }
 
 
-});
-
-
-});
-
-
-}
-
-
-// Start App
+// =========================
+// Start Application
+// =========================
 
 document.addEventListener(
 "DOMContentLoaded",
 ()=>{
 
+    loadJobs();
 
-loadJobs();
-
-searchJobs();
-
+    searchJobs();
 
 });
