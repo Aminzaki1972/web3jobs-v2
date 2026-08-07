@@ -4,13 +4,19 @@
 // =========================
 
 
+// =========================
 // Supabase Settings
+// =========================
 
-const SUPABASE_URL = "https://lmkfieqwkrbdbtemhsyr.supabase.co";
-const SUPABASE_KEY = "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
+const SUPABASE_URL =
+"https://uewocyaspztybnvnkbmo.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
 
 
-const db = supabase.createClient(
+const db =
+supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
@@ -26,81 +32,180 @@ async function loadJobs() {
     document.getElementById("jobs-container");
 
 
-    if (!container) return;
-
-
-    const { data, error } =
-    await db
-    .from("jobs")
-    .select("*")
-    .order("created_at", {
-        ascending: false
-    });
-
-
-    if (error) {
-
-        console.error(error);
-
-        container.innerHTML =
-        `
-        <p>
-        Error loading jobs
-        </p>
-        `;
-
+    if (!container) {
         return;
     }
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+    `
+        <p style="text-align:center;">
+            Loading jobs...
+        </p>
+    `;
 
 
-    data.forEach(job => {
+    try {
+
+        const { data, error } =
+        await db
+        .from("jobs")
+        .select("*")
+        .order("created_at", {
+            ascending: false
+        });
 
 
-        container.innerHTML +=
+        // =========================
+        // Supabase Error
+        // =========================
 
+        if (error) {
+
+            console.error(
+                "Supabase Jobs Error:",
+                error
+            );
+
+
+            container.innerHTML =
+            `
+                <div class="job-card">
+
+                    <h3>
+                        Unable to load jobs
+                    </h3>
+
+                    <p>
+                        ${error.message}
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        // =========================
+        // No Jobs
+        // =========================
+
+        if (!data || data.length === 0) {
+
+            container.innerHTML =
+            `
+                <div class="job-card">
+
+                    <h3>
+                        No jobs available
+                    </h3>
+
+                    <p>
+                        New Web3 jobs will appear here soon.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        // =========================
+        // Clear Container
+        // =========================
+
+        container.innerHTML = "";
+
+
+        // =========================
+        // Display Jobs
+        // =========================
+
+        data.forEach(job => {
+
+
+            const card =
+            document.createElement("div");
+
+
+            card.className =
+            "job-card";
+
+
+            card.innerHTML =
+            `
+
+                <h3>
+                    ${escapeHTML(job.title || "Untitled Job")}
+                </h3>
+
+
+                <p>
+                    🏢
+                    ${escapeHTML(job.company || "Unknown Company")}
+                </p>
+
+
+                <p>
+                    📍
+                    ${escapeHTML(job.location || "Remote")}
+                </p>
+
+
+                <p>
+                    💼
+                    ${escapeHTML(job.type || "Web3 Job")}
+                </p>
+
+
+                <p>
+                    ${escapeHTML(job.description || "")}
+                </p>
+
+
+                <a
+                    class="btn"
+                    href="job.html?id=${encodeURIComponent(job.id)}"
+                >
+                    View Job
+                </a>
+
+            `;
+
+
+            container.appendChild(card);
+
+        });
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected Jobs Error:",
+            error
+        );
+
+
+        container.innerHTML =
         `
-        <div class="job-card">
+            <div class="job-card">
 
-            <h3>
-            ${job.title}
-            </h3>
+                <h3>
+                    Unable to load jobs
+                </h3>
 
+                <p>
+                    Please try again later.
+                </p>
 
-            <p>
-            🏢 ${job.company}
-            </p>
-
-
-            <p>
-            📍 ${job.location}
-            </p>
-
-
-            <p>
-            💼 ${job.type}
-            </p>
-
-
-            <p>
-            ${job.description || ""}
-            </p>
-
-
-            <a class="btn"
-href="job.html?id=${job.id}">
-View Job
-</a>
-
-
-        </div>
+            </div>
         `;
 
-
-    });
-
+    }
 
 }
 
@@ -116,47 +221,78 @@ function searchJobs() {
     document.getElementById("searchInput");
 
 
-    if (!input) return;
+    if (!input) {
+        return;
+    }
 
 
     input.addEventListener(
-    "keyup",
-    function(){
+        "keyup",
+        function() {
 
 
-        const value =
-        input.value.toLowerCase();
+            const value =
+            input.value
+            .toLowerCase()
+            .trim();
 
 
-        const cards =
-        document.querySelectorAll(".job-card");
+            const cards =
+            document.querySelectorAll(
+                "#jobs-container .job-card"
+            );
 
 
-        cards.forEach(card => {
+            cards.forEach(card => {
 
 
-            const text =
-            card.innerText.toLowerCase();
+                const text =
+                card.innerText
+                .toLowerCase();
 
 
-            if(text.includes(value)) {
+                if (
+                    value === "" ||
+                    text.includes(value)
+                ) {
 
-                card.style.display =
-                "block";
+                    card.style.display =
+                    "block";
 
-            } else {
+                }
 
-                card.style.display =
-                "none";
+                else {
 
-            }
+                    card.style.display =
+                    "none";
+
+                }
+
+            });
+
+        }
+    );
+
+}
 
 
-        });
+// =========================
+// HTML Security
+// =========================
 
+function escapeHTML(value) {
 
-    });
+    return String(value)
 
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
 
 }
 
@@ -166,11 +302,12 @@ function searchJobs() {
 // =========================
 
 document.addEventListener(
-"DOMContentLoaded",
-()=>{
+    "DOMContentLoaded",
+    function() {
 
-    loadJobs();
+        loadJobs();
 
-    searchJobs();
+        searchJobs();
 
-});
+    }
+);
