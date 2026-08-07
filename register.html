@@ -7,39 +7,75 @@
 
     <title>Create Account - Web3jops</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
+<nav>
+    <div class="logo">Web3jops</div>
 
-    <div class="logo">
-        Web3jops
-    </div>
-
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="login.html">Login</a>
-    </nav>
-
-</header>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="companies.html">Companies</a></li>
+        <li><a href="login.html">Login</a></li>
+    </ul>
+</nav>
 
 
-<main>
+<section class="hero">
 
-    <section class="auth-container">
+    <h1>Create Your Web3jops Account</h1>
 
-        <h1>Create Account</h1>
+    <p>Choose your account type and join Web3jops.</p>
+
+</section>
+
+
+<section class="features">
+
+    <div class="card">
+
+        <h2>Create Account</h2>
 
         <form id="registerForm">
+
+            <h3>Choose account type</h3>
+
+            <div style="margin:20px 0;">
+
+                <label style="display:block; margin:12px 0;">
+                    <input
+                        type="radio"
+                        name="accountType"
+                        value="individual"
+                        required
+                    >
+                    👤 Individual
+                </label>
+
+                <label style="display:block; margin:12px 0;">
+                    <input
+                        type="radio"
+                        name="accountType"
+                        value="company"
+                        required
+                    >
+                    🏢 Company
+                </label>
+
+            </div>
+
 
             <input
                 type="email"
                 id="email"
-                placeholder="Email address"
+                placeholder="Email"
                 required
+                style="width:100%;padding:12px;margin:10px 0;border-radius:8px;border:none;"
             >
+
 
             <input
                 type="password"
@@ -47,15 +83,19 @@
                 placeholder="Password"
                 minlength="6"
                 required
+                style="width:100%;padding:12px;margin:10px 0;border-radius:8px;border:none;"
             >
+
 
             <input
                 type="password"
                 id="confirmPassword"
-                placeholder="Confirm password"
+                placeholder="Confirm Password"
                 minlength="6"
                 required
+                style="width:100%;padding:12px;margin:10px 0;border-radius:8px;border:none;"
             >
+
 
             <button type="submit">
                 Create Account
@@ -63,31 +103,44 @@
 
         </form>
 
+
         <p id="message"></p>
+
 
         <p>
             Already have an account?
             <a href="login.html">Login</a>
         </p>
 
-    </section>
+    </div>
 
-</main>
+</section>
+
+
+<footer>
+
+    <p>© 2026 Web3jops. All Rights Reserved.</p>
+
+</footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
 
-const SUPABASE_URL = "https://zsaokfdnvursdhw.supabase.co";
+const SUPABASE_URL =
+    "https://zsaokfdnvursdhw.supabase.co";
 
-const SUPABASE_ANON_KEY = "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
+const SUPABASE_ANON_KEY =
+    "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
 
 
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
 
 const registerForm =
@@ -105,11 +158,28 @@ registerForm.addEventListener("submit", async function(event) {
     const email =
         document.getElementById("email").value.trim();
 
+
     const password =
         document.getElementById("password").value;
 
+
     const confirmPassword =
         document.getElementById("confirmPassword").value;
+
+
+    const accountType =
+        document.querySelector(
+            'input[name="accountType"]:checked'
+        );
+
+
+    if (!accountType) {
+
+        message.textContent =
+            "Please choose Individual or Company.";
+
+        return;
+    }
 
 
     if (password !== confirmPassword) {
@@ -134,8 +204,12 @@ registerForm.addEventListener("submit", async function(event) {
 
             options: {
 
-                emailRedirectTo:
-                    window.location.origin + "/web3jobs/login.html"
+                data: {
+
+                    account_type:
+                        accountType.value
+
+                }
 
             }
 
