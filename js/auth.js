@@ -1,230 +1,253 @@
 // =========================
-// Web3Jobs Authentication
+// Web3jops Authentication
 // Supabase Auth System
 // =========================
 
-
 // Supabase Configuration
+const SUPABASE_URL =
+  "https://zsaokfdnvursdhw.supabase.co";
 
-const SUPABASE_URL = "https://lmkfieqwkrbdbtemhsyr.supabase.co";
-const SUPABASE_KEY = "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
-
+const SUPABASE_KEY =
+  "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
 
 const db = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
-
-
+// =========================
 // Register User
+// =========================
 
-async function register(){
+async function register() {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const roleElement =
+    document.getElementById("role");
+
+  const message =
+    document.getElementById("message");
+
+  if (!email || !password) {
+
+    message.innerHTML =
+      "Please fill all fields";
+
+    return;
+  }
+
+  let role = "individual";
+
+  if (roleElement) {
+    role = roleElement.value;
+  }
+
+  const { data, error } =
+    await db.auth.signUp({
+
+      email: email,
+
+      password: password,
+
+      options: {
+        data: {
+          account_type: role,
+          role: role
+        }
+      }
+
+    });
 
 
-const email =
-document.getElementById("email").value;
+  if (error) {
+
+    message.innerHTML =
+      error.message;
+
+    return;
+  }
 
 
-const password =
-document.getElementById("password").value;
+  const user =
+    data.user;
 
 
-const role =
-document.getElementById("role").value;
+  if (user) {
+
+    const { error: profileError } =
+      await db
+        .from("profiles")
+        .upsert([
+          {
+            id: user.id,
+            email: email,
+            role: role
+          }
+        ]);
 
 
+    if (profileError) {
 
-const message =
-document.getElementById("message");
+      console.log(
+        "Profile error:",
+        profileError
+      );
+
+    }
+
+  }
 
 
+  message.innerHTML =
+    "Account created successfully!";
 
-if(!email || !password){
 
-message.innerHTML =
-"Please fill all fields";
+  setTimeout(() => {
 
-return;
+    window.location.href =
+      "login.html";
+
+  }, 2000);
 
 }
 
 
 
-
-const { data, error } =
-await db.auth.signUp({
-
-email: email,
-
-password: password
-
-});
-
-
-
-
-if(error){
-
-message.innerHTML =
-error.message;
-
-return;
-
-}
-
-
-
-
-
-// Save User Profile
-
-
-const user =
-data.user;
-
-
-
-if(user){
-
-
-
-const { error: profileError } =
-await db
-.from("profiles")
-.insert([
-
-{
-
-id:user.id,
-
-email:email,
-
-role:role
-
-}
-
-]);
-
-
-
-if(profileError){
-
-console.log(profileError);
-
-}
-
-
-
-}
-
-
-
-
-message.innerHTML =
-"Account created successfully!";
-
-
-
-setTimeout(()=>{
-
-
-window.location.href =
-"login.html";
-
-
-},2000);
-
-
-
-}
 // =========================
 // Login User
 // =========================
 
-async function login(){
+async function login() {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const message =
+    document.getElementById("message");
 
 
-const email =
-document.getElementById("email").value;
+  if (!email || !password) {
+
+    message.innerHTML =
+      "Please fill all fields";
+
+    return;
+  }
 
 
-const password =
-document.getElementById("password").value;
+  message.innerHTML =
+    "Signing in...";
 
 
-const message =
-document.getElementById("message");
+  const { data, error } =
+    await db.auth.signInWithPassword({
+
+      email: email,
+
+      password: password
+
+    });
 
 
+  if (error) {
 
-if(!email || !password){
+    message.innerHTML =
+      error.message;
 
-message.innerHTML =
-"Please fill all fields";
-
-return;
-
-}
+    return;
+  }
 
 
-
-const { data, error } =
-await db.auth.signInWithPassword({
-
-email: email,
-
-password: password
-
-});
+  const user =
+    data.user;
 
 
+  if (!user) {
 
-if(error){
+    message.innerHTML =
+      "Login failed.";
 
-message.innerHTML =
-error.message;
-
-return;
-
-}
+    return;
+  }
 
 
+  // =========================
+  // Get User Profile
+  // =========================
 
-const user =
-data.user;
-
-
-
-// Get User Role
-
-const { data: profile } =
-await db
-.from("profiles")
-.select("role")
-.eq("id", user.id)
-.single();
+  const { data: profile, error: profileError } =
+    await db
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .maybeSingle();
 
 
+  if (profileError) {
+
+    console.log(
+      "Profile error:",
+      profileError
+    );
+
+  }
 
 
-if(profile.role === "company"){
+  // =========================
+  // If profile does not exist
+  // create one from Auth metadata
+  // =========================
+
+  if (!profile) {
+
+    const accountType =
+      user.user_metadata?.account_type ||
+      user.user_metadata?.role ||
+      "individual";
 
 
-window.location.href =
-"dashboard.html";
+    await db
+      .from("profiles")
+      .upsert([
+        {
+          id: user.id,
+          email: user.email,
+          role: accountType
+        }
+      ]);
 
 
-}else{
+    // Individual user
+    window.location.href =
+      "profile.html";
+
+    return;
+  }
 
 
-window.location.href =
-"profile.html";
+  // =========================
+  // Redirect according to role
+  // =========================
 
+  if (profile.role === "company") {
 
-}
+    window.location.href =
+      "dashboard.html";
 
+  } else {
 
+    window.location.href =
+      "profile.html";
+
+  }
 
 }
