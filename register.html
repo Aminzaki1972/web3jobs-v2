@@ -2,101 +2,161 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Create Account - Web3jops</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Register - Web3Jobs</title>
-
-<link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 
 <body>
 
-
 <header>
 
-<div class="logo">
-Web3Jobs
-</div>
+    <div class="logo">
+        Web3jops
+    </div>
 
-<nav>
-
-<a href="index.html">Home</a>
-
-<a href="login.html">Login</a>
-
-</nav>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+    </nav>
 
 </header>
 
 
+<main>
 
+    <section class="auth-container">
 
-<section>
+        <h1>Create Account</h1>
 
+        <form id="registerForm">
 
-<h2>
-Create Account
-</h2>
+            <input
+                type="email"
+                id="email"
+                placeholder="Email address"
+                required
+            >
 
+            <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                minlength="6"
+                required
+            >
 
-<div class="job-card">
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                minlength="6"
+                required
+            >
 
+            <button type="submit">
+                Create Account
+            </button>
 
-<input id="email"
-type="email"
-placeholder="Email">
+        </form>
 
+        <p id="message"></p>
 
-<input id="password"
-type="password"
-placeholder="Password">
+        <p>
+            Already have an account?
+            <a href="login.html">Login</a>
+        </p>
 
+    </section>
 
-
-<select id="role">
-
-<option value="jobseeker">
-Job Seeker
-</option>
-
-
-<option value="company">
-Company
-</option>
-
-</select>
-
-
-
-<button class="btn"
-onclick="register()">
-
-Create Account
-
-</button>
-
-
-<p id="message"></p>
-
-
-</div>
-
-
-</section>
-
-
-
+</main>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/auth.js"></script>
+<script>
 
+const SUPABASE_URL = "https://zsaokfdnvursdhw.supabase.co";
+
+const SUPABASE_ANON_KEY = "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
+
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+
+const registerForm =
+    document.getElementById("registerForm");
+
+const message =
+    document.getElementById("message");
+
+
+registerForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+
+    if (password !== confirmPassword) {
+
+        message.textContent =
+            "Passwords do not match.";
+
+        return;
+    }
+
+
+    message.textContent =
+        "Creating account...";
+
+
+    const { data, error } =
+        await supabaseClient.auth.signUp({
+
+            email: email,
+
+            password: password,
+
+            options: {
+
+                emailRedirectTo:
+                    window.location.origin + "/web3jobs/login.html"
+
+            }
+
+        });
+
+
+    if (error) {
+
+        message.textContent =
+            error.message;
+
+        return;
+    }
+
+
+    message.textContent =
+        "Account created successfully. Please check your email to confirm your account.";
+
+});
+
+</script>
 
 </body>
 
