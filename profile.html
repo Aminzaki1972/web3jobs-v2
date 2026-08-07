@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Profile - Web3Jobs</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+Web3Jobs
+</div>
+
+
+<nav>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="index.html#jobs">
+Jobs
+</a>
+
+</nav>
+
+</header>
+
+
+
+
+
+<section>
+
+
+<h2>
+My Profile
+</h2>
+
+
+<div class="job-card">
+
+
+<input
+id="name"
+placeholder="Full Name">
+
+
+<input
+id="skills"
+placeholder="Skills (Solidity, React, Web3...)">
+
+
+<input
+id="github"
+placeholder="GitHub URL">
+
+
+<input
+id="linkedin"
+placeholder="LinkedIn URL">
+
+
+
+<textarea
+id="bio"
+placeholder="About you">
+</textarea>
+
+
+
+<button
+class="btn"
+onclick="saveProfile()">
+
+Save Profile
+
+</button>
+
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/profile.js"></script>
+
+
+</body>
+
+</html>
