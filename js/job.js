@@ -1,19 +1,7 @@
 // =========================
 // Web3Jobs Job Details
+// + Apply Button System
 // =========================
-
-
-// Supabase Configuration
-
-const SUPABASE_URL = "https://lmkfieqwkrbdbtemhsyr.supabase.co";
-const SUPABASE_KEY = "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
-
-
-const db = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
 
 
 // Get Job ID From URL
@@ -26,31 +14,22 @@ const jobId = params.get("id");
 
 
 
+
 // Load Job Details
 
-async function loadJobDetails(){
+async function loadJob(){
 
 
 const container =
-document.getElementById("job-container");
+document.getElementById("job-details");
 
 
-if(!jobId){
-
-container.innerHTML =
-`
-<h2>
-Job not found
-</h2>
-`;
-
-return;
-
-}
+if(!container) return;
 
 
 
-const { data, error } = await db
+const { data, error } =
+await db
 .from("jobs")
 .select("*")
 .eq("id", jobId)
@@ -58,16 +37,16 @@ const { data, error } = await db
 
 
 
+
 if(error){
 
-console.error(error);
-
+console.log(error);
 
 container.innerHTML =
 `
-<h2>
-Unable to load job
-</h2>
+<p>
+Job not found
+</p>
 `;
 
 return;
@@ -89,43 +68,43 @@ ${data.title}
 </h2>
 
 
-<p>
-🏢 Company:
+
+<h3>
 ${data.company}
-</p>
+</h3>
 
-
-<p>
-📍 Location:
-${data.location}
-</p>
 
 
 <p>
-💼 Type:
-${data.type}
+📍 ${data.location || ""}
 </p>
 
 
 
 <p>
+💼 ${data.type || ""}
+</p>
 
+
+
+<p>
 ${data.description || ""}
-
 </p>
 
 
 
-<a class="btn"
 
-href="${data.apply_link}"
-
-target="_blank">
+<button 
+class="btn"
+onclick="applyForJob(${data.id})">
 
 Apply Now
 
-</a>
+</button>
 
+
+
+<p id="apply-message"></p>
 
 
 </div>
@@ -138,12 +117,13 @@ Apply Now
 
 
 
-// Start
+
+// Start Loading
 
 document.addEventListener(
 "DOMContentLoaded",
 ()=>{
 
-loadJobDetails();
+loadJob();
 
 });
