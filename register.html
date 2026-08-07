@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Register - Web3Jobs</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+Web3Jobs
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="login.html">Login</a>
+
+</nav>
+
+</header>
+
+
+
+
+<section>
+
+
+<h2>
+Create Account
+</h2>
+
+
+<div class="job-card">
+
+
+<input id="email"
+type="email"
+placeholder="Email">
+
+
+<input id="password"
+type="password"
+placeholder="Password">
+
+
+
+<select id="role">
+
+<option value="jobseeker">
+Job Seeker
+</option>
+
+
+<option value="company">
+Company
+</option>
+
+</select>
+
+
+
+<button class="btn"
+onclick="register()">
+
+Create Account
+
+</button>
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/auth.js"></script>
+
+
+</body>
+
+</html>
