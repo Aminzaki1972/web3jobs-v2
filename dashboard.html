@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Company Dashboard - Web3Jobs</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+Web3Jobs
+</div>
+
+
+<nav>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="dashboard.html">
+Dashboard
+</a>
+
+</nav>
+
+</header>
+
+
+
+
+
+<section>
+
+
+<h2>
+Company Dashboard
+</h2>
+
+
+
+<div class="job-card">
+
+
+<h3>
+Post a New Job
+</h3>
+
+
+
+<input 
+id="title"
+placeholder="Job Title">
+
+
+
+<input 
+id="company"
+placeholder="Company Name">
+
+
+
+<input 
+id="location"
+placeholder="Location">
+
+
+
+<input 
+id="type"
+placeholder="Job Type">
+
+
+
+<textarea
+id="description"
+placeholder="Job Description">
+</textarea>
+
+
+
+<input
+id="apply_link"
+placeholder="Application Link">
+
+
+
+<button 
+class="btn"
+onclick="addJob()">
+
+Publish Job
+
+</button>
+
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/dashboard.js"></script>
+
+
+</body>
+
+</html>
