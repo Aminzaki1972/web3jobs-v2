@@ -1,253 +1,247 @@
-// =========================
-// Web3jops Authentication
-// Supabase Auth System
-// =========================
+// ==========================================
+// Web3Jobs Authentication
+// Supabase Auth
+// ==========================================
 
-// Supabase Configuration
+
+// ==========================================
+// SUPABASE CONFIGURATION
+// ==========================================
+
 const SUPABASE_URL =
-  "https://zsaokfdnvursdhw.supabase.co";
+"https://uewocyaspztybnvnkbmo.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
+"sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
 
-const db = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+
+// Create Supabase client
+
+const { createClient } = supabase;
+
+const supabaseClient =
+createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
 
-// =========================
-// Register User
-// =========================
-
-async function register() {
-
-  const email =
-    document.getElementById("email").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-  const roleElement =
-    document.getElementById("role");
-
-  const message =
-    document.getElementById("message");
-
-  if (!email || !password) {
-
-    message.innerHTML =
-      "Please fill all fields";
-
-    return;
-  }
-
-  let role = "individual";
-
-  if (roleElement) {
-    role = roleElement.value;
-  }
-
-  const { data, error } =
-    await db.auth.signUp({
-
-      email: email,
-
-      password: password,
-
-      options: {
-        data: {
-          account_type: role,
-          role: role
-        }
-      }
-
-    });
-
-
-  if (error) {
-
-    message.innerHTML =
-      error.message;
-
-    return;
-  }
-
-
-  const user =
-    data.user;
-
-
-  if (user) {
-
-    const { error: profileError } =
-      await db
-        .from("profiles")
-        .upsert([
-          {
-            id: user.id,
-            email: email,
-            role: role
-          }
-        ]);
-
-
-    if (profileError) {
-
-      console.log(
-        "Profile error:",
-        profileError
-      );
-
-    }
-
-  }
-
-
-  message.innerHTML =
-    "Account created successfully!";
-
-
-  setTimeout(() => {
-
-    window.location.href =
-      "login.html";
-
-  }, 2000);
-
-}
-
-
-
-// =========================
-// Login User
-// =========================
+// ==========================================
+// LOGIN
+// ==========================================
 
 async function login() {
 
-  const email =
+    const email =
     document.getElementById("email").value.trim();
 
-  const password =
+    const password =
     document.getElementById("password").value;
 
-  const message =
+    const message =
     document.getElementById("message");
 
 
-  if (!email || !password) {
+    // Clear message
 
-    message.innerHTML =
-      "Please fill all fields";
-
-    return;
-  }
+    message.textContent = "";
 
 
-  message.innerHTML =
-    "Signing in...";
+
+    // Check email
+
+    if (!email) {
+
+        message.textContent =
+        "Please enter your email.";
+
+        return;
+    }
 
 
-  const { data, error } =
-    await db.auth.signInWithPassword({
 
-      email: email,
+    // Check password
 
-      password: password
+    if (!password) {
 
-    });
+        message.textContent =
+        "Please enter your password.";
 
-
-  if (error) {
-
-    message.innerHTML =
-      error.message;
-
-    return;
-  }
+        return;
+    }
 
 
-  const user =
-    data.user;
+
+    message.textContent =
+    "Logging in...";
 
 
-  if (!user) {
+    try {
 
-    message.innerHTML =
-      "Login failed.";
+        // ======================================
+        // SUPABASE LOGIN
+        // ======================================
 
-    return;
-  }
+        const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
 
+            email: email,
 
-  // =========================
-  // Get User Profile
-  // =========================
+            password: password
 
-  const { data: profile, error: profileError } =
-    await db
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .maybeSingle();
+        });
 
 
-  if (profileError) {
 
-    console.log(
-      "Profile error:",
-      profileError
-    );
+        // ======================================
+        // LOGIN ERROR
+        // ======================================
 
-  }
+        if (error) {
 
+            console.error(
+                "Login error:",
+                error
+            );
 
-  // =========================
-  // If profile does not exist
-  // create one from Auth metadata
-  // =========================
+            message.textContent =
+            error.message;
 
-  if (!profile) {
-
-    const accountType =
-      user.user_metadata?.account_type ||
-      user.user_metadata?.role ||
-      "individual";
-
-
-    await db
-      .from("profiles")
-      .upsert([
-        {
-          id: user.id,
-          email: user.email,
-          role: accountType
+            return;
         }
-      ]);
 
 
-    // Individual user
-    window.location.href =
-      "profile.html";
 
-    return;
-  }
+        // ======================================
+        // LOGIN SUCCESS
+        // ======================================
+
+        if (data && data.user) {
+
+            message.textContent =
+            "Login successful!";
 
 
-  // =========================
-  // Redirect according to role
-  // =========================
+            // Go to home page
 
-  if (profile.role === "company") {
+            setTimeout(function() {
 
-    window.location.href =
-      "dashboard.html";
+                window.location.href =
+                "index.html";
 
-  } else {
+            }, 700);
 
-    window.location.href =
-      "profile.html";
+        }
 
-  }
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected login error:",
+            error
+        );
+
+        message.textContent =
+        "Login failed. Please try again.";
+
+    }
 
 }
+
+
+
+// ==========================================
+// CHECK CURRENT USER
+// ==========================================
+
+async function getCurrentUser() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if (error) {
+
+            console.error(
+                "Get user error:",
+                error
+            );
+
+            return null;
+        }
+
+
+        return data.user || null;
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        return null;
+
+    }
+
+}
+
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+async function logout() {
+
+    try {
+
+        const { error } =
+        await supabaseClient.auth.signOut();
+
+
+        if (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        window.location.href =
+        "index.html";
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+
+// ==========================================
+// EXPORT USER STATUS
+// ==========================================
+
+window.Web3JobsAuth = {
+
+    supabase: supabaseClient,
+
+    getCurrentUser: getCurrentUser,
+
+    logout: logout
+
+};
