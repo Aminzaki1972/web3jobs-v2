@@ -7,9 +7,101 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Web3Jobs - Web3 Career Platform</title>
+<title>Register - Web3Jobs</title>
 
 <link rel="stylesheet" href="css/style.css">
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+.register-container {
+    max-width: 450px;
+    margin: 80px auto;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+}
+
+.register-container h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.register-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.register-button:hover {
+    background: #1d4ed8;
+}
+
+.register-button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+#message {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    display: none;
+}
+
+.success {
+    display: block !important;
+    background: #dcfce7;
+    color: #166534;
+}
+
+.error {
+    display: block !important;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+</style>
 
 </head>
 
@@ -30,14 +122,13 @@ Web3Jobs
 </div>
 
 
-
 <nav>
 
 <a href="index.html">
 Home
 </a>
 
-<a href="#jobs">
+<a href="index.html#jobs">
 Jobs
 </a>
 
@@ -53,283 +144,360 @@ Roadmap
 Login
 </a>
 
-<a class="nav-btn" href="register.html">
-Register
-</a>
-
 </nav>
-
 
 </header>
 
 
 
+<!-- Register -->
 
-
-<!-- Hero Section -->
-
-<section class="hero">
-
-
-<div>
-
+<section class="register-container">
 
 <h1>
-
-Connect With The Future Of
-
-<span>
-Web3 Careers
-</span>
-
+Create Your Account
 </h1>
 
 
-
-<p>
-
-Discover blockchain, crypto and decentralized technology opportunities from companies worldwide.
-
-</p>
+<form id="registerForm">
 
 
+<div class="form-group">
 
-<a href="#jobs" class="btn">
-
-Explore Jobs
-
-</a>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-<!-- Jobs Section -->
-
-<section id="jobs">
-
-
-<h2>
-Featured Web3 Jobs
-</h2>
-
-
-
-<div class="search-box">
-
+<label for="name">
+Full Name
+</label>
 
 <input
-
 type="text"
-
-id="searchInput"
-
-placeholder="Search jobs, skills or companies..."
-
+id="name"
+placeholder="Enter your full name"
+required
 >
 
-
 </div>
 
 
 
+<div class="form-group">
 
-<div
+<label for="email">
+Email
+</label>
 
-class="jobs-container"
-
-id="jobs-container"
-
+<input
+type="email"
+id="email"
+placeholder="Enter your email"
+required
 >
 
+</div>
+
+
+
+<div class="form-group">
+
+<label for="password">
+Password
+</label>
+
+<input
+type="password"
+id="password"
+placeholder="Enter your password"
+required
+>
 
 </div>
 
 
 
-</section>
+<div class="form-group">
 
+<label for="confirmPassword">
+Confirm Password
+</label>
 
-
-
-
-
-
-
-<!-- Why Web3Jobs -->
-
-<section>
-
-
-<h2>
-Why Choose Web3Jobs?
-</h2>
-
-
-
-
-<div class="jobs-container">
-
-
-<div class="job-card">
-
-
-<h3>
-Web3 Specialized
-</h3>
-
-
-<p>
-
-Jobs focused on Blockchain, Crypto and Decentralized Technology.
-
-</p>
-
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm your password"
+required
+>
 
 </div>
 
 
 
+<button
+type="submit"
+class="register-button"
+id="registerButton"
+>
 
+Create Account
 
-<div class="job-card">
+</button>
 
-
-<h3>
-Global Remote Jobs
-</h3>
-
-
-<p>
-
-Connect with Web3 companies and opportunities worldwide.
-
-</p>
-
-
-</div>
+</form>
 
 
 
-
-
-<div class="job-card">
-
-
-<h3>
-Future Ready Careers
-</h3>
-
-
-<p>
-
-Build your career in the next generation of technology.
-
-</p>
-
-
-</div>
+<div id="message"></div>
 
 
 
-</div>
+<div class="login-link">
 
+Already have an account?
 
-
-</section>
-
-
-
-
-
-
-
-
-<!-- Roadmap Preview -->
-
-
-<section>
-
-
-<h2>
-Web3Jobs Roadmap
-</h2>
-
-
-
-<p style="text-align:center">
-
-Building the future of Web3 careers step by step.
-
-</p>
-
-
-
-
-<div style="text-align:center;margin-top:25px">
-
-
-<a href="roadmap.html" class="btn">
-
-View Full Roadmap
-
+<a href="login.html">
+Login
 </a>
 
-
 </div>
 
 
 </section>
-
-
-
-
-
 
 
 
 <!-- Footer -->
 
-
 <footer>
 
-
 <p>
-
 © 2026 Web3Jobs - Web3 Career Platform
-
 </p>
-
-
 
 </footer>
 
 
 
+<script>
+
+
+// ==========================================
+// SUPABASE CONFIGURATION
+// ==========================================
+
+const SUPABASE_URL =
+"https://uewocyaspztybnvnkbmo.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
+
+
+// Create Supabase client
+
+const { createClient } = supabase;
+
+const supabaseClient =
+createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
 
+// ==========================================
+// REGISTER
+// ==========================================
 
-<!-- Scripts -->
+const registerForm =
+document.getElementById("registerForm");
+
+const registerButton =
+document.getElementById("registerButton");
+
+const message =
+document.getElementById("message");
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+registerForm.addEventListener(
+"submit",
+async function(event) {
+
+    event.preventDefault();
 
 
-<script src="js/app.js"></script>
+    const name =
+    document.getElementById("name")
+    .value
+    .trim();
 
+
+    const email =
+    document.getElementById("email")
+    .value
+    .trim();
+
+
+    const password =
+    document.getElementById("password")
+    .value;
+
+
+    const confirmPassword =
+    document.getElementById("confirmPassword")
+    .value;
+
+
+
+    // Clear previous message
+
+    message.className = "";
+
+    message.style.display = "none";
+
+
+
+    // Check passwords
+
+    if (password !== confirmPassword) {
+
+        message.textContent =
+        "Passwords do not match.";
+
+        message.className =
+        "error";
+
+        return;
+
+    }
+
+
+
+    // Check password length
+
+    if (password.length < 6) {
+
+        message.textContent =
+        "Password must be at least 6 characters.";
+
+        message.className =
+        "error";
+
+        return;
+
+    }
+
+
+
+    // Disable button
+
+    registerButton.disabled = true;
+
+    registerButton.textContent =
+    "Creating account...";
+
+
+
+    try {
+
+
+        // ======================================
+        // SUPABASE SIGN UP
+        // ======================================
+
+        const { data, error } =
+        await supabaseClient.auth.signUp({
+
+            email: email,
+
+            password: password,
+
+            options: {
+
+                data: {
+
+                    full_name: name
+
+                },
+
+                emailRedirectTo:
+                window.location.origin +
+                "/login.html"
+
+            }
+
+        });
+
+
+
+        // ======================================
+        // ERROR
+        // ======================================
+
+        if (error) {
+
+            console.error(error);
+
+            message.textContent =
+            error.message;
+
+            message.className =
+            "error";
+
+            registerButton.disabled =
+            false;
+
+            registerButton.textContent =
+            "Create Account";
+
+            return;
+
+        }
+
+
+
+        // ======================================
+        // SUCCESS
+        // ======================================
+
+        message.textContent =
+        "Account created successfully. Please check your email to confirm your account.";
+
+        message.className =
+        "success";
+
+
+        registerForm.reset();
+
+
+        registerButton.textContent =
+        "Account Created";
+
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        message.textContent =
+        "Something went wrong. Please try again.";
+
+        message.className =
+        "error";
+
+
+        registerButton.disabled =
+        false;
+
+        registerButton.textContent =
+        "Create Account";
+
+    }
+
+});
+
+</script>
 
 
 </body>
-
 
 </html>
