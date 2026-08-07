@@ -139,3 +139,92 @@ window.location.href =
 
 
 }
+// =========================
+// Login User
+// =========================
+
+async function login(){
+
+
+const email =
+document.getElementById("email").value;
+
+
+const password =
+document.getElementById("password").value;
+
+
+const message =
+document.getElementById("message");
+
+
+
+if(!email || !password){
+
+message.innerHTML =
+"Please fill all fields";
+
+return;
+
+}
+
+
+
+const { data, error } =
+await db.auth.signInWithPassword({
+
+email: email,
+
+password: password
+
+});
+
+
+
+if(error){
+
+message.innerHTML =
+error.message;
+
+return;
+
+}
+
+
+
+const user =
+data.user;
+
+
+
+// Get User Role
+
+const { data: profile } =
+await db
+.from("profiles")
+.select("role")
+.eq("id", user.id)
+.single();
+
+
+
+
+if(profile.role === "company"){
+
+
+window.location.href =
+"dashboard.html";
+
+
+}else{
+
+
+window.location.href =
+"profile.html";
+
+
+}
+
+
+
+}
