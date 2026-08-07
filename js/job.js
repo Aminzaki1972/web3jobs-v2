@@ -4,7 +4,24 @@
 // =========================
 
 
+// Supabase Settings
+
+const JOBS_SUPABASE_URL =
+"https://lmkfieqwkrbdbtemhsyr.supabase.co";
+
+const JOBS_SUPABASE_KEY =
+"sb_publishable_S_2GRmf1XaPVG0KQ8-sQIg_eHXLfHus";
+
+
+const jobDb = supabase.createClient(
+    JOBS_SUPABASE_URL,
+    JOBS_SUPABASE_KEY
+);
+
+
+// =========================
 // Get Job ID From URL
+// =========================
 
 const params = new URLSearchParams(
     window.location.search
@@ -13,117 +30,98 @@ const params = new URLSearchParams(
 const jobId = params.get("id");
 
 
-
-
+// =========================
 // Load Job Details
+// =========================
 
-async function loadJob(){
+async function loadJob() {
 
-
-const container =
-document.getElementById("job-details");
-
-
-if(!container) return;
+    const container =
+        document.getElementById("job-container");
 
 
-
-const { data, error } =
-await db
-.from("jobs")
-.select("*")
-.eq("id", jobId)
-.single();
+    if (!container) return;
 
 
+    if (!jobId) {
+
+        container.innerHTML = `
+            <p>Job not found</p>
+        `;
+
+        return;
+    }
 
 
-if(error){
+    const { data, error } =
+        await jobDb
+        .from("jobs")
+        .select("*")
+        .eq("id", jobId)
+        .single();
 
-console.log(error);
 
-container.innerHTML =
-`
-<p>
-Job not found
-</p>
-`;
+    if (error) {
 
-return;
+        console.log(error);
 
+        container.innerHTML = `
+            <p>Job not found</p>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML = `
+
+        <div class="job-card">
+
+            <h2>
+                ${data.title || ""}
+            </h2>
+
+            <h3>
+                ${data.company || ""}
+            </h3>
+
+            <p>
+                📍 ${data.location || ""}
+            </p>
+
+            <p>
+                💼 ${data.type || ""}
+            </p>
+
+            <p>
+                ${data.description || ""}
+            </p>
+
+            <button
+                class="btn"
+                onclick="applyForJob(${data.id})">
+
+                Apply Now
+
+            </button>
+
+            <p id="apply-message"></p>
+
+        </div>
+
+    `;
 }
 
 
-
-
-container.innerHTML =
-
-`
-
-<div class="job-card">
-
-
-<h2>
-${data.title}
-</h2>
-
-
-
-<h3>
-${data.company}
-</h3>
-
-
-
-<p>
-📍 ${data.location || ""}
-</p>
-
-
-
-<p>
-💼 ${data.type || ""}
-</p>
-
-
-
-<p>
-${data.description || ""}
-</p>
-
-
-
-
-<button 
-class="btn"
-onclick="applyForJob(${data.id})">
-
-Apply Now
-
-</button>
-
-
-
-<p id="apply-message"></p>
-
-
-</div>
-
-`;
-
-
-
-}
-
-
-
-
+// =========================
 // Start Loading
+// =========================
 
 document.addEventListener(
-"DOMContentLoaded",
-()=>{
+    "DOMContentLoaded",
+    () => {
 
-loadJob();
+        loadJob();
 
-});
+    }
+);
