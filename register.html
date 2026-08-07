@@ -2,15 +2,25 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Create Account - Web3Jobs</title>
 
+    <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     Header
+========================= -->
 
 <header>
 
@@ -18,61 +28,128 @@
         Web3Jobs
     </div>
 
+
     <nav>
-        <a href="index.html">Home</a>
-        <a href="jobs.html">Jobs</a>
-        <a href="companies.html">Companies</a>
-        <a href="login.html">Login</a>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="jobs.html">
+            Jobs
+        </a>
+
+        <a href="companies.html">
+            Companies
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
     </nav>
 
 </header>
 
 
+
+<!-- =========================
+     Hero
+========================= -->
+
 <section class="hero">
 
-    <h1>Create Your Web3Jobs Account</h1>
+    <h1>
+        Create Your Web3Jobs Account
+    </h1>
 
-    <p>Choose your account type and join Web3Jobs.</p>
+    <p>
+        Choose your account type and join Web3Jobs.
+    </p>
 
 </section>
 
+
+
+<!-- =========================
+     Register Section
+========================= -->
 
 <section class="features">
 
     <div class="card">
 
-        <h2>Create Account</h2>
+        <h2>
+            Create Account
+        </h2>
+
 
         <form id="registerForm">
 
-            <h3>Choose account type</h3>
 
-            <label>
-                <input
-                    type="radio"
-                    name="accountType"
-                    value="individual"
-                    required
-                >
-                👤 Individual
-            </label>
+            <!-- Account Type -->
 
-            <label>
-                <input
-                    type="radio"
-                    name="accountType"
-                    value="company"
-                    required
-                >
-                🏢 Company
-            </label>
+            <h3>
+                Choose account type
+            </h3>
+
+
+            <div style="margin:20px 0;">
+
+
+                <label style="display:block; margin:12px 0;">
+
+                    <input
+                        type="radio"
+                        name="accountType"
+                        value="individual"
+                        required
+                    >
+
+                    👤 Individual
+
+                </label>
+
+
+
+                <label style="display:block; margin:12px 0;">
+
+                    <input
+                        type="radio"
+                        name="accountType"
+                        value="company"
+                        required
+                    >
+
+                    🏢 Company
+
+                </label>
+
+
+            </div>
+
+
+
+            <!-- Email -->
 
             <input
                 type="email"
                 id="email"
                 placeholder="Email"
                 required
+                style="
+                    width:100%;
+                    padding:12px;
+                    margin:10px 0;
+                    border-radius:8px;
+                    border:none;
+                    box-sizing:border-box;
+                "
             >
+
+
+
+            <!-- Password -->
 
             <input
                 type="password"
@@ -80,7 +157,19 @@
                 placeholder="Password"
                 minlength="6"
                 required
+                style="
+                    width:100%;
+                    padding:12px;
+                    margin:10px 0;
+                    border-radius:8px;
+                    border:none;
+                    box-sizing:border-box;
+                "
             >
+
+
+
+            <!-- Confirm Password -->
 
             <input
                 type="password"
@@ -88,45 +177,102 @@
                 placeholder="Confirm Password"
                 minlength="6"
                 required
+                style="
+                    width:100%;
+                    padding:12px;
+                    margin:10px 0;
+                    border-radius:8px;
+                    border:none;
+                    box-sizing:border-box;
+                "
             >
 
-            <button type="submit">
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+                class="btn"
+            >
+
                 Create Account
+
             </button>
+
 
         </form>
 
-        <p id="message"></p>
+
+
+        <!-- Message -->
+
+        <p
+            id="message"
+            style="margin-top:20px;"
+        ></p>
+
+
+
+        <!-- Login -->
 
         <p>
+
             Already have an account?
-            <a href="login.html">Login</a>
+
+            <a href="login.html">
+                Login
+            </a>
+
         </p>
+
 
     </div>
 
 </section>
 
 
+
+<!-- =========================
+     Footer
+========================= -->
+
 <footer>
 
-    <p>© 2026 Web3Jobs. All Rights Reserved.</p>
+    <p>
+        © 2026 Web3Jobs. All Rights Reserved.
+    </p>
 
 </footer>
 
 
-<!-- Supabase -->
+
+<!-- =========================
+     Supabase
+========================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 
 <script>
 
+
+// ========================================
+// Supabase Configuration
+// ========================================
+
 const SUPABASE_URL =
     "https://uewocyaspztybnvynkbmo.supabase.co";
+
 
 const SUPABASE_KEY =
     "sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
 
+
+// ========================================
+// Create Supabase Client
+// ========================================
 
 const supabaseClient =
     window.supabase.createClient(
@@ -135,12 +281,23 @@ const supabaseClient =
     );
 
 
+
+// ========================================
+// Register Form
+// ========================================
+
 const registerForm =
     document.getElementById("registerForm");
+
 
 const message =
     document.getElementById("message");
 
+
+
+// ========================================
+// Register
+// ========================================
 
 registerForm.addEventListener(
     "submit",
@@ -148,14 +305,27 @@ registerForm.addEventListener(
 
         event.preventDefault();
 
+
+        // Get values
+
         const email =
-            document.getElementById("email").value.trim();
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
 
         const password =
-            document.getElementById("password").value;
+            document
+                .getElementById("password")
+                .value;
+
 
         const confirmPassword =
-            document.getElementById("confirmPassword").value;
+            document
+                .getElementById("confirmPassword")
+                .value;
+
 
         const accountType =
             document.querySelector(
@@ -163,14 +333,25 @@ registerForm.addEventListener(
             );
 
 
+
+        // ========================================
+        // Validate account type
+        // ========================================
+
         if (!accountType) {
 
             message.textContent =
                 "Please choose Individual or Company.";
 
             return;
+
         }
 
+
+
+        // ========================================
+        // Validate password
+        // ========================================
 
         if (password !== confirmPassword) {
 
@@ -178,56 +359,129 @@ registerForm.addEventListener(
                 "Passwords do not match.";
 
             return;
+
         }
 
+
+
+        if (password.length < 6) {
+
+            message.textContent =
+                "Password must be at least 6 characters.";
+
+            return;
+
+        }
+
+
+
+        // ========================================
+        // Loading
+        // ========================================
 
         message.textContent =
             "Creating account...";
 
 
-        const { data, error } =
-            await supabaseClient.auth.signUp({
 
-                email: email,
+        // ========================================
+        // Create Supabase Account
+        // ========================================
 
-                password: password,
+        try {
 
-                options: {
 
-                    data: {
-                        account_type:
-                            accountType.value
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options: {
+
+                        data: {
+
+                            account_type:
+                                accountType.value
+
+                        }
+
                     }
 
-                }
-
-            });
+                });
 
 
-        if (error) {
 
-            message.textContent =
-                error.message;
+            // ========================================
+            // Supabase Error
+            // ========================================
 
-            console.error(error);
+            if (error) {
 
-            return;
+                console.error(
+                    "Supabase signup error:",
+                    error
+                );
+
+
+                message.textContent =
+                    error.message;
+
+
+                return;
+
+            }
+
+
+
+            // ========================================
+            // Success
+            // ========================================
+
+            if (data && data.user) {
+
+                message.textContent =
+                    "Account created successfully! Please check your email to confirm your account.";
+
+
+                registerForm.reset();
+
+
+            } else {
+
+                message.textContent =
+                    "Account creation failed.";
+
+            }
+
+
         }
 
+        catch (error) {
 
-        if (data.user) {
+
+            console.error(
+                "Connection error:",
+                error
+            );
+
 
             message.textContent =
-                "Account created successfully! Please check your email to confirm your account.";
+                "Failed to connect to Supabase. Please try again.";
 
-            registerForm.reset();
 
         }
 
     }
+
 );
 
 </script>
+
 
 </body>
 
