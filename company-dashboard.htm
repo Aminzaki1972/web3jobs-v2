@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Company Dashboard - Web3Jobs</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><link rel="stylesheet" href="css/style.css"><style>
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Company Dashboard - Web3Jobs</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><link rel="stylesheet" href="css/style.css"><style>
 
 :root{
     --bg:#06101d;
     --card:#0d1b2e;
-    --card2:#10233a;
     --text:#f5f8ff;
     --muted:#9db0c8;
     --line:#1d3553;
@@ -53,26 +54,22 @@ a{
 
 header{
     border-bottom:1px solid var(--line);
-    background:rgba(6,16,29,.97);
+    background:rgba(6,16,29,.96);
     backdrop-filter:blur(12px);
 }
 
 .header-inner{
     min-height:72px;
-
     display:flex;
     align-items:center;
     justify-content:space-between;
-
     gap:20px;
 }
 
 .brand{
     display:flex;
     align-items:center;
-
     color:white;
-
     font-size:21px;
     font-weight:800;
 }
@@ -80,46 +77,34 @@ header{
 .brand-logo{
     width:40px;
     height:40px;
-
     display:grid;
     place-items:center;
-
     margin-right:9px;
-
     border-radius:12px;
-
     background:
         linear-gradient(
             135deg,
             var(--accent),
             var(--blue)
         );
-
     color:#06101d;
-
     font-weight:900;
 }
 
 nav{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:18px;
 }
 
 nav a{
     color:#b9c9dc;
-
     font-size:14px;
     font-weight:650;
-
-    padding:9px 11px;
-
-    border-radius:8px;
 }
 
 nav a:hover{
     color:var(--accent);
-    background:#0d2035;
 }
 
 
@@ -129,15 +114,10 @@ nav a:hover{
 
 .btn{
     border:0;
-
     border-radius:10px;
-
-    padding:11px 17px;
-
+    padding:10px 15px;
     cursor:pointer;
-
     font-weight:750;
-
     transition:.2s;
 }
 
@@ -153,7 +133,6 @@ nav a:hover{
 .btn-secondary{
     background:#13263e;
     color:#eaf1f8;
-
     border:1px solid #294563;
 }
 
@@ -163,7 +142,7 @@ nav a:hover{
 }
 
 .btn-small{
-    padding:8px 12px;
+    padding:7px 11px;
     font-size:12px;
 }
 
@@ -176,120 +155,51 @@ main{
     padding:45px 0 70px;
 }
 
-.page-header{
-    margin-bottom:25px;
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:25px;
+    margin-bottom:28px;
 }
 
-.page-header h1{
+.welcome h1{
     margin:0 0 8px;
-
     font-size:38px;
 }
 
-.page-header p{
+.welcome p{
     margin:0;
-
     color:var(--muted);
 }
 
-
-/* =========================
-   COMPANY HERO
-========================= */
-
-.company-hero{
-
+.company-box{
     display:flex;
-
     align-items:center;
-
-    justify-content:space-between;
-
-    gap:20px;
-
-    padding:24px;
-
-    margin-bottom:22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #0d2036,
-            #0c192b
-        );
-
-    border:1px solid var(--line);
-
-    border-radius:18px;
-}
-
-.company-info{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:16px;
+    gap:14px;
 }
 
 .company-avatar{
-
-    width:66px;
-    height:66px;
-
+    width:62px;
+    height:62px;
     display:grid;
     place-items:center;
-
-    border-radius:16px;
-
+    border-radius:15px;
     background:#122a43;
-
     border:1px solid #315777;
-
-    font-size:27px;
-
+    font-size:25px;
     overflow:hidden;
 }
 
 .company-avatar img{
-
     width:100%;
     height:100%;
-
     object-fit:cover;
-}
-
-.company-info h2{
-
-    margin:0 0 5px;
-
-    font-size:22px;
-}
-
-.company-info p{
-
-    margin:0;
-
-    color:var(--muted);
-
-    font-size:13px;
-}
-
-.company-status{
-
-    padding:8px 13px;
-
-    border-radius:999px;
-
-    background:#12352b;
-
-    border:1px solid #24634e;
-
-    color:#a7f3d0;
-
-    font-size:12px;
-
-    font-weight:700;
 }
 
 
@@ -298,55 +208,28 @@ main{
 ========================= */
 
 .stats{
-
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns:repeat(4,1fr);
     gap:16px;
-
-    margin-bottom:25px;
+    margin-bottom:28px;
 }
 
 .stat{
-
-    position:relative;
-
     background:var(--card);
-
     border:1px solid var(--line);
-
     border-radius:16px;
-
     padding:22px;
 }
 
-.stat-icon{
-
-    position:absolute;
-
-    right:20px;
-    top:20px;
-
-    font-size:24px;
-}
-
 .stat-label{
-
     color:var(--muted);
-
     font-size:13px;
 }
 
 .stat-number{
-
     display:block;
-
     margin-top:9px;
-
     font-size:30px;
-
     font-weight:850;
 }
 
@@ -355,276 +238,198 @@ main{
    QUICK ACTIONS
 ========================= */
 
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.section-title h2{
+    margin:0;
+    font-size:22px;
+}
+
 .quick-actions{
-
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns:repeat(4,1fr);
     gap:14px;
-
-    margin-bottom:25px;
+    margin-bottom:30px;
 }
 
 .quick-action{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:13px;
-
-    padding:17px;
-
     background:var(--card);
-
     border:1px solid var(--line);
-
     border-radius:15px;
-
+    padding:19px;
     transition:.2s;
 }
 
 .quick-action:hover{
-
+    border-color:#386184;
     transform:translateY(-2px);
-
-    border-color:#3a607f;
-
-    background:#102239;
 }
 
 .quick-icon{
-
-    width:43px;
-    height:43px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:11px;
-
-    background:#122a43;
-
-    font-size:20px;
+    font-size:25px;
+    margin-bottom:12px;
 }
 
 .quick-action strong{
-
     display:block;
-
-    margin-bottom:3px;
+    margin-bottom:5px;
 }
 
 .quick-action span{
-
     color:var(--muted);
-
     font-size:12px;
 }
 
 
 /* =========================
-   CONTENT
+   GRID
 ========================= */
 
-.layout{
-
+.dashboard-grid{
     display:grid;
-
-    grid-template-columns:
-        1fr 1.35fr;
-
+    grid-template-columns:1.45fr .85fr;
     gap:20px;
 }
 
+
+/* =========================
+   PANEL
+========================= */
+
 .panel{
-
     background:var(--card);
-
     border:1px solid var(--line);
-
     border-radius:17px;
-
     padding:23px;
-
     margin-bottom:20px;
 }
 
-.panel h2{
-
-    margin:0 0 20px;
-
-    font-size:21px;
-}
-
 
 /* =========================
-   FORM
-========================= */
-
-.form-group{
-
-    margin-bottom:15px;
-}
-
-.form-group label{
-
-    display:block;
-
-    margin-bottom:7px;
-
-    color:#c9d7e8;
-
-    font-size:13px;
-
-    font-weight:650;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea{
-
-    width:100%;
-
-    padding:12px 13px;
-
-    border-radius:9px;
-
-    border:1px solid #284563;
-
-    background:#071423;
-
-    color:white;
-
-    outline:none;
-}
-
-.form-group textarea{
-
-    min-height:130px;
-
-    resize:vertical;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-
-    border-color:var(--blue);
-}
-
-.form-actions{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-top:18px;
-}
-
-
-/* =========================
-   JOBS
+   JOB
 ========================= */
 
 .job{
-
     padding:18px 0;
-
     border-bottom:1px solid #18314c;
 }
 
 .job:last-child{
-
     border-bottom:0;
 }
 
 .job-title{
-
     font-size:18px;
-
     font-weight:800;
-
     margin-bottom:5px;
 }
 
 .job-company{
-
     color:var(--accent);
-
     font-size:13px;
-
-    margin-bottom:8px;
+    margin-bottom:9px;
 }
 
 .job-meta{
-
     display:flex;
-
     flex-wrap:wrap;
-
     gap:7px;
-
     margin-bottom:10px;
 }
 
 .tag{
-
     background:#122a43;
-
     border:1px solid #244866;
-
     color:#bfd2e5;
-
     padding:5px 9px;
-
     border-radius:999px;
-
     font-size:11px;
 }
 
 .job-description{
-
     color:var(--muted);
-
-    line-height:1.55;
-
     font-size:13px;
-
+    line-height:1.55;
     margin-bottom:13px;
 }
 
 .job-actions{
-
     display:flex;
-
     flex-wrap:wrap;
-
     gap:8px;
 }
 
 
 /* =========================
-   MESSAGE
+   APPLICATION
 ========================= */
 
-.message{
+.application{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #18314c;
+}
 
-    margin-top:12px;
+.application:last-child{
+    border-bottom:0;
+}
 
+.candidate-name{
+    font-weight:750;
+    margin-bottom:4px;
+}
+
+.candidate-job{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.status{
+    padding:5px 9px;
+    border-radius:999px;
+    background:#122a43;
+    border:1px solid #244866;
+    color:#bfd2e5;
+    font-size:11px;
+}
+
+
+/* =========================
+   PROFILE COMPLETION
+========================= */
+
+.progress{
+    width:100%;
+    height:8px;
+    border-radius:999px;
+    background:#14283e;
+    overflow:hidden;
+    margin:15px 0;
+}
+
+.progress-bar{
+    width:75%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        var(--accent),
+        var(--blue)
+    );
+}
+
+.profile-text{
+    color:var(--muted);
     font-size:13px;
-}
-
-.success{
-
-    color:#bbf7d0;
-}
-
-.error{
-
-    color:#fecaca;
+    line-height:1.6;
 }
 
 
@@ -633,99 +438,60 @@ main{
 ========================= */
 
 .empty{
-
     text-align:center;
-
     color:var(--muted);
-
     padding:30px 10px;
 }
 
 
 /* =========================
-   HIDDEN
+   RESPONSIVE
 ========================= */
 
-.hidden{
+@media(max-width:950px){
 
-    display:none !important;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:900px){
-
-    nav a:not(.keep){
-
+    nav{
         display:none;
     }
 
     .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
 
+    .quick-actions{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .welcome{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .welcome h1{
+        font-size:30px;
+    }
+
+    .stats{
         grid-template-columns:1fr;
     }
 
     .quick-actions{
-
         grid-template-columns:1fr;
-    }
-
-    .layout{
-
-        grid-template-columns:1fr;
-    }
-
-    .company-hero{
-
-        align-items:flex-start;
-
-        flex-direction:column;
-    }
-}
-
-@media(max-width:550px){
-
-    .page-header h1{
-
-        font-size:30px;
-    }
-
-    .form-actions{
-
-        flex-direction:column;
-    }
-
-    .form-actions button{
-
-        width:100%;
-    }
-
-}
-
-
-/* =========================
-   MOBILE NAV
-========================= */
-
-@media(min-width:901px){
-
-    .mobile-only{
-
-        display:none;
     }
 
 }
 
 </style></head><body><!-- =========================
-     COMPANY NAVIGATION
-========================= --><header><div class="container header-inner"><a
-href="index.html"
-class="brand">
-
-<span class="brand-logo">
+     HEADER
+========================= --><header><div class="container header-inner"><a href="index.html" class="brand"><span class="brand-logo">
 W3
 </span>Web3Jobs
 
@@ -737,8 +503,6 @@ Jobs
 Companies
 </a><a href="company-profile.html">
 Company Profile
-</a><a href="applications.html">
-Applications
 </a><button
 class="btn btn-danger"
 onclick="logout()">
@@ -747,27 +511,27 @@ Logout
 
 </button></nav></div></header><!-- =========================
      MAIN
-========================= --><main><div class="container"><div class="page-header"><h1>
-Company Dashboard
+========================= --><main><div class="container"><!-- WELCOME --><div class="welcome"><div><h1>
+Welcome back,
+<span id="companyNameTitle">
+Your Company
+</span>
 </h1><p>
-Everything your company needs to manage Web3 hiring.
-</p></div><!-- =========================
-     COMPANY HERO
-========================= --><div class="company-hero"><div class="company-info"><div
+Manage your jobs, applications and company profile.
+</p></div><div class="company-box"><div
 class="company-avatar"
 id="companyAvatar">🏢
 
-</div><div><h2 id="companyName">
+</div><div><strong id="companyName">
 Your Company
-</h2><p id="companyEmail">
-Loading...
-</p></div></div><div class="company-status">● Company Account
+</strong><p
+id="companyEmail"
+style="
+margin:4px 0 0;
+color:var(--muted);
+font-size:12px;">Loading...
 
-</div></div><!-- =========================
-     STATS
-========================= --><div class="stats"><div class="stat"><div class="stat-icon">
-💼
-</div><span class="stat-label">
+</p></div></div></div><!-- STATS --><div class="stats"><div class="stat"><span class="stat-label">
 Published Jobs
 </span><strong
 id="jobsCount"
@@ -775,9 +539,7 @@ class="stat-number">
 
 0
 
-</strong></div><div class="stat"><div class="stat-icon">
-👥
-</div><span class="stat-label">
+</strong></div><div class="stat"><span class="stat-label">
 Applications
 </span><strong
 id="applicationsCount"
@@ -785,9 +547,7 @@ class="stat-number">
 
 0
 
-</strong></div><div class="stat"><div class="stat-icon">
-🟢
-</div><span class="stat-label">
+</strong></div><div class="stat"><span class="stat-label">
 Active Jobs
 </span><strong
 id="activeJobsCount"
@@ -795,115 +555,124 @@ class="stat-number">
 
 0
 
-</strong></div></div><!-- =========================
-     QUICK ACTIONS
-========================= --><div class="quick-actions"><a
-href="#post-job"
+</strong></div><div class="stat"><span class="stat-label">
+Job Views
+</span><strong
+id="viewsCount"
+class="stat-number">
+
+0
+
+</strong></div></div><!-- QUICK ACTIONS --><div class="section-title"><h2>
+Quick Actions
+</h2></div><div class="quick-actions"><a
+href="post-job.html"
 class="quick-action">
 
 <div class="quick-icon">
 ➕
-</div><div><strong>
+</div><strong>
 Post a Job
 </strong><span>
-Create a new opportunity
-</span></div></a><a
+Create a new Web3 job opportunity
+</span></a><a
 href="applications.html"
 class="quick-action">
 
 <div class="quick-icon">
 👥
-</div><div><strong>
+</div><strong>
 Applications
 </strong><span>
-Review candidates
-</span></div></a><a
+Review candidates and applications
+</span></a><a
 href="company-profile.html"
 class="quick-action">
 
 <div class="quick-icon">
 🏢
-</div><div><strong>
+</div><strong>
 Company Profile
 </strong><span>
-Manage company information
-</span></div></a></div><!-- =========================
-     CONTENT
-========================= --><div class="layout"><!-- =========================
-     POST JOB
-========================= --><div><div
-class="panel"
-id="post-job"><h2>
-Post a New Job
-</h2><div class="form-group"><label>
-Job Title *
-</label><input
-id="title"
-type="text"
-placeholder="e.g. Senior Solidity Developer">
+Manage your company information
+</span></a><a
+href="jobs.html"
+class="quick-action">
 
-</div><div class="form-group"><label>
-Company Name *
-</label><input
-id="company"
-type="text"
-placeholder="Company name">
+<div class="quick-icon">
+📋
+</div><strong>
+Manage Jobs
+</strong><span>
+View and manage published jobs
+</span></a></div><!-- CONTENT --><div class="dashboard-grid"><!-- LEFT --><div><div class="panel"><div class="section-title"><h2>
+My Jobs
+</h2><a
+href="jobs.html"
+style="
+color:var(--accent);
+font-size:13px;">
 
-</div><div class="form-group"><label>
-Location
-</label><input
-id="location"
-type="text"
-placeholder="Remote / Dubai / London">
+View All →
 
-</div><div class="form-group"><label>
-Job Type
-</label><select id="type"><option value="Full-time">
-Full-time
-</option><option value="Part-time">
-Part-time
-</option><option value="Contract">
-Contract
-</option><option value="Freelance">
-Freelance
-</option><option value="Internship">
-Internship
-</option></select></div><div class="form-group"><label>
-Job Description *
-</label><textarea
-id="description"
-placeholder="Describe the position, responsibilities and requirements...">
-</textarea></div><div class="form-group"><label>
-Application Link
-</label><input
-id="apply_link"
-type="url"
-placeholder="https://...">
+</a></div><div id="jobsList"><div class="empty">
+Loading jobs...
+</div></div></div><!-- RECENT APPLICATIONS --><div class="panel"><div class="section-title"><h2>
+Recent Applications
+</h2><a
+href="applications.html"
+style="
+color:var(--accent);
+font-size:13px;">
 
-</div><div class="form-actions"><button
-id="publishButton"
-class="btn btn-primary"
-onclick="addJob()">
+View All →
 
-Publish Job
+</a></div><div id="applicationsList"><div class="empty">Loading applications...
 
-</button><button
-id="cancelEditButton"
-class="btn btn-secondary hidden"
-onclick="cancelEdit()">
+</div></div></div></div><!-- RIGHT --><div><!-- PROFILE --><div class="panel"><h2>
+Company Profile
+</h2><p class="profile-text">Complete your company profile so candidates
+can learn more about your organization.
 
-Cancel Edit
+</p><div class="progress"><div class="progress-bar"></div></div><p
+style="
+font-size:12px;
+color:var(--muted);">Profile completion: <strong>75%</strong>
 
-</button></div><div
-id="message"
-class="message">
-</div></div></div><!-- =========================
-     MY JOBS
-========================= --><div><div class="panel"><h2>
-My Published Jobs
-</h2><div id="jobsList"><div class="empty">Loading your jobs...
+</p><a
+href="company-profile.html"
+class="btn btn-secondary">
 
-</div></div></div></div></div></div></main><script>
+Complete Profile
+
+</a></div><!-- COMPANY INFO --><div class="panel"><h2>
+Company Information
+</h2><p
+style="
+color:var(--muted);
+font-size:13px;
+line-height:1.7;"><strong
+style="color:white;">
+Company:
+</strong>
+
+<span id="infoCompany">
+Loading...
+</span><br><strong
+style="color:white;">
+Email:
+</strong>
+
+<span id="infoEmail">
+Loading...
+</span><br><strong
+style="color:white;">
+Account:
+</strong>
+
+Company
+
+</p></div></div></div></div></main><script>
 
 /* ==========================================
    SUPABASE
@@ -928,8 +697,6 @@ window.supabase.createClient(
 
 let currentUser = null;
 
-let editingJobId = null;
-
 
 /* ==========================================
    ESCAPE HTML
@@ -952,72 +719,6 @@ function escapeHtml(value){
 
             }
         );
-
-}
-
-
-/* ==========================================
-   ESCAPE ATTRIBUTE
-========================================== */
-
-function escapeAttribute(value){
-
-    return String(value ?? "")
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* ==========================================
-   ACCOUNT TYPE
-========================================== */
-
-async function getAccountType(user){
-
-    if(!user){
-        return null;
-    }
-
-    const metadata =
-        user.user_metadata || {};
-
-    if(metadata.account_type){
-
-        return metadata.account_type;
-
-    }
-
-    try{
-
-        const {
-            data
-        } =
-        await db
-            .from("profiles")
-            .select("account_type")
-            .eq(
-                "id",
-                user.id
-            )
-            .maybeSingle();
-
-        return data?.account_type || null;
-
-    }
-    catch(error){
-
-        console.log(error);
-
-        return null;
-
-    }
 
 }
 
@@ -1049,15 +750,33 @@ async function init(){
         data.session.user;
 
 
-    const accountType =
-        await getAccountType(
-            currentUser
-        );
+    const metadata =
+        currentUser.user_metadata || {};
 
 
-    /*
-       Company accounts only
-    */
+    let accountType =
+        metadata.account_type || "";
+
+
+    if(!accountType){
+
+        const {
+            data:profile
+        } =
+        await db
+            .from("profiles")
+            .select("account_type")
+            .eq(
+                "id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+        accountType =
+            profile?.account_type || "";
+
+    }
+
 
     if(
         accountType !== "company" &&
@@ -1078,46 +797,23 @@ async function init(){
         currentUser.email || "";
 
 
-    const metadata =
-        currentUser.user_metadata || {};
+    document.getElementById(
+        "infoEmail"
+    ).textContent =
+        currentUser.email || "";
 
 
-    const companyName =
+    let companyName =
         metadata.company_name ||
         metadata.full_name ||
         metadata.name ||
         "Your Company";
 
 
-    document.getElementById(
-        "companyName"
-    ).textContent =
-        companyName;
-
-
-    document.getElementById(
-        "company"
-    ).value =
-        companyName;
-
-
-    await loadCompanyProfile();
-
-    await loadCompanyJobs();
-
-}
-
-
-/* ==========================================
-   COMPANY PROFILE
-========================================== */
-
-async function loadCompanyProfile(){
-
     try{
 
         const {
-            data
+            data:company
         } =
         await db
             .from("company_profiles")
@@ -1129,47 +825,27 @@ async function loadCompanyProfile(){
             .maybeSingle();
 
 
-        if(!data){
+        if(company){
 
-            return;
-
-        }
-
-
-        const name =
-            data.company_name ||
-            data.name;
+            companyName =
+                company.company_name ||
+                company.name ||
+                companyName;
 
 
-        if(name){
+            if(company.logo_url){
 
-            document.getElementById(
-                "companyName"
-            ).textContent =
-                name;
+                document.getElementById(
+                    "companyAvatar"
+                ).innerHTML = `
 
+                    <img
+                    src="${escapeHtml(company.logo_url)}"
+                    alt="Company Logo">
 
-            document.getElementById(
-                "company"
-            ).value =
-                name;
+                `;
 
-        }
-
-
-        if(data.logo_url){
-
-            document.getElementById(
-                "companyAvatar"
-            ).innerHTML = `
-
-                <img
-                src="${escapeAttribute(
-                    data.logo_url
-                )}"
-                alt="Company Logo">
-
-            `;
+            }
 
         }
 
@@ -1177,10 +853,33 @@ async function loadCompanyProfile(){
     catch(error){
 
         console.log(
-            "Company profile unavailable."
+            "Company profile not available."
         );
 
     }
+
+
+    document.getElementById(
+        "companyName"
+    ).textContent =
+        companyName;
+
+
+    document.getElementById(
+        "companyNameTitle"
+    ).textContent =
+        companyName;
+
+
+    document.getElementById(
+        "infoCompany"
+    ).textContent =
+        companyName;
+
+
+    await loadJobs();
+
+    await loadApplications();
 
 }
 
@@ -1189,7 +888,7 @@ async function loadCompanyProfile(){
    LOAD JOBS
 ========================================== */
 
-async function loadCompanyJobs(){
+async function loadJobs(){
 
     const list =
         document.getElementById(
@@ -1215,19 +914,15 @@ async function loadCompanyJobs(){
                 );
 
 
-        /*
-           Fallback for old jobs table
-        */
-
         if(
             response.error &&
             response.error.code === "42703"
         ){
 
-            const companyName =
+            const company =
                 document.getElementById(
-                    "company"
-                ).value;
+                    "infoCompany"
+                ).textContent;
 
 
             response =
@@ -1236,7 +931,7 @@ async function loadCompanyJobs(){
                     .select("*")
                     .eq(
                         "company",
-                        companyName
+                        company
                     )
                     .order(
                         "created_at",
@@ -1259,9 +954,27 @@ async function loadCompanyJobs(){
             response.data || [];
 
 
+        document.getElementById(
+            "jobsCount"
+        ).textContent =
+            jobs.length;
+
+
+        document.getElementById(
+            "activeJobsCount"
+        ).textContent =
+            jobs.length;
+
+
+        document.getElementById(
+            "viewsCount"
+        ).textContent =
+            "0";
+
+
         renderJobs(jobs);
 
-        await updateStats(jobs);
+        loadApplicationCount(jobs);
 
     }
     catch(error){
@@ -1306,8 +1019,13 @@ function renderJobs(jobs){
 
                 <br><br>
 
-                Use <strong>Post a Job</strong>
-                to create your first opportunity.
+                <a
+                href="post-job.html"
+                class="btn btn-primary">
+
+                + Post Your First Job
+
+                </a>
 
             </div>
 
@@ -1320,101 +1038,109 @@ function renderJobs(jobs){
 
     list.innerHTML =
 
-        jobs.map(
-            job => {
+        jobs
+        .slice(0,5)
+        .map(
+            job => `
 
-                return `
+            <div class="job">
 
-                <div class="job">
+                <div class="job-title">
 
-                    <div class="job-title">
-
-                        ${escapeHtml(
-                            job.title ||
-                            "Untitled Job"
-                        )}
-
-                    </div>
-
-
-                    <div class="job-company">
-
-                        ${escapeHtml(
-                            job.company ||
-                            "Company"
-                        )}
-
-                    </div>
-
-
-                    <div class="job-meta">
-
-                        <span class="tag">
-
-                            ${escapeHtml(
-                                job.location ||
-                                "Remote"
-                            )}
-
-                        </span>
-
-
-                        <span class="tag">
-
-                            ${escapeHtml(
-                                job.type ||
-                                "Full-time"
-                            )}
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="job-description">
-
-                        ${escapeHtml(
-                            (
-                                job.description ||
-                                ""
-                            ).slice(0,220)
-                        )}
-
-                    </div>
-
-
-                    <div class="job-actions">
-
-
-                        <button
-                        class="btn btn-secondary btn-small"
-                        onclick="editJob(${JSON.stringify(
-                            job.id
-                        )})">
-
-                        Edit
-
-                        </button>
-
-
-                        <button
-                        class="btn btn-danger btn-small"
-                        onclick="deleteJob(${JSON.stringify(
-                            job.id
-                        )})">
-
-                        Delete
-
-                        </button>
-
-
-                    </div>
+                    ${escapeHtml(
+                        job.title ||
+                        "Untitled Job"
+                    )}
 
                 </div>
 
-                `;
 
-            }
+                <div class="job-company">
+
+                    ${escapeHtml(
+                        job.company ||
+                        "Company"
+                    )}
+
+                </div>
+
+
+                <div class="job-meta">
+
+                    <span class="tag">
+
+                        ${escapeHtml(
+                            job.location ||
+                            "Remote"
+                        )}
+
+                    </span>
+
+
+                    <span class="tag">
+
+                        ${escapeHtml(
+                            job.type ||
+                            "Full-time"
+                        )}
+
+                    </span>
+
+
+                    <span class="tag">
+
+                        🟢 Active
+
+                    </span>
+
+                </div>
+
+
+                <div class="job-description">
+
+                    ${escapeHtml(
+                        (
+                            job.description ||
+                            "No description provided."
+                        ).slice(0,180)
+                    )}
+
+                </div>
+
+
+                <div class="job-actions">
+
+                    <button
+                    class="btn btn-secondary btn-small"
+                    onclick="editJob(${JSON.stringify(job.id)})">
+
+                    Edit
+
+                    </button>
+
+
+                    <a
+                    href="applications.html"
+                    class="btn btn-secondary btn-small">
+
+                    Applications
+
+                    </a>
+
+
+                    <button
+                    class="btn btn-danger btn-small"
+                    onclick="deleteJob(${JSON.stringify(job.id)})">
+
+                    Delete
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            `
         )
         .join("");
 
@@ -1422,222 +1148,185 @@ function renderJobs(jobs){
 
 
 /* ==========================================
-   ADD / UPDATE JOB
+   APPLICATION COUNT
 ========================================== */
 
-async function addJob(){
+async function loadApplicationCount(jobs){
 
-    const title =
+    if(!jobs.length){
+
         document.getElementById(
-            "title"
-        ).value.trim();
-
-
-    const company =
-        document.getElementById(
-            "company"
-        ).value.trim();
-
-
-    const location =
-        document.getElementById(
-            "location"
-        ).value.trim();
-
-
-    const type =
-        document.getElementById(
-            "type"
-        ).value;
-
-
-    const description =
-        document.getElementById(
-            "description"
-        ).value.trim();
-
-
-    const apply_link =
-        document.getElementById(
-            "apply_link"
-        ).value.trim();
-
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
-    const button =
-        document.getElementById(
-            "publishButton"
-        );
-
-
-    if(!title){
-
-        showMessage(
-            "Please enter a job title.",
-            true
-        );
+            "applicationsCount"
+        ).textContent =
+            "0";
 
         return;
 
     }
-
-
-    if(!company){
-
-        showMessage(
-            "Please enter the company name.",
-            true
-        );
-
-        return;
-
-    }
-
-
-    if(!description){
-
-        showMessage(
-            "Please enter a job description.",
-            true
-        );
-
-        return;
-
-    }
-
-
-    button.disabled = true;
-
-    button.textContent =
-        editingJobId
-        ? "Saving..."
-        : "Publishing...";
 
 
     try{
 
-        const payload = {
-
-            title,
-
-            company,
-
-            location,
-
-            type,
-
-            description,
-
-            apply_link,
-
-            created_by:
-                currentUser.id
-
-        };
+        const ids =
+            jobs
+            .map(job => job.id)
+            .filter(Boolean);
 
 
-        let response;
+        const {
+            data,
+            error
+        } =
+        await db
+            .from("applications")
+            .select("id")
+            .in(
+                "job_id",
+                ids
+            );
 
 
-        if(editingJobId){
+        if(error){
 
-            response =
-                await db
-                    .from("jobs")
-                    .update(payload)
-                    .eq(
-                        "id",
-                        editingJobId
-                    );
-
-        }
-        else{
-
-            response =
-                await db
-                    .from("jobs")
-                    .insert(payload);
+            throw error;
 
         }
 
 
-        /*
-           Compatibility with old jobs table
-        */
+        document.getElementById(
+            "applicationsCount"
+        ).textContent =
+            data?.length || 0;
 
-        if(
-            response.error &&
-            response.error.code === "42703"
-        ){
+    }
+    catch(error){
 
-            delete payload.created_by;
+        document.getElementById(
+            "applicationsCount"
+        ).textContent =
+            "0";
 
+    }
 
-            if(editingJobId){
-
-                response =
-                    await db
-                        .from("jobs")
-                        .update(payload)
-                        .eq(
-                            "id",
-                            editingJobId
-                        );
-
-            }
-            else{
-
-                response =
-                    await db
-                        .from("jobs")
-                        .insert(payload);
-
-            }
-
-        }
+}
 
 
-        if(response.error){
+/* ==========================================
+   RECENT APPLICATIONS
+========================================== */
 
-            throw response.error;
+async function loadApplications(){
 
-        }
-
-
-        showMessage(
-            editingJobId
-            ? "Job updated successfully."
-            : "Job published successfully.",
-            false
+    const list =
+        document.getElementById(
+            "applicationsList"
         );
 
 
-        clearForm();
+    try{
 
-        await loadCompanyJobs();
+        const {
+            data,
+            error
+        } =
+        await db
+            .from("applications")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(5);
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        const applications =
+            data || [];
+
+
+        if(!applications.length){
+
+            list.innerHTML = `
+
+                <div class="empty">
+
+                    No applications yet.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        list.innerHTML =
+
+            applications
+            .map(
+                app => `
+
+                <div class="application">
+
+                    <div>
+
+                        <div class="candidate-name">
+
+                            ${escapeHtml(
+                                app.name ||
+                                app.full_name ||
+                                app.email ||
+                                "Candidate"
+                            )}
+
+                        </div>
+
+                        <div class="candidate-job">
+
+                            Application received
+
+                        </div>
+
+                    </div>
+
+                    <span class="status">
+
+                        ${escapeHtml(
+                            app.status ||
+                            "New"
+                        )}
+
+                    </span>
+
+                </div>
+
+                `
+            )
+            .join("");
 
     }
     catch(error){
 
         console.error(error);
 
-        showMessage(
-            "Unable to save the job. Please check Supabase permissions.",
-            true
-        );
+        list.innerHTML = `
 
-    }
-    finally{
+            <div class="empty">
 
-        button.disabled = false;
+                Applications will appear here.
 
-        button.textContent =
-            "Publish Job";
+            </div>
+
+        `;
 
     }
 
@@ -1648,156 +1337,11 @@ async function addJob(){
    EDIT JOB
 ========================================== */
 
-async function editJob(id){
+function editJob(id){
 
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await db
-            .from("jobs")
-            .select("*")
-            .eq(
-                "id",
-                id
-            )
-            .single();
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        editingJobId =
-            id;
-
-
-        document.getElementById(
-            "title"
-        ).value =
-            data.title || "";
-
-
-        document.getElementById(
-            "company"
-        ).value =
-            data.company || "";
-
-
-        document.getElementById(
-            "location"
-        ).value =
-            data.location || "";
-
-
-        document.getElementById(
-            "type"
-        ).value =
-            data.type || "Full-time";
-
-
-        document.getElementById(
-            "description"
-        ).value =
-            data.description || "";
-
-
-        document.getElementById(
-            "apply_link"
-        ).value =
-            data.apply_link || "";
-
-
-        document.getElementById(
-            "publishButton"
-        ).textContent =
-            "Save Changes";
-
-
-        document.getElementById(
-            "cancelEditButton"
-        ).classList.remove(
-            "hidden"
-        );
-
-
-        document.getElementById(
-            "post-job"
-        ).scrollIntoView({
-            behavior:"smooth"
-        });
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert(
-            "Unable to load this job."
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   CANCEL EDIT
-========================================== */
-
-function cancelEdit(){
-
-    clearForm();
-
-}
-
-
-/* ==========================================
-   CLEAR FORM
-========================================== */
-
-function clearForm(){
-
-    document.getElementById(
-        "title"
-    ).value = "";
-
-
-    document.getElementById(
-        "location"
-    ).value = "";
-
-
-    document.getElementById(
-        "description"
-    ).value = "";
-
-
-    document.getElementById(
-        "apply_link"
-    ).value = "";
-
-
-    editingJobId =
-        null;
-
-
-    document.getElementById(
-        "publishButton"
-    ).textContent =
-        "Publish Job";
-
-
-    document.getElementById(
-        "cancelEditButton"
-    ).classList.add(
-        "hidden"
-    );
+    window.location.href =
+        "post-job.html?edit=" +
+        encodeURIComponent(id);
 
 }
 
@@ -1859,7 +1403,7 @@ async function deleteJob(id){
         }
 
 
-        await loadCompanyJobs();
+        await loadJobs();
 
     }
     catch(error){
@@ -1871,111 +1415,6 @@ async function deleteJob(id){
         );
 
     }
-
-}
-
-
-/* ==========================================
-   STATS
-========================================== */
-
-async function updateStats(jobs){
-
-    document.getElementById(
-        "jobsCount"
-    ).textContent =
-        jobs.length;
-
-
-    document.getElementById(
-        "activeJobsCount"
-    ).textContent =
-        jobs.length;
-
-
-    if(!jobs.length){
-
-        document.getElementById(
-            "applicationsCount"
-        ).textContent =
-            "0";
-
-        return;
-
-    }
-
-
-    try{
-
-        const ids =
-            jobs
-            .map(
-                job => job.id
-            )
-            .filter(Boolean);
-
-
-        const {
-            data,
-            error
-        } =
-        await db
-            .from("applications")
-            .select("id")
-            .in(
-                "job_id",
-                ids
-            );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        document.getElementById(
-            "applicationsCount"
-        ).textContent =
-            data?.length || 0;
-
-    }
-    catch(error){
-
-        document.getElementById(
-            "applicationsCount"
-        ).textContent =
-            "0";
-
-    }
-
-}
-
-
-/* ==========================================
-   MESSAGE
-========================================== */
-
-function showMessage(
-    text,
-    isError
-){
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
-    message.textContent =
-        text;
-
-
-    message.className =
-        isError
-        ? "message error"
-        : "message success";
 
 }
 
