@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications - Web3Jobs</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <a href="index.html">
+            Web3Jobs
+        </a>
+    </div>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#jobs">
+            Jobs
+        </a>
+
+        <a href="companies.html">
+            Companies
+        </a>
+
+        <a href="my-applications.html">
+            My Applications
+        </a>
+
+    </nav>
+
+</header>
+
+
+<section id="my-applications">
+
+    <h1>
+        My Applications
+    </h1>
+
+    <p style="text-align:center;">
+        Track your job applications
+    </p>
+
+
+    <div
+        id="applications-container"
+        class="jobs-container"
+    >
+
+        <p style="text-align:center;">
+            Loading applications...
+        </p>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 Web3Jobs - Web3 Career Platform
+    </p>
+
+</footer>
+
+
+<script>
+
+
+// ==========================================
+// SUPABASE
+// ==========================================
+
+const SUPABASE_URL =
+"https://uewocyaspztybnvnkbmo.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
+
+
+const { createClient } =
+supabase;
+
+
+const web3Supabase =
+createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// ==========================================
+// CONTAINER
+// ==========================================
+
+const applicationsContainer =
+document.getElementById(
+    "applications-container"
+);
+
+
+// ==========================================
+// LOAD APPLICATIONS
+// ==========================================
+
+async function loadApplications() {
+
+    try {
+
+        // Check login
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+        await web3Supabase.auth.getSession();
+
+
+        if (sessionError) {
+
+            console.error(
+                sessionError
+            );
+
+            showMessage(
+                "Unable to check your login."
+            );
+
+            return;
+        }
+
+
+        const session =
+            sessionData.session;
+
+
+        // ======================================
+        // NOT LOGGED IN
+        // ======================================
+
+        if (!session) {
+
+            applicationsContainer.innerHTML = `
+
+                <div class="job-card">
+
+                    <h3>
+                        Login Required
+                    </h3>
+
+                    <p>
+                        Please login to view your applications.
+                    </p>
+
+                    <a
+                        href="login.html"
+                        class="btn"
+                    >
+                        Login
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        const user =
+            session.user;
+
+
+        // ======================================
+        // LOAD APPLICATIONS
+        // ======================================
+
+        const {
+            data,
+            error
+        } =
+        await web3Supabase
+
+            .from("applications")
+
+            .select(`
+                id,
+                job_id,
+                user_id,
+                status,
+                created_at,
+                jobs (
+                    title,
+                    company,
+                    location,
+                    type
+                )
+            `)
+
+            .eq(
+                "user_id",
+                user.id
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+        if (error) {
+
+            console.error(
+                "Applications error:",
+                error
+            );
+
+            showMessage(
+                "Failed to load your applications."
+            );
+
+            return;
+        }
+
+
+        // ======================================
+        // NO APPLICATIONS
+        // ======================================
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            applicationsContainer.innerHTML = `
+
+                <div class="job-card">
+
+                    <h3>
+                        No Applications Yet
+                    </h3>
+
+                    <p>
+                        You have not applied for any jobs yet.
+                    </p>
+
+                    <a
+                        href="index.html#jobs"
+                        class="btn"
+                    >
+                        Browse Jobs
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        // ======================================
+        // DISPLAY
+        // ======================================
+
+        applicationsContainer.innerHTML =
+        data.map(function(application) {
+
+            const job =
+                application.jobs;
+
+
+            return `
+
+                <div class="job-card">
+
+                    <h3>
+                        ${escapeHTML(
+                            job?.title ||
+                            "Job"
+                        )}
+                    </h3>
+
+
+                    <p>
+
+                        <strong>
+                            Company:
+                        </strong>
+
+                        ${escapeHTML(
+                            job?.company ||
+                            "Not specified"
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Location:
+                        </strong>
+
+                        ${escapeHTML(
+                            job?.location ||
+                            "Remote"
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Type:
+                        </strong>
+
+                        ${escapeHTML(
+                            job?.type ||
+                            "Not specified"
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Status:
+                        </strong>
+
+                        ${escapeHTML(
+                            application.status ||
+                            "pending"
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Applied:
+                        </strong>
+
+                        ${formatDate(
+                            application.created_at
+                        )}
+
+                    </p>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+        showMessage(
+            "Something went wrong."
+        );
+
+    }
+}
+
+
+// ==========================================
+// DATE
+// ==========================================
+
+function formatDate(date) {
+
+    if (!date) {
+        return "Unknown";
+    }
+
+
+    return new Date(date)
+        .toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            }
+        );
+}
+
+
+// ==========================================
+// SECURITY
+// ==========================================
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+
+// ==========================================
+// MESSAGE
+// ==========================================
+
+function showMessage(message) {
+
+    applicationsContainer.innerHTML = `
+
+        <div class="job-card">
+
+            <p style="text-align:center;">
+                ${escapeHTML(message)}
+            </p>
+
+        </div>
+
+    `;
+}
+
+
+// ==========================================
+// START
+// ==========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadApplications();
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
