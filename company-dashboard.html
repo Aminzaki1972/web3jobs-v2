@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Company Dashboard - Web3Jobs</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+.dashboard {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 30px;
+}
+
+.dashboard h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.dashboard-subtitle {
+    text-align: center;
+    margin-bottom: 35px;
+    opacity: 0.8;
+}
+
+.company-form {
+    background: rgba(255,255,255,0.04);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(0,200,255,0.2);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #111;
+    color: white;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.save-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    background: #00bcd4;
+    color: white;
+}
+
+.save-btn:hover {
+    opacity: 0.9;
+}
+
+.message {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    display: none;
+}
+
+.error {
+    background: rgba(255,0,0,0.15);
+    color: #ff7777;
+}
+
+.success {
+    background: rgba(0,255,100,0.15);
+    color: #66ff99;
+}
+
+.loading {
+    text-align: center;
+    margin: 30px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+
+        <a href="index.html">
+            Web3Jobs
+        </a>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            الرئيسية
+        </a>
+
+        <a href="jobs.html">
+            الوظائف
+        </a>
+
+        <a href="companies.html">
+            الشركات
+        </a>
+
+        <a href="roadmap.html">
+            خارطة الطريق
+        </a>
+
+        <a href="company-dashboard.html">
+            لوحة الشركة
+        </a>
+
+        <a href="my-applications.html">
+            طلباتي
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================
+     COMPANY DASHBOARD
+========================= -->
+
+<main class="dashboard">
+
+    <h1>
+        لوحة الشركة 🏢
+    </h1>
+
+    <p class="dashboard-subtitle">
+        أنشئ أو حدّث ملف شركتك على Web3Jobs
+    </p>
+
+
+    <div
+        id="loading"
+        class="loading"
+    >
+        جاري التحقق من الحساب...
+    </div>
+
+
+    <div
+        id="dashboard-content"
+        style="display:none;"
+    >
+
+        <div class="company-form">
+
+
+            <!-- Company Name -->
+
+            <div class="form-group">
+
+                <label for="companyName">
+                    اسم الشركة
+                </label>
+
+                <input
+                    type="text"
+                    id="companyName"
+                    placeholder="مثال: Web3Jobs"
+                >
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="form-group">
+
+                <label for="companyDescription">
+                    وصف الشركة
+                </label>
+
+                <textarea
+                    id="companyDescription"
+                    placeholder="اكتب نبذة عن الشركة..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- Website -->
+
+            <div class="form-group">
+
+                <label for="companyWebsite">
+                    الموقع الإلكتروني
+                </label>
+
+                <input
+                    type="url"
+                    id="companyWebsite"
+                    placeholder="https://example.com"
+                >
+
+            </div>
+
+
+            <!-- Location -->
+
+            <div class="form-group">
+
+                <label for="companyLocation">
+                    الموقع
+                </label>
+
+                <input
+                    type="text"
+                    id="companyLocation"
+                    placeholder="Egypt / Remote / Worldwide"
+                >
+
+            </div>
+
+
+            <!-- Logo -->
+
+            <div class="form-group">
+
+                <label for="companyLogo">
+                    رابط شعار الشركة
+                </label>
+
+                <input
+                    type="url"
+                    id="companyLogo"
+                    placeholder="https://example.com/logo.png"
+                >
+
+            </div>
+
+
+            <!-- Save -->
+
+            <button
+                id="saveCompany"
+                class="save-btn"
+                type="button"
+            >
+                حفظ بيانات الشركة
+            </button>
+
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <p>
+        © 2026 Web3Jobs - Web3 Career Platform
+    </p>
+
+</footer>
+
+
+
+<script>
+
+// ==========================================
+// SUPABASE CONFIGURATION
+// ==========================================
+
+const SUPABASE_URL =
+"https://uewocyaspztybnvnkbmo.supabase.co";
+
+const SUPABASE_KEY =
