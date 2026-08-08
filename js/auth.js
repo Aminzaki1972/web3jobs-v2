@@ -15,7 +15,9 @@ const SUPABASE_KEY =
 "sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
 
 
-// Create Supabase client
+// ==========================================
+// CREATE SUPABASE CLIENT
+// ==========================================
 
 const { createClient } = supabase;
 
@@ -42,13 +44,12 @@ async function login() {
     document.getElementById("message");
 
 
-    // Clear message
-
     message.textContent = "";
 
 
-
-    // Check email
+    // ======================================
+    // VALIDATE EMAIL
+    // ======================================
 
     if (!email) {
 
@@ -59,8 +60,9 @@ async function login() {
     }
 
 
-
-    // Check password
+    // ======================================
+    // VALIDATE PASSWORD
+    // ======================================
 
     if (!password) {
 
@@ -71,18 +73,21 @@ async function login() {
     }
 
 
-
     message.textContent =
     "Logging in...";
 
 
     try {
 
+
         // ======================================
         // SUPABASE LOGIN
         // ======================================
 
-        const { data, error } =
+        const {
+            data,
+            error
+        } =
         await supabaseClient.auth.signInWithPassword({
 
             email: email,
@@ -90,7 +95,6 @@ async function login() {
             password: password
 
         });
-
 
 
         // ======================================
@@ -111,25 +115,132 @@ async function login() {
         }
 
 
-
         // ======================================
-        // LOGIN SUCCESS
+        // USER LOGGED IN
         // ======================================
 
         if (data && data.user) {
+
+
+            const user =
+            data.user;
+
+
+            // ======================================
+            // GET USER PROFILE
+            // ======================================
+
+            const {
+                data: profile,
+                error: profileError
+            } =
+            await supabaseClient
+
+                .from("profiles")
+
+                .select("account_type")
+
+                .eq("id", user.id)
+
+                .single();
+
+
+            // ======================================
+            // PROFILE ERROR
+            // ======================================
+
+            if (profileError) {
+
+                console.error(
+                    "Profile error:",
+                    profileError
+                );
+
+
+                /*
+                 * Fallback:
+                 * Read account_type from
+                 * Supabase Auth metadata.
+                 */
+
+                const accountType =
+                user.user_metadata?.account_type;
+
+
+                // ==================================
+                // COMPANY
+                // ==================================
+
+                if (
+                    accountType === "company"
+                ) {
+
+                    window.location.href =
+                    "company-dashboard.html";
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // INDIVIDUAL
+                // ==================================
+
+                window.location.href =
+                "dashboard.html";
+
+                return;
+
+            }
+
+
+            // ======================================
+            // ACCOUNT TYPE
+            // ======================================
+
+            const accountType =
+            profile?.account_type;
+
+
+            // ======================================
+            // COMPANY DASHBOARD
+            // ======================================
+
+            if (
+                accountType === "company"
+            ) {
+
+                message.textContent =
+                "Login successful!";
+
+                setTimeout(function() {
+
+                    window.location.href =
+                    "company-dashboard.html";
+
+                }, 400);
+
+                return;
+
+            }
+
+
+            // ======================================
+            // INDIVIDUAL DASHBOARD
+            // ======================================
 
             message.textContent =
             "Login successful!";
 
 
-            // Go to home page
-
             setTimeout(function() {
 
                 window.location.href =
-                "index.html";
+                "dashboard.html";
 
-            }, 700);
+            }, 400);
+
 
         }
 
@@ -148,7 +259,6 @@ async function login() {
     }
 
 }
-
 
 
 // ==========================================
@@ -192,7 +302,6 @@ async function getCurrentUser() {
 }
 
 
-
 // ==========================================
 // LOGOUT
 // ==========================================
@@ -201,7 +310,9 @@ async function logout() {
 
     try {
 
-        const { error } =
+        const {
+            error
+        } =
         await supabaseClient.auth.signOut();
 
 
@@ -231,17 +342,19 @@ async function logout() {
 }
 
 
-
 // ==========================================
-// EXPORT USER STATUS
+// EXPORT AUTH
 // ==========================================
 
 window.Web3JobsAuth = {
 
-    supabase: supabaseClient,
+    supabase:
+    supabaseClient,
 
-    getCurrentUser: getCurrentUser,
+    getCurrentUser:
+    getCurrentUser,
 
-    logout: logout
+    logout:
+    logout
 
 };
