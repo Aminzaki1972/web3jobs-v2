@@ -19,13 +19,16 @@ content="width=device-width, initial-scale=1.0">
 :root{
     --bg:#06101d;
     --card:#0d1b2e;
-    --card2:#10233a;
     --text:#f5f8ff;
     --muted:#9db0c8;
     --line:#1d3553;
     --accent:#6ee7b7;
     --blue:#60a5fa;
     --danger:#fb7185;
+}
+
+*{
+    box-sizing:border-box;
 }
 
 body{
@@ -38,6 +41,19 @@ body{
             #07111f
         );
     color:var(--text);
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
 .container{
@@ -45,168 +61,94 @@ body{
     margin:auto;
 }
 
+
+/* =========================
+   HEADER
+========================= */
+
 header{
     border-bottom:1px solid var(--line);
-    background:rgba(6,16,29,.95);
+    background:rgba(6,16,29,.96);
+    backdrop-filter:blur(12px);
 }
 
 .header-inner{
     min-height:72px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     gap:20px;
 }
 
 .brand{
+    display:flex;
+    align-items:center;
+
     color:white;
-    text-decoration:none;
     font-size:21px;
     font-weight:800;
 }
 
-.brand span{
-    display:inline-grid;
-    place-items:center;
+.brand-logo{
     width:40px;
     height:40px;
-    margin-right:8px;
+
+    display:grid;
+    place-items:center;
+
+    margin-right:9px;
+
     border-radius:12px;
-    background:linear-gradient(
-        135deg,
-        var(--accent),
-        var(--blue)
-    );
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--blue)
+        );
+
     color:#06101d;
+    font-weight:900;
 }
 
 nav{
     display:flex;
     align-items:center;
-    gap:18px;
+    gap:14px;
 }
 
 nav a{
     color:#b9c9dc;
-    text-decoration:none;
     font-size:14px;
+    font-weight:650;
 }
 
 nav a:hover{
     color:var(--accent);
 }
 
-main{
-    padding:45px 0 70px;
-}
 
-.page-header{
-    margin-bottom:28px;
-}
-
-.page-header h1{
-    margin:0 0 8px;
-    font-size:38px;
-}
-
-.page-header p{
-    margin:0;
-    color:var(--muted);
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
-    margin-bottom:25px;
-}
-
-.stat{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:22px;
-}
-
-.stat-label{
-    color:var(--muted);
-    font-size:13px;
-}
-
-.stat-number{
-    display:block;
-    font-size:30px;
-    font-weight:850;
-    margin-top:9px;
-}
-
-.layout{
-    display:grid;
-    grid-template-columns:1fr 1.35fr;
-    gap:20px;
-}
-
-.panel{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:17px;
-    padding:23px;
-    margin-bottom:20px;
-}
-
-.panel h2{
-    margin:0 0 20px;
-    font-size:21px;
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:7px;
-    font-size:13px;
-    color:#c9d7e8;
-    font-weight:650;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea{
-    width:100%;
-    box-sizing:border-box;
-    padding:12px 13px;
-    border-radius:9px;
-    border:1px solid #284563;
-    background:#071423;
-    color:white;
-    outline:none;
-}
-
-.form-group textarea{
-    min-height:130px;
-    resize:vertical;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-    border-color:var(--blue);
-}
-
-.form-actions{
-    display:flex;
-    gap:10px;
-    margin-top:18px;
-}
+/* =========================
+   BUTTONS
+========================= */
 
 .btn{
     border:0;
     border-radius:10px;
+
     padding:11px 17px;
+
     cursor:pointer;
+
     font-weight:750;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
 }
 
 .btn-primary{
@@ -217,6 +159,7 @@ main{
 .btn-secondary{
     background:#13263e;
     color:#eaf1f8;
+
     border:1px solid #294563;
 }
 
@@ -230,8 +173,240 @@ main{
     font-size:12px;
 }
 
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+    padding:45px 0 70px;
+}
+
+.page-header{
+    margin-bottom:28px;
+}
+
+.page-header h1{
+    margin:0 0 8px;
+
+    font-size:38px;
+}
+
+.page-header p{
+    margin:0;
+
+    color:var(--muted);
+}
+
+
+/* =========================
+   COMPANY
+========================= */
+
+.company-card{
+    display:flex;
+    align-items:center;
+
+    gap:15px;
+
+    padding:22px;
+
+    margin-bottom:22px;
+
+    background:var(--card);
+
+    border:1px solid var(--line);
+
+    border-radius:17px;
+}
+
+.company-avatar{
+    width:62px;
+    height:62px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:15px;
+
+    background:#122a43;
+
+    border:1px solid #315777;
+
+    font-size:24px;
+    font-weight:800;
+
+    overflow:hidden;
+}
+
+.company-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.company-info h2{
+    margin:0 0 5px;
+
+    font-size:20px;
+}
+
+.company-info p{
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:16px;
+
+    margin-bottom:25px;
+}
+
+.stat{
+    background:var(--card);
+
+    border:1px solid var(--line);
+
+    border-radius:16px;
+
+    padding:22px;
+}
+
+.stat-label{
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+.stat-number{
+    display:block;
+
+    margin-top:9px;
+
+    font-size:30px;
+
+    font-weight:850;
+}
+
+
+/* =========================
+   LAYOUT
+========================= */
+
+.layout{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1.35fr;
+
+    gap:20px;
+}
+
+
+/* =========================
+   PANEL
+========================= */
+
+.panel{
+    background:var(--card);
+
+    border:1px solid var(--line);
+
+    border-radius:17px;
+
+    padding:23px;
+
+    margin-bottom:20px;
+}
+
+.panel h2{
+    margin:0 0 20px;
+
+    font-size:21px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#c9d7e8;
+
+    font-size:13px;
+
+    font-weight:650;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    padding:12px 13px;
+
+    border-radius:9px;
+
+    border:1px solid #284563;
+
+    background:#071423;
+
+    color:white;
+
+    outline:none;
+
+}
+
+.form-group textarea{
+    min-height:130px;
+
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--blue);
+}
+
+.form-actions{
+    display:flex;
+
+    gap:10px;
+
+    margin-top:18px;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
 .message{
     margin-top:12px;
+
     font-size:13px;
 }
 
@@ -243,9 +418,16 @@ main{
     color:#fecaca;
 }
 
+
+/* =========================
+   JOBS
+========================= */
+
 .job{
     padding:18px 0;
-    border-bottom:1px solid #18314c;
+
+    border-bottom:
+        1px solid #18314c;
 }
 
 .job:last-child{
@@ -254,82 +436,135 @@ main{
 
 .job-title{
     font-size:18px;
+
     font-weight:800;
+
     margin-bottom:6px;
 }
 
 .job-company{
     color:var(--accent);
+
     font-size:14px;
+
     margin-bottom:8px;
 }
 
 .job-meta{
     display:flex;
+
     flex-wrap:wrap;
+
     gap:7px;
+
     margin-bottom:10px;
 }
 
 .tag{
     background:#122a43;
+
     border:1px solid #244866;
+
     color:#bfd2e5;
+
     padding:5px 9px;
+
     border-radius:999px;
+
     font-size:11px;
 }
 
 .job-description{
     color:var(--muted);
+
     line-height:1.55;
+
     font-size:13px;
+
     margin-bottom:13px;
 }
 
 .job-actions{
     display:flex;
-    gap:8px;
+
     flex-wrap:wrap;
+
+    gap:8px;
 }
+
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-actions{
+    display:grid;
+
+    gap:10px;
+}
+
+.quick-action{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px;
+
+    background:#0a1728;
+
+    border:1px solid #1b3551;
+
+    border-radius:12px;
+}
+
+.quick-action:hover{
+    border-color:#386184;
+}
+
+.quick-icon{
+    font-size:21px;
+}
+
+.quick-action strong{
+    display:block;
+
+    margin-bottom:3px;
+}
+
+.quick-action span{
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
 
 .empty{
     text-align:center;
+
     color:var(--muted);
+
     padding:28px 10px;
 }
 
-.company-box{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
 
-.company-avatar{
-    width:58px;
-    height:58px;
-    border-radius:14px;
-    display:grid;
-    place-items:center;
-    background:#122a43;
-    border:1px solid #315777;
-    font-size:23px;
-    font-weight:800;
-}
-
-.company-box h3{
-    margin:0 0 5px;
-}
-
-.company-box p{
-    margin:0;
-    color:var(--muted);
-    font-size:13px;
-}
+/* =========================
+   HIDDEN
+========================= */
 
 .hidden{
     display:none !important;
 }
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:900px){
 
@@ -361,6 +596,10 @@ main{
         width:100%;
     }
 
+    .company-card{
+        align-items:flex-start;
+    }
+
 }
 
 </style>
@@ -371,13 +610,22 @@ main{
 <body>
 
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
 
 <div class="container header-inner">
 
-<a href="index.html" class="brand">
 
-<span>W3</span>
+<a
+href="index.html"
+class="brand">
+
+<span class="brand-logo">
+W3
+</span>
 
 Web3Jobs
 
@@ -402,25 +650,35 @@ Companies
 Company Profile
 </a>
 
+<a href="applications.html">
+Applications
+</a>
+
 <button
-class="btn btn-secondary"
+class="btn btn-danger"
 onclick="logout()">
+
 Logout
+
 </button>
 
 </nav>
+
 
 </div>
 
 </header>
 
 
+
+<!-- =========================
+     MAIN
+========================= -->
+
 <main>
 
 <div class="container">
 
-
-<!-- HEADER -->
 
 <div class="page-header">
 
@@ -428,30 +686,35 @@ Logout
 Company Dashboard
 </h1>
 
-<p id="welcomeText">
-Manage your company and Web3 job opportunities.
+<p>
+Manage your company, job postings and candidates.
 </p>
 
 </div>
 
 
-<!-- COMPANY -->
 
-<div class="panel">
+<!-- =========================
+     COMPANY CARD
+========================= -->
 
-<div class="company-box">
+<div class="company-card">
+
 
 <div
 class="company-avatar"
 id="companyAvatar">
+
 🏢
+
 </div>
 
-<div>
 
-<h3 id="companyName">
+<div class="company-info">
+
+<h2 id="companyName">
 Your Company
-</h3>
+</h2>
 
 <p id="companyEmail">
 Loading...
@@ -459,12 +722,14 @@ Loading...
 
 </div>
 
-</div>
 
 </div>
 
 
-<!-- STATS -->
+
+<!-- =========================
+     STATS
+========================= -->
 
 <div class="stats">
 
@@ -478,7 +743,9 @@ Published Jobs
 <strong
 id="jobsCount"
 class="stat-number">
+
 0
+
 </strong>
 
 </div>
@@ -487,13 +754,15 @@ class="stat-number">
 <div class="stat">
 
 <span class="stat-label">
-Total Applications
+Applications
 </span>
 
 <strong
 id="applicationsCount"
 class="stat-number">
+
 0
+
 </strong>
 
 </div>
@@ -508,7 +777,9 @@ Active Jobs
 <strong
 id="activeJobsCount"
 class="stat-number">
+
 0
+
 </strong>
 
 </div>
@@ -517,10 +788,13 @@ class="stat-number">
 </div>
 
 
+
 <div class="layout">
 
 
-<!-- LEFT -->
+<!-- =========================
+     LEFT COLUMN
+========================= -->
 
 <div>
 
@@ -536,7 +810,7 @@ Post a New Job
 
 <div class="form-group">
 
-<label for="title">
+<label>
 Job Title *
 </label>
 
@@ -550,7 +824,7 @@ placeholder="e.g. Senior Solidity Developer">
 
 <div class="form-group">
 
-<label for="company">
+<label>
 Company Name *
 </label>
 
@@ -564,7 +838,7 @@ placeholder="Company name">
 
 <div class="form-group">
 
-<label for="location">
+<label>
 Location
 </label>
 
@@ -578,7 +852,7 @@ placeholder="Remote / Dubai / London">
 
 <div class="form-group">
 
-<label for="type">
+<label>
 Job Type
 </label>
 
@@ -611,7 +885,7 @@ Internship
 
 <div class="form-group">
 
-<label for="description">
+<label>
 Job Description *
 </label>
 
@@ -625,7 +899,7 @@ placeholder="Describe the position, responsibilities and requirements...">
 
 <div class="form-group">
 
-<label for="apply_link">
+<label>
 Application Link
 </label>
 
@@ -648,6 +922,7 @@ Publish Job
 
 </button>
 
+
 <button
 id="cancelEditButton"
 class="btn btn-secondary hidden"
@@ -669,36 +944,76 @@ class="message">
 </div>
 
 
-<!-- COMPANY PROFILE SHORTCUT -->
+<!-- COMPANY MANAGEMENT -->
 
 <div class="panel">
 
 <h2>
-Company Profile
+Company Management
 </h2>
 
-<p
-style="
-color:var(--muted);
-line-height:1.6;">
-Complete your company profile so candidates can
-learn more about your organization.
-</p>
+
+<div class="quick-actions">
+
 
 <a
 href="company-profile.html"
-class="btn btn-secondary">
+class="quick-action">
 
-Manage Company Profile
+<div class="quick-icon">
+🏢
+</div>
+
+<div>
+
+<strong>
+Company Profile
+</strong>
+
+<span>
+Manage your company information
+</span>
+
+</div>
 
 </a>
 
+
+<a
+href="applications.html"
+class="quick-action">
+
+<div class="quick-icon">
+👥
+</div>
+
+<div>
+
+<strong>
+Applications
+</strong>
+
+<span>
+Review candidates who applied
+</span>
+
+</div>
+
+</a>
+
+
 </div>
 
 </div>
 
 
-<!-- RIGHT -->
+</div>
+
+
+
+<!-- =========================
+     RIGHT COLUMN
+========================= -->
 
 <div>
 
@@ -708,24 +1023,30 @@ Manage Company Profile
 My Published Jobs
 </h2>
 
+
 <div id="jobsList">
 
 <div class="empty">
+
 Loading jobs...
-</div>
 
 </div>
 
 </div>
 
+
+</div>
+
 </div>
 
 
 </div>
+
 
 </div>
 
 </main>
+
 
 
 <script>
@@ -757,7 +1078,7 @@ let editingJobId = null;
 
 
 /* ==========================================
-   ESCAPE
+   ESCAPE HTML
 ========================================== */
 
 function escapeHtml(value){
@@ -782,6 +1103,25 @@ function escapeHtml(value){
 
 
 /* ==========================================
+   ESCAPE ATTRIBUTE
+========================================== */
+
+function escapeAttribute(value){
+
+    return String(value ?? "")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==========================================
    ACCOUNT TYPE
 ========================================== */
 
@@ -797,7 +1137,9 @@ async function getAccountType(user){
 
 
     if(metadata.account_type){
+
         return metadata.account_type;
+
     }
 
 
@@ -809,7 +1151,10 @@ async function getAccountType(user){
         await db
             .from("profiles")
             .select("account_type")
-            .eq("id",user.id)
+            .eq(
+                "id",
+                user.id
+            )
             .maybeSingle();
 
 
@@ -817,6 +1162,8 @@ async function getAccountType(user){
 
     }
     catch(error){
+
+        console.log(error);
 
         return null;
 
@@ -838,9 +1185,7 @@ async function init(){
     await db.auth.getSession();
 
 
-    if(error){
-
-        console.error(error);
+    if(error || !data?.session){
 
         window.location.href =
             "login.html";
@@ -851,17 +1196,7 @@ async function init(){
 
 
     currentUser =
-        data?.session?.user;
-
-
-    if(!currentUser){
-
-        window.location.href =
-            "login.html";
-
-        return;
-
-    }
+        data.session.user;
 
 
     const accountType =
@@ -871,7 +1206,7 @@ async function init(){
 
 
     /*
-       Only company accounts
+       Company accounts only
     */
 
     if(
@@ -885,16 +1220,6 @@ async function init(){
         return;
 
     }
-
-
-    /*
-       Basic account data
-    */
-
-    document.getElementById(
-        "companyEmail"
-    ).textContent =
-        currentUser.email || "";
 
 
     const metadata =
@@ -912,6 +1237,12 @@ async function init(){
         "companyName"
     ).textContent =
         companyName;
+
+
+    document.getElementById(
+        "companyEmail"
+    ).textContent =
+        currentUser.email || "";
 
 
     document.getElementById(
@@ -950,12 +1281,18 @@ async function loadCompanyProfile(){
 
 
         if(error){
-            throw error;
+
+            console.log(error);
+
+            return;
+
         }
 
 
         if(!data){
+
             return;
+
         }
 
 
@@ -988,13 +1325,7 @@ async function loadCompanyProfile(){
 
                 <img
                 src="${escapeAttribute(data.logo_url)}"
-                alt="Company Logo"
-                style="
-                    width:100%;
-                    height:100%;
-                    object-fit:cover;
-                    border-radius:14px;
-                ">
+                alt="Company Logo">
 
             `;
 
@@ -1003,9 +1334,7 @@ async function loadCompanyProfile(){
     }
     catch(error){
 
-        console.log(
-            "Company profile not available yet."
-        );
+        console.log(error);
 
     }
 
@@ -1026,16 +1355,6 @@ async function loadCompanyJobs(){
 
     try{
 
-        /*
-           We use created_by when available.
-           If your existing jobs table does not
-           have created_by yet, we fall back to
-           company name matching.
-        */
-
-        let jobs = [];
-
-
         let response =
             await db
                 .from("jobs")
@@ -1051,6 +1370,10 @@ async function loadCompanyJobs(){
                     }
                 );
 
+
+        /*
+           Compatibility with old jobs table
+        */
 
         if(
             response.error &&
@@ -1068,7 +1391,7 @@ async function loadCompanyJobs(){
                 "";
 
 
-            const fallback =
+            response =
                 await db
                     .from("jobs")
                     .select("*")
@@ -1083,36 +1406,29 @@ async function loadCompanyJobs(){
                         }
                     );
 
-
-            if(fallback.error){
-                throw fallback.error;
-            }
+        }
 
 
-            jobs =
-                fallback.data || [];
+        if(response.error){
+
+            throw response.error;
 
         }
-        else{
 
-            if(response.error){
-                throw response.error;
-            }
 
-            jobs =
-                response.data || [];
-
-        }
+        const jobs =
+            response.data || [];
 
 
         renderJobs(jobs);
 
-        await updateStats(jobs);
+        updateStats(jobs);
 
     }
     catch(error){
 
         console.error(error);
+
 
         list.innerHTML = `
 
@@ -1122,10 +1438,8 @@ async function loadCompanyJobs(){
 
                 <br><br>
 
-                If this is a new project,
-                the jobs table may need a
-                <strong>created_by</strong>
-                column.
+                Please check your Supabase
+                jobs table and permissions.
 
             </div>
 
@@ -1157,6 +1471,11 @@ function renderJobs(jobs){
                 You haven't published
                 any jobs yet.
 
+                <br><br>
+
+                Publish your first job
+                using the form.
+
             </div>
 
         `;
@@ -1171,11 +1490,6 @@ function renderJobs(jobs){
         jobs.map(
             job => {
 
-                const description =
-                    job.description ||
-                    "No description provided.";
-
-
                 return `
 
                 <div class="job">
@@ -1189,6 +1503,7 @@ function renderJobs(jobs){
 
                     </div>
 
+
                     <div class="job-company">
 
                         ${escapeHtml(
@@ -1197,6 +1512,7 @@ function renderJobs(jobs){
                         )}
 
                     </div>
+
 
                     <div class="job-meta">
 
@@ -1209,29 +1525,33 @@ function renderJobs(jobs){
 
                         </span>
 
+
                         <span class="tag">
 
                             ${escapeHtml(
                                 job.type ||
-                                "Web3"
+                                "Full-time"
                             )}
 
                         </span>
 
                     </div>
 
+
                     <div class="job-description">
 
                         ${escapeHtml(
-                            description.slice(
-                                0,
-                                220
-                            )
+                            (
+                                job.description ||
+                                "No description provided."
+                            ).slice(0,220)
                         )}
 
                     </div>
 
+
                     <div class="job-actions">
+
 
                         <button
                         class="btn btn-secondary btn-small"
@@ -1241,6 +1561,7 @@ function renderJobs(jobs){
 
                         </button>
 
+
                         <button
                         class="btn btn-danger btn-small"
                         onclick="deleteJob(${JSON.stringify(job.id)})">
@@ -1248,6 +1569,7 @@ function renderJobs(jobs){
                         Delete
 
                         </button>
+
 
                     </div>
 
@@ -1263,7 +1585,7 @@ function renderJobs(jobs){
 
 
 /* ==========================================
-   ADD JOB
+   ADD / UPDATE JOB
 ========================================== */
 
 async function addJob(){
@@ -1274,60 +1596,48 @@ async function addJob(){
         );
 
 
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
     const title =
-        document
-        .getElementById("title")
-        .value
-        .trim();
+        document.getElementById(
+            "title"
+        ).value.trim();
 
 
     const company =
-        document
-        .getElementById("company")
-        .value
-        .trim();
+        document.getElementById(
+            "company"
+        ).value.trim();
 
 
     const location =
-        document
-        .getElementById("location")
-        .value
-        .trim();
+        document.getElementById(
+            "location"
+        ).value.trim();
 
 
     const type =
-        document
-        .getElementById("type")
-        .value;
+        document.getElementById(
+            "type"
+        ).value;
 
 
     const description =
-        document
-        .getElementById("description")
-        .value
-        .trim();
+        document.getElementById(
+            "description"
+        ).value.trim();
 
 
     const apply_link =
-        document
-        .getElementById("apply_link")
-        .value
-        .trim();
+        document.getElementById(
+            "apply_link"
+        ).value.trim();
 
 
     if(!title){
 
-        message.className =
-            "message error";
-
-        message.textContent =
-            "Please enter a job title.";
+        showMessage(
+            "Please enter a job title.",
+            true
+        );
 
         return;
 
@@ -1336,11 +1646,10 @@ async function addJob(){
 
     if(!company){
 
-        message.className =
-            "message error";
-
-        message.textContent =
-            "Please enter the company name.";
+        showMessage(
+            "Please enter the company name.",
+            true
+        );
 
         return;
 
@@ -1349,11 +1658,10 @@ async function addJob(){
 
     if(!description){
 
-        message.className =
-            "message error";
-
-        message.textContent =
-            "Please enter a job description.";
+        showMessage(
+            "Please enter a job description.",
+            true
+        );
 
         return;
 
@@ -1362,13 +1670,11 @@ async function addJob(){
 
     button.disabled = true;
 
+
     button.textContent =
         editingJobId
         ? "Saving..."
         : "Publishing...";
-
-
-    message.textContent = "";
 
 
     try{
@@ -1418,61 +1724,55 @@ async function addJob(){
         }
 
 
-        if(response.error){
+        /*
+           Old table compatibility
+        */
 
-            /*
-               If created_by does not exist,
-               try without it so existing
-               database remains usable.
-            */
+        if(
+            response.error &&
+            response.error.code === "42703"
+        ){
 
-            if(
-                response.error.code ===
-                "42703"
-            ){
-
-                delete payload.created_by;
+            delete payload.created_by;
 
 
-                if(editingJobId){
+            if(editingJobId){
 
-                    response =
-                        await db
-                            .from("jobs")
-                            .update(payload)
-                            .eq(
-                                "id",
-                                editingJobId
-                            );
-
-                }
-                else{
-
-                    response =
-                        await db
-                            .from("jobs")
-                            .insert(payload);
-
-                }
+                response =
+                    await db
+                        .from("jobs")
+                        .update(payload)
+                        .eq(
+                            "id",
+                            editingJobId
+                        );
 
             }
+            else{
 
+                response =
+                    await db
+                        .from("jobs")
+                        .insert(payload);
 
-            if(response.error){
-                throw response.error;
             }
 
         }
 
 
-        message.className =
-            "message success";
+        if(response.error){
+
+            throw response.error;
+
+        }
 
 
-        message.textContent =
+        showMessage(
             editingJobId
             ? "Job updated successfully."
-            : "Job published successfully.";
+            : "Job published successfully.",
+            false
+        );
 
 
         clearForm();
@@ -1484,12 +1784,11 @@ async function addJob(){
 
         console.error(error);
 
-        message.className =
-            "message error";
 
-
-        message.textContent =
-            "Unable to save the job. Please check your Supabase jobs table and permissions.";
+        showMessage(
+            "Unable to save the job. Please check Supabase permissions.",
+            true
+        );
 
     }
     finally{
@@ -1497,9 +1796,7 @@ async function addJob(){
         button.disabled = false;
 
         button.textContent =
-            editingJobId
-            ? "Save Changes"
-            : "Publish Job";
+            "Publish Job";
 
     }
 
@@ -1529,7 +1826,9 @@ async function editJob(id){
 
 
         if(error){
+
             throw error;
+
         }
 
 
@@ -1586,12 +1885,12 @@ async function editJob(id){
         );
 
 
-        document
-            .getElementById("title")
-            .scrollIntoView({
-                behavior:"smooth",
-                block:"center"
-            });
+        document.getElementById(
+            "title"
+        ).scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
 
     }
     catch(error){
@@ -1618,19 +1917,6 @@ function cancelEdit(){
 
 
     clearForm();
-
-
-    document.getElementById(
-        "publishButton"
-    ).textContent =
-        "Publish Job";
-
-
-    document.getElementById(
-        "cancelEditButton"
-    ).classList.add(
-        "hidden"
-    );
 
 }
 
@@ -1686,23 +1972,18 @@ function clearForm(){
 
 async function deleteJob(id){
 
-    const confirmed =
-        confirm(
+    if(
+        !confirm(
             "Are you sure you want to delete this job?"
-        );
+        )
+    ){
 
-
-    if(!confirmed){
         return;
+
     }
 
 
     try{
-
-        /*
-           Try delete with owner
-           when created_by exists.
-        */
 
         let response =
             await db
@@ -1719,7 +2000,7 @@ async function deleteJob(id){
 
 
         /*
-           Existing table fallback
+           Compatibility with old table
         */
 
         if(
@@ -1740,17 +2021,19 @@ async function deleteJob(id){
 
 
         if(response.error){
+
             throw response.error;
+
         }
 
 
         await loadCompanyJobs();
 
-
     }
     catch(error){
 
         console.error(error);
+
 
         alert(
             "Unable to delete this job. Check Supabase permissions."
@@ -1778,12 +2061,6 @@ async function updateStats(jobs){
     ).textContent =
         jobs.length;
 
-
-    /*
-       Count applications where
-       applications.job_id belongs
-       to this company's jobs.
-    */
 
     if(!jobs.length){
 
@@ -1821,7 +2098,9 @@ async function updateStats(jobs){
 
 
         if(error){
+
             throw error;
+
         }
 
 
@@ -1844,20 +2123,28 @@ async function updateStats(jobs){
 
 
 /* ==========================================
-   ATTRIBUTE ESCAPE
+   MESSAGE
 ========================================== */
 
-function escapeAttribute(value){
+function showMessage(
+    text,
+    isError
+){
 
-    return String(value ?? "")
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
+    const message =
+        document.getElementById(
+            "message"
         );
+
+
+    message.textContent =
+        text;
+
+
+    message.className =
+        isError
+        ? "message error"
+        : "message success";
 
 }
 
@@ -1886,4 +2173,4 @@ init();
 
 </body>
 
-  </html>
+    </html>
