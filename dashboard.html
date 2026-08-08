@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard - Web3Jobs</title>
+<title>My Dashboard - Web3Jobs</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -16,15 +16,21 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+/* ==================================================
+   WEB3JOBS - INDIVIDUAL DASHBOARD
+================================================== */
+
 :root{
     --bg:#06101d;
     --card:#0d1b2e;
+    --card2:#10233a;
     --text:#f5f8ff;
     --muted:#9db0c8;
     --line:#1d3553;
     --accent:#6ee7b7;
     --blue:#60a5fa;
     --danger:#fb7185;
+    --warning:#fbbf24;
 }
 
 *{
@@ -65,9 +71,9 @@ a{
 }
 
 
-/* =========================
+/* ==================================================
    HEADER
-========================= */
+================================================== */
 
 header{
     border-bottom:1px solid var(--line);
@@ -75,13 +81,19 @@ header{
     background:rgba(6,16,29,.96);
 
     backdrop-filter:blur(12px);
+
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
 .header-inner{
     min-height:72px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     gap:20px;
@@ -94,6 +106,7 @@ header{
     color:white;
 
     font-size:21px;
+
     font-weight:800;
 }
 
@@ -102,6 +115,7 @@ header{
     height:40px;
 
     display:grid;
+
     place-items:center;
 
     margin-right:9px;
@@ -122,7 +136,9 @@ header{
 
 nav{
     display:flex;
+
     align-items:center;
+
     gap:18px;
 }
 
@@ -130,6 +146,7 @@ nav a{
     color:#b9c9dc;
 
     font-size:14px;
+
     font-weight:650;
 }
 
@@ -138,9 +155,9 @@ nav a:hover{
 }
 
 
-/* =========================
+/* ==================================================
    BUTTONS
-========================= */
+================================================== */
 
 .btn{
     border:0;
@@ -162,6 +179,7 @@ nav a:hover{
 
 .btn-primary{
     background:var(--accent);
+
     color:#06101d;
 }
 
@@ -179,76 +197,117 @@ nav a:hover{
     color:#fecdd3;
 }
 
+.btn-small{
+    padding:8px 12px;
 
-/* =========================
+    font-size:12px;
+}
+
+
+/* ==================================================
    MAIN
-========================= */
+================================================== */
 
 main{
-    padding:45px 0 70px;
+    padding:42px 0 70px;
 }
 
-.page-header{
-    margin-bottom:28px;
+
+/* ==================================================
+   WELCOME
+================================================== */
+
+.welcome{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:25px;
 }
 
-.page-header h1{
+.welcome h1{
     margin:0 0 8px;
 
-    font-size:38px;
+    font-size:36px;
 }
 
-.page-header p{
+.welcome p{
     margin:0;
 
     color:var(--muted);
 }
 
 
-/* =========================
-   USER CARD
-========================= */
+/* ==================================================
+   PROFILE SUMMARY
+================================================== */
 
-.user-card{
+.profile-summary{
     display:flex;
+
     align-items:center;
 
-    gap:15px;
-
-    padding:22px;
-
-    margin-bottom:22px;
+    gap:16px;
 
     background:var(--card);
 
     border:1px solid var(--line);
 
     border-radius:17px;
+
+    padding:20px;
+
+    margin-bottom:22px;
 }
 
-.user-avatar{
+.avatar{
     width:62px;
     height:62px;
 
     display:grid;
+
     place-items:center;
 
-    border-radius:15px;
+    border-radius:50%;
 
-    background:#122a43;
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--blue)
+        );
 
-    border:1px solid #315777;
+    color:#06101d;
 
-    font-size:24px;
+    font-size:23px;
+
+    font-weight:900;
+
+    overflow:hidden;
 }
 
-.user-info h2{
+.avatar img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.profile-info{
+    flex:1;
+}
+
+.profile-info h2{
     margin:0 0 5px;
 
     font-size:20px;
 }
 
-.user-info p{
+.profile-info p{
     margin:0;
 
     color:var(--muted);
@@ -256,20 +315,59 @@ main{
     font-size:13px;
 }
 
+.profile-progress{
+    width:190px;
+}
 
-/* =========================
+.progress-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:7px;
+
+    font-size:12px;
+
+    color:var(--muted);
+}
+
+.progress{
+    height:7px;
+
+    background:#172b43;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+
+    width:75%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--blue)
+        );
+}
+
+
+/* ==================================================
    STATS
-========================= */
+================================================== */
 
 .stats{
     display:grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        repeat(4,1fr);
 
-    gap:16px;
+    gap:15px;
 
-    margin-bottom:25px;
+    margin-bottom:24px;
 }
 
 .stat{
@@ -279,43 +377,120 @@ main{
 
     border-radius:16px;
 
-    padding:22px;
+    padding:20px;
+}
+
+.stat-icon{
+    font-size:22px;
+
+    margin-bottom:12px;
 }
 
 .stat-label{
     color:var(--muted);
 
-    font-size:13px;
+    font-size:12px;
 }
 
 .stat-number{
     display:block;
 
-    margin-top:9px;
+    margin-top:6px;
 
-    font-size:30px;
+    font-size:28px;
 
     font-weight:850;
 }
 
 
-/* =========================
-   LAYOUT
-========================= */
+/* ==================================================
+   SEARCH
+================================================== */
 
-.layout{
+.search-panel{
+    background:
+        linear-gradient(
+            135deg,
+            #0e2035,
+            #0b192b
+        );
+
+    border:1px solid #234361;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    margin-bottom:24px;
+}
+
+.search-panel h2{
+    margin:0 0 7px;
+
+    font-size:22px;
+}
+
+.search-panel p{
+    margin:0 0 18px;
+
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+.search-form{
     display:grid;
 
     grid-template-columns:
-        1.35fr 1fr;
+        1.5fr
+        1fr
+        1fr
+        auto;
+
+    gap:10px;
+}
+
+.search-form input,
+.search-form select{
+    width:100%;
+
+    padding:13px;
+
+    border-radius:10px;
+
+    border:1px solid #284563;
+
+    background:#071423;
+
+    color:white;
+
+    outline:none;
+}
+
+.search-form input:focus,
+.search-form select:focus{
+    border-color:var(--blue);
+}
+
+
+/* ==================================================
+   CONTENT LAYOUT
+================================================== */
+
+.dashboard-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        1fr;
 
     gap:20px;
 }
 
 
-/* =========================
+/* ==================================================
    PANEL
-========================= */
+================================================== */
 
 .panel{
     background:var(--card);
@@ -324,24 +499,290 @@ main{
 
     border-radius:17px;
 
-    padding:23px;
+    padding:22px;
 
     margin-bottom:20px;
 }
 
-.panel h2{
-    margin:0 0 20px;
+.panel-header{
+    display:flex;
 
-    font-size:21px;
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:18px;
+}
+
+.panel-header h2{
+    margin:0;
+
+    font-size:20px;
+}
+
+.panel-link{
+    color:var(--accent);
+
+    font-size:12px;
+
+    font-weight:700;
 }
 
 
-/* =========================
+/* ==================================================
+   JOB CARD
+================================================== */
+
+.job-card{
+    padding:17px 0;
+
+    border-bottom:1px solid #18314c;
+}
+
+.job-card:first-child{
+    padding-top:0;
+}
+
+.job-card:last-child{
+    border-bottom:0;
+
+    padding-bottom:0;
+}
+
+.job-top{
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:12px;
+}
+
+.company-logo{
+    width:44px;
+    height:44px;
+
+    flex-shrink:0;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:11px;
+
+    background:#122a43;
+
+    border:1px solid #294966;
+
+    font-size:19px;
+}
+
+.job-info{
+    flex:1;
+}
+
+.job-title{
+    font-size:16px;
+
+    font-weight:800;
+
+    margin-bottom:4px;
+}
+
+.job-company{
+    color:var(--accent);
+
+    font-size:13px;
+}
+
+.job-meta{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin:11px 0;
+}
+
+.tag{
+    background:#122a43;
+
+    border:1px solid #244866;
+
+    color:#bfd2e5;
+
+    padding:5px 9px;
+
+    border-radius:999px;
+
+    font-size:10px;
+}
+
+.job-description{
+    color:var(--muted);
+
+    line-height:1.5;
+
+    font-size:12px;
+
+    margin-bottom:12px;
+}
+
+.job-footer{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.job-date{
+    color:#71869e;
+
+    font-size:11px;
+}
+
+.job-buttons{
+    display:flex;
+
+    gap:7px;
+}
+
+
+/* ==================================================
+   APPLICATIONS
+================================================== */
+
+.application{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px 0;
+
+    border-bottom:1px solid #18314c;
+}
+
+.application:last-child{
+    border-bottom:0;
+}
+
+.application-icon{
+    width:40px;
+    height:40px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:10px;
+
+    background:#122a43;
+
+    border:1px solid #294966;
+}
+
+.application-info{
+    flex:1;
+}
+
+.application-info strong{
+    display:block;
+
+    margin-bottom:3px;
+
+    font-size:13px;
+}
+
+.application-info span{
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.status{
+    padding:5px 9px;
+
+    border-radius:999px;
+
+    font-size:10px;
+
+    font-weight:750;
+}
+
+.status-pending{
+    background:#3a2d0d;
+
+    color:#fde68a;
+}
+
+.status-interview{
+    background:#0d3528;
+
+    color:#bbf7d0;
+}
+
+.status-rejected{
+    background:#3b1722;
+
+    color:#fecdd3;
+}
+
+
+/* ==================================================
+   SAVED JOBS
+================================================== */
+
+.saved-job{
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    padding:13px 0;
+
+    border-bottom:1px solid #18314c;
+}
+
+.saved-job:last-child{
+    border-bottom:0;
+}
+
+.saved-info{
+    flex:1;
+}
+
+.saved-info strong{
+    display:block;
+
+    font-size:13px;
+
+    margin-bottom:3px;
+}
+
+.saved-info span{
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+
+/* ==================================================
    QUICK ACTIONS
-========================= */
+================================================== */
 
 .quick-actions{
     display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
 
     gap:10px;
 }
@@ -351,9 +792,9 @@ main{
 
     align-items:center;
 
-    gap:12px;
+    gap:10px;
 
-    padding:14px;
+    padding:13px;
 
     background:#0a1728;
 
@@ -371,11 +812,13 @@ main{
 }
 
 .quick-icon{
-    font-size:21px;
+    font-size:20px;
 }
 
 .quick-action strong{
     display:block;
+
+    font-size:12px;
 
     margin-bottom:3px;
 }
@@ -383,143 +826,104 @@ main{
 .quick-action span{
     color:var(--muted);
 
-    font-size:12px;
+    font-size:10px;
 }
 
 
-/* =========================
-   JOBS
-========================= */
-
-.job{
-    padding:18px 0;
-
-    border-bottom:
-        1px solid #18314c;
-}
-
-.job:first-child{
-    padding-top:0;
-}
-
-.job:last-child{
-    border-bottom:0;
-}
-
-.job-title{
-    font-size:18px;
-
-    font-weight:800;
-
-    margin-bottom:7px;
-}
-
-.job-company{
-    color:#d7e4f3;
-
-    font-size:13px;
-
-    margin-bottom:8px;
-}
-
-.job-meta{
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:7px;
-
-    margin-bottom:10px;
-}
-
-.tag{
-    background:#122a43;
-
-    border:1px solid #244866;
-
-    color:#bfd2e5;
-
-    padding:5px 9px;
-
-    border-radius:999px;
-
-    font-size:11px;
-}
-
-.job-description{
-    color:var(--muted);
-
-    line-height:1.55;
-
-    font-size:13px;
-
-    margin-bottom:13px;
-}
-
-.job-actions{
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:8px;
-}
+/* ==================================================
+   EMPTY
+================================================== */
 
 .empty{
     text-align:center;
 
     color:var(--muted);
 
-    padding:28px 10px;
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-.message{
-    margin-top:12px;
+    padding:25px 10px;
 
     font-size:13px;
 }
 
-.success{
-    color:#bbf7d0;
+
+/* ==================================================
+   HIDDEN
+================================================== */
+
+.hidden{
+    display:none !important;
 }
 
-.error{
-    color:#fecaca;
-}
 
-
-/* =========================
+/* ==================================================
    MOBILE
-========================= */
+================================================== */
 
-@media(max-width:900px){
+@media(max-width:950px){
 
     nav{
         display:none;
     }
 
     .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .dashboard-grid{
         grid-template-columns:1fr;
     }
 
-    .layout{
-        grid-template-columns:1fr;
+    .search-form{
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .search-form button{
+        grid-column:1/-1;
     }
 
 }
 
-@media(max-width:550px){
+@media(max-width:600px){
 
-    .page-header h1{
-        font-size:30px;
+    main{
+        padding-top:28px;
     }
 
-    .user-card{
+    .welcome{
         align-items:flex-start;
+
+        flex-direction:column;
+    }
+
+    .welcome h1{
+        font-size:29px;
+    }
+
+    .profile-summary{
+        align-items:flex-start;
+
+        flex-wrap:wrap;
+    }
+
+    .profile-progress{
+        width:100%;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .search-form{
+        grid-template-columns:1fr;
+    }
+
+    .search-form button{
+        grid-column:auto;
+    }
+
+    .quick-actions{
+        grid-template-columns:1fr;
     }
 
 }
@@ -532,9 +936,9 @@ main{
 <body>
 
 
-<!-- =========================
+<!-- ==================================================
      HEADER
-========================= -->
+================================================== -->
 
 <header>
 
@@ -560,16 +964,20 @@ Web3Jobs
 Home
 </a>
 
+<a href="jobs.html">
+Find Jobs
+</a>
+
+<a href="companies.html">
+Companies
+</a>
+
 <a href="dashboard.html">
 Dashboard
 </a>
 
-<a href="jobs.html">
-Explore Jobs
-</a>
-
-<a href="applications.html">
-My Applications
+<a href="profile.html">
+Profile
 </a>
 
 <button
@@ -589,38 +997,55 @@ Logout
 
 
 
-<!-- =========================
+<!-- ==================================================
      MAIN
-========================= -->
+================================================== -->
 
 <main>
 
 <div class="container">
 
 
-<div class="page-header">
+<!-- ==================================================
+     WELCOME
+================================================== -->
+
+<div class="welcome">
+
+<div>
 
 <h1>
-My Dashboard
+Welcome back, <span id="userName">there</span> 👋
 </h1>
 
 <p>
-Discover Web3 opportunities and manage your applications.
+Find your next opportunity in Web3.
 </p>
 
 </div>
 
 
+<a
+href="jobs.html"
+class="btn btn-primary">
 
-<!-- =========================
-     USER INFO
-========================= -->
+🔎 Explore Jobs
 
-<div class="user-card">
+</a>
+
+</div>
+
+
+
+<!-- ==================================================
+     PROFILE SUMMARY
+================================================== -->
+
+<div class="profile-summary">
 
 
 <div
-class="user-avatar"
+class="avatar"
 id="userAvatar">
 
 👤
@@ -628,10 +1053,10 @@ id="userAvatar">
 </div>
 
 
-<div class="user-info">
+<div class="profile-info">
 
-<h2 id="userName">
-User
+<h2 id="profileName">
+Your Profile
 </h2>
 
 <p id="userEmail">
@@ -641,25 +1066,64 @@ Loading...
 </div>
 
 
+<div class="profile-progress">
+
+<div class="progress-top">
+
+<span>
+Profile Completion
+</span>
+
+<strong id="profilePercent">
+75%
+</strong>
+
+</div>
+
+<div class="progress">
+
+<div
+id="profileBar"
+class="progress-bar">
+</div>
+
+</div>
+
+</div>
+
+
+<a
+href="profile.html"
+class="btn btn-secondary btn-small">
+
+Edit Profile
+
+</a>
+
+
 </div>
 
 
 
-<!-- =========================
+<!-- ==================================================
      STATS
-========================= -->
+================================================== -->
 
 <div class="stats">
 
 
 <div class="stat">
 
+<div class="stat-icon">
+📨
+</div>
+
 <span class="stat-label">
-Available Jobs
+Applied Jobs
 </span>
 
 <strong
-id="jobsCount"
+id="appliedCount"
 class="stat-number">
 
 0
@@ -671,12 +1135,16 @@ class="stat-number">
 
 <div class="stat">
 
+<div class="stat-icon">
+🔖
+</div>
+
 <span class="stat-label">
-My Applications
+Saved Jobs
 </span>
 
 <strong
-id="applicationsCount"
+id="savedCount"
 class="stat-number">
 
 0
@@ -688,15 +1156,40 @@ class="stat-number">
 
 <div class="stat">
 
+<div class="stat-icon">
+🎯
+</div>
+
 <span class="stat-label">
-Profile Status
+Interviews
 </span>
 
 <strong
-id="profileStatus"
+id="interviewCount"
 class="stat-number">
 
-Active
+0
+
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon">
+👁️
+</div>
+
+<span class="stat-label">
+Profile Views
+</span>
+
+<strong
+id="viewsCount"
+class="stat-number">
+
+0
 
 </strong>
 
@@ -707,51 +1200,217 @@ Active
 
 
 
-<div class="layout">
+<!-- ==================================================
+     SEARCH
+================================================== -->
 
-
-<!-- =========================
-     LEFT
-========================= -->
-
-<div>
-
-<div class="panel">
+<div class="search-panel">
 
 <h2>
-Latest Jobs
+Find Your Next Web3 Job
 </h2>
 
+<p>
+Search thousands of Web3 and blockchain opportunities.
+</p>
 
-<div id="jobsList">
 
-<div class="empty">
+<div class="search-form">
 
-Loading jobs...
+
+<input
+id="searchInput"
+type="text"
+placeholder="Job title, skill or keyword">
+
+
+<input
+id="locationInput"
+type="text"
+placeholder="Location / Remote">
+
+
+<select id="typeInput">
+
+<option value="">
+Any Job Type
+</option>
+
+<option value="Full-time">
+Full-time
+</option>
+
+<option value="Part-time">
+Part-time
+</option>
+
+<option value="Contract">
+Contract
+</option>
+
+<option value="Freelance">
+Freelance
+</option>
+
+<option value="Internship">
+Internship
+</option>
+
+</select>
+
+
+<button
+class="btn btn-primary"
+onclick="searchJobs()">
+
+Search Jobs
+
+</button>
+
 
 </div>
 
 </div>
 
 
-</div>
 
-</div>
+<!-- ==================================================
+     DASHBOARD GRID
+================================================== -->
+
+<div class="dashboard-grid">
 
 
-
-<!-- =========================
-     RIGHT
-========================= -->
+<!-- ==================================================
+     LEFT COLUMN
+================================================== -->
 
 <div>
 
 
+<!-- RECOMMENDED JOBS -->
+
 <div class="panel">
+
+<div class="panel-header">
+
+<h2>
+Recommended Jobs
+</h2>
+
+<a
+href="jobs.html"
+class="panel-link">
+
+View All →
+
+</a>
+
+</div>
+
+
+<div id="recommendedJobs">
+
+<div class="empty">
+Loading recommended jobs...
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- APPLICATIONS -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+<h2>
+My Applications
+</h2>
+
+<a
+href="applications.html"
+class="panel-link">
+
+View All →
+
+</a>
+
+</div>
+
+
+<div id="applicationsList">
+
+<div class="empty">
+Loading applications...
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- ==================================================
+     RIGHT COLUMN
+================================================== -->
+
+<div>
+
+
+<!-- SAVED JOBS -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+<h2>
+🔖 Saved Jobs
+</h2>
+
+<a
+href="saved-jobs.html"
+class="panel-link">
+
+View All →
+
+</a>
+
+</div>
+
+
+<div id="savedJobs">
+
+<div class="empty">
+No saved jobs yet.
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- QUICK ACTIONS -->
+
+<div class="panel">
+
+<div class="panel-header">
 
 <h2>
 Quick Actions
 </h2>
+
+</div>
 
 
 <div class="quick-actions">
@@ -768,11 +1427,11 @@ class="quick-action">
 <div>
 
 <strong>
-Explore Jobs
+Find Jobs
 </strong>
 
 <span>
-Find your next Web3 opportunity
+Explore opportunities
 </span>
 
 </div>
@@ -785,7 +1444,7 @@ href="applications.html"
 class="quick-action">
 
 <div class="quick-icon">
-📋
+📨
 </div>
 
 <div>
@@ -795,7 +1454,7 @@ My Applications
 </strong>
 
 <span>
-Track your submitted applications
+Track your applications
 </span>
 
 </div>
@@ -818,7 +1477,30 @@ My Profile
 </strong>
 
 <span>
-Manage your personal profile
+Update your profile
+</span>
+
+</div>
+
+</a>
+
+
+<a
+href="saved-jobs.html"
+class="quick-action">
+
+<div class="quick-icon">
+🔖
+</div>
+
+<div>
+
+<strong>
+Saved Jobs
+</strong>
+
+<span>
+View bookmarked jobs
 </span>
 
 </div>
@@ -831,25 +1513,34 @@ Manage your personal profile
 </div>
 
 
+<!-- PROFILE TIP -->
+
 <div class="panel">
 
 <h2>
-Welcome to Web3Jobs
+💡 Improve Your Profile
 </h2>
 
-<p style="
-    color:var(--muted);
-    line-height:1.7;
-    font-size:14px;
-    margin:0;
-">
+<p
+style="
+color:var(--muted);
+font-size:13px;
+line-height:1.6;
+margin-bottom:15px;">
 
-Explore Web3 and blockchain jobs,
-discover new opportunities and apply
-directly to positions that match your
-skills.
+Complete your skills, experience and portfolio
+to increase your chances of getting noticed
+by Web3 companies.
 
 </p>
+
+<a
+href="profile.html"
+class="btn btn-secondary">
+
+Complete Profile
+
+</a>
 
 </div>
 
@@ -868,9 +1559,9 @@ skills.
 
 <script>
 
-/* ==========================================
+/* ==================================================
    SUPABASE
-========================================== */
+================================================== */
 
 const SUPABASE_URL =
 "https://uewocyaspztybnvnkbmo.supabase.co";
@@ -885,16 +1576,16 @@ window.supabase.createClient(
 );
 
 
-/* ==========================================
+/* ==================================================
    VARIABLES
-========================================== */
+================================================== */
 
 let currentUser = null;
 
 
-/* ==========================================
+/* ==================================================
    ESCAPE HTML
-========================================== */
+================================================== */
 
 function escapeHtml(value){
 
@@ -904,11 +1595,13 @@ function escapeHtml(value){
             function(match){
 
                 return {
+
                     "&":"&amp;",
                     "<":"&lt;",
                     ">":"&gt;",
                     '"':"&quot;",
                     "'":"&#039;"
+
                 }[match];
 
             }
@@ -917,9 +1610,58 @@ function escapeHtml(value){
 }
 
 
-/* ==========================================
+/* ==================================================
+   GET ACCOUNT TYPE
+================================================== */
+
+async function getAccountType(user){
+
+    if(!user){
+        return null;
+    }
+
+
+    const metadata =
+        user.user_metadata || {};
+
+
+    if(metadata.account_type){
+
+        return metadata.account_type;
+
+    }
+
+
+    try{
+
+        const {
+            data
+        } =
+        await db
+            .from("profiles")
+            .select("account_type")
+            .eq(
+                "id",
+                user.id
+            )
+            .maybeSingle();
+
+
+        return data?.account_type || null;
+
+    }
+    catch(error){
+
+        return null;
+
+    }
+
+}
+
+
+/* ==================================================
    INIT
-========================================== */
+================================================== */
 
 async function init(){
 
@@ -929,10 +1671,6 @@ async function init(){
     } =
     await db.auth.getSession();
 
-
-    /*
-       No login
-    */
 
     if(error || !data?.session){
 
@@ -948,56 +1686,16 @@ async function init(){
         data.session.user;
 
 
-    const metadata =
-        currentUser.user_metadata || {};
-
-
-    let accountType =
-        metadata.account_type ||
-        "";
-
-
     /*
-       Check profiles table
-       if account type isn't in metadata.
-    */
-
-    if(!accountType){
-
-        try{
-
-            const {
-                data:profile
-            } =
-            await db
-                .from("profiles")
-                .select("account_type")
-                .eq(
-                    "id",
-                    currentUser.id
-                )
-                .maybeSingle();
-
-
-            accountType =
-                profile?.account_type ||
-                "";
-
-        }
-        catch(error){
-
-            console.log(error);
-
-        }
-
-    }
-
-
-    /*
-       IMPORTANT:
        Company accounts must use
-       company-dashboard.html
+       company dashboard.
     */
+
+    const accountType =
+        await getAccountType(
+            currentUser
+        );
+
 
     if(
         accountType === "company" ||
@@ -1013,8 +1711,31 @@ async function init(){
 
 
     /*
-       User information
+       USER INFORMATION
     */
+
+    const metadata =
+        currentUser.user_metadata || {};
+
+
+    const name =
+        metadata.full_name ||
+        metadata.name ||
+        metadata.username ||
+        "there";
+
+
+    document.getElementById(
+        "userName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        name;
+
 
     document.getElementById(
         "userEmail"
@@ -1022,39 +1743,442 @@ async function init(){
         currentUser.email || "";
 
 
-    const userName =
-        metadata.full_name ||
-        metadata.name ||
-        metadata.username ||
-        "User";
+    /*
+       Avatar
+    */
+
+    if(metadata.avatar_url){
+
+        document.getElementById(
+            "userAvatar"
+        ).innerHTML = `
+
+            <img
+            src="${escapeAttribute(
+                metadata.avatar_url
+            )}"
+            alt="Profile">
+
+        `;
+
+    }
+    else{
+
+        const firstLetter =
+            String(name)
+            .charAt(0)
+            .toUpperCase();
 
 
-    document.getElementById(
-        "userName"
-    ).textContent =
-        userName;
+        document.getElementById(
+            "userAvatar"
+        ).textContent =
+            firstLetter || "👤";
+
+    }
 
 
     /*
-       Load data
+       Load dashboard
     */
 
-    await loadJobs();
-
     await loadApplications();
+
+    await loadSavedJobs();
+
+    await loadRecommendedJobs();
+
+    await loadProfileCompletion();
 
 }
 
 
-/* ==========================================
-   LOAD JOBS
-========================================== */
+/* ==================================================
+   APPLICATIONS
+================================================== */
 
-async function loadJobs(){
+async function loadApplications(){
 
     const list =
         document.getElementById(
-            "jobsList"
+            "applicationsList"
+        );
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await db
+            .from("applications")
+            .select("*")
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(5);
+
+
+        if(error){
+
+            console.log(error);
+
+            list.innerHTML = `
+
+                <div class="empty">
+
+                    No applications yet.
+
+                    <br><br>
+
+                    Start applying to jobs
+                    to see them here.
+
+                </div>
+
+            `;
+
+            document.getElementById(
+                "appliedCount"
+            ).textContent = "0";
+
+            return;
+
+        }
+
+
+        const applications =
+            data || [];
+
+
+        document.getElementById(
+            "appliedCount"
+        ).textContent =
+            applications.length;
+
+
+        const interviews =
+            applications.filter(
+                app =>
+                    String(
+                        app.status || ""
+                    ).toLowerCase()
+                    === "interview"
+            ).length;
+
+
+        document.getElementById(
+            "interviewCount"
+        ).textContent =
+            interviews;
+
+
+        renderApplications(
+            applications
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        list.innerHTML = `
+
+            <div class="empty">
+                No applications yet.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==================================================
+   RENDER APPLICATIONS
+================================================== */
+
+function renderApplications(
+    applications
+){
+
+    const list =
+        document.getElementById(
+            "applicationsList"
+        );
+
+
+    if(!applications.length){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                You haven't applied
+                to any jobs yet.
+
+                <br><br>
+
+                <a
+                href="jobs.html"
+                class="btn btn-primary btn-small">
+
+                Explore Jobs
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        applications.map(
+            app => {
+
+                const status =
+                    String(
+                        app.status ||
+                        "Pending"
+                    );
+
+
+                const statusClass =
+                    status.toLowerCase()
+                    .includes("interview")
+                    ? "status-interview"
+                    :
+                    status.toLowerCase()
+                    .includes("reject")
+                    ? "status-rejected"
+                    :
+                    "status-pending";
+
+
+                return `
+
+                    <div class="application">
+
+                        <div class="application-icon">
+                            💼
+                        </div>
+
+                        <div class="application-info">
+
+                            <strong>
+                                ${escapeHtml(
+                                    app.job_title ||
+                                    "Job Application"
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHtml(
+                                    app.company ||
+                                    "Web3 Company"
+                                )}
+                            </span>
+
+                        </div>
+
+                        <span
+                        class="status ${statusClass}">
+
+                            ${escapeHtml(
+                                status
+                            )}
+
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* ==================================================
+   SAVED JOBS
+================================================== */
+
+async function loadSavedJobs(){
+
+    const list =
+        document.getElementById(
+            "savedJobs"
+        );
+
+
+    /*
+       This supports a saved_jobs
+       table if it exists.
+    */
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await db
+            .from("saved_jobs")
+            .select("*")
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(5);
+
+
+        if(error){
+
+            document.getElementById(
+                "savedCount"
+            ).textContent = "0";
+
+            list.innerHTML = `
+
+                <div class="empty">
+
+                    No saved jobs yet.
+
+                    <br><br>
+
+                    Save jobs you like
+                    to find them here.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        const jobs =
+            data || [];
+
+
+        document.getElementById(
+            "savedCount"
+        ).textContent =
+            jobs.length;
+
+
+        if(!jobs.length){
+
+            list.innerHTML = `
+
+                <div class="empty">
+
+                    No saved jobs yet.
+
+                    <br><br>
+
+                    <a
+                    href="jobs.html"
+                    class="btn btn-primary btn-small">
+
+                    Find Jobs
+
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        list.innerHTML =
+            jobs.map(
+                job => `
+
+                    <div class="saved-job">
+
+                        <div class="company-logo">
+                            💼
+                        </div>
+
+                        <div class="saved-info">
+
+                            <strong>
+                                ${escapeHtml(
+                                    job.title ||
+                                    "Saved Job"
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHtml(
+                                    job.company ||
+                                    "Web3 Company"
+                                )}
+                            </span>
+
+                        </div>
+
+                        <a
+                        href="jobs.html"
+                        class="btn btn-secondary btn-small">
+
+                        View
+
+                        </a>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+    }
+    catch(error){
+
+        document.getElementById(
+            "savedCount"
+        ).textContent = "0";
+
+    }
+
+}
+
+
+/* ==================================================
+   RECOMMENDED JOBS
+================================================== */
+
+async function loadRecommendedJobs(){
+
+    const list =
+        document.getElementById(
+            "recommendedJobs"
         );
 
 
@@ -1073,7 +2197,7 @@ async function loadJobs(){
                     ascending:false
                 }
             )
-            .limit(6);
+            .limit(5);
 
 
         if(error){
@@ -1087,19 +2211,31 @@ async function loadJobs(){
             data || [];
 
 
-        document.getElementById(
-            "jobsCount"
-        ).textContent =
-            jobs.length;
+        if(!jobs.length){
+
+            list.innerHTML = `
+
+                <div class="empty">
+
+                    No jobs available yet.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
 
 
-        renderJobs(jobs);
+        renderRecommendedJobs(
+            jobs
+        );
 
     }
     catch(error){
 
         console.error(error);
-
 
         list.innerHTML = `
 
@@ -1107,6 +2243,16 @@ async function loadJobs(){
 
                 Unable to load jobs.
 
+                <br><br>
+
+                <a
+                href="jobs.html"
+                class="btn btn-primary btn-small">
+
+                Explore Jobs
+
+                </a>
+
             </div>
 
         `;
@@ -1116,75 +2262,62 @@ async function loadJobs(){
 }
 
 
-/* ==========================================
+/* ==================================================
    RENDER JOBS
-========================================== */
+================================================== */
 
-function renderJobs(jobs){
+function renderRecommendedJobs(
+    jobs
+){
 
     const list =
         document.getElementById(
-            "jobsList"
+            "recommendedJobs"
         );
 
 
-    if(!jobs.length){
-
-        list.innerHTML = `
-
-            <div class="empty">
-
-                No jobs available yet.
-
-                <br><br>
-
-                Check back soon for new
-                opportunities.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
     list.innerHTML =
-
         jobs.map(
-            job => {
+            job => `
 
-                return `
+                <div class="job-card">
 
-                <div class="job">
+                    <div class="job-top">
 
+                        <div class="company-logo">
+                            🏢
+                        </div>
 
-                    <div class="job-title">
+                        <div class="job-info">
 
-                        ${escapeHtml(
-                            job.title ||
-                            "Untitled Job"
-                        )}
+                            <div class="job-title">
 
-                    </div>
+                                ${escapeHtml(
+                                    job.title ||
+                                    "Web3 Job"
+                                )}
 
+                            </div>
 
-                    <div class="job-company">
+                            <div class="job-company">
 
-                        ${escapeHtml(
-                            job.company ||
-                            "Web3 Company"
-                        )}
+                                ${escapeHtml(
+                                    job.company ||
+                                    "Web3 Company"
+                                )}
+
+                            </div>
+
+                        </div>
 
                     </div>
 
 
                     <div class="job-meta">
 
-
                         <span class="tag">
 
+                            📍
                             ${escapeHtml(
                                 job.location ||
                                 "Remote"
@@ -1192,9 +2325,9 @@ function renderJobs(jobs){
 
                         </span>
 
-
                         <span class="tag">
 
+                            💼
                             ${escapeHtml(
                                 job.type ||
                                 "Full-time"
@@ -1202,108 +2335,333 @@ function renderJobs(jobs){
 
                         </span>
 
-
                     </div>
 
 
                     <div class="job-description">
 
                         ${escapeHtml(
-                            (job.description || "")
-                            .slice(0,180)
+                            String(
+                                job.description ||
+                                "Explore this Web3 opportunity."
+                            ).slice(0,180)
                         )}
 
-                        ${job.description &&
-                          job.description.length > 180
-                          ? "..."
-                          : ""}
-
                     </div>
 
 
-                    <div class="job-actions">
+                    <div class="job-footer">
 
-                        <a
-                        class="btn btn-primary"
-                        href="jobs.html">
+                        <span class="job-date">
 
-                        Explore Jobs
+                            New opportunity
 
-                        </a>
+                        </span>
+
+
+                        <div class="job-buttons">
+
+                            <button
+                            class="btn btn-secondary btn-small"
+                            onclick="saveJob('${escapeAttribute(job.id)}')">
+
+                            🔖 Save
+
+                            </button>
+
+
+                            <a
+                            href="jobs.html"
+                            class="btn btn-primary btn-small">
+
+                            View Job
+
+                            </a>
+
+                        </div>
 
                     </div>
-
 
                 </div>
 
-                `;
-
-            }
+            `
         )
         .join("");
 
 }
 
 
-/* ==========================================
-   LOAD APPLICATIONS
-========================================== */
+/* ==================================================
+   PROFILE COMPLETION
+================================================== */
 
-async function loadApplications(){
+async function loadProfileCompletion(){
+
+    /*
+       Basic calculation based on
+       available user metadata.
+    */
+
+    const metadata =
+        currentUser.user_metadata || {};
+
+
+    let completed = 0;
+
+    let total = 5;
+
+
+    if(
+        metadata.full_name ||
+        metadata.name
+    ){
+
+        completed++;
+
+    }
+
+
+    if(metadata.avatar_url){
+
+        completed++;
+
+    }
+
+
+    if(metadata.bio){
+
+        completed++;
+
+    }
+
+
+    if(metadata.skills){
+
+        completed++;
+
+    }
+
+
+    if(metadata.resume_url){
+
+        completed++;
+
+    }
+
+
+    let percent =
+        Math.round(
+            completed / total * 100
+        );
+
+
+    /*
+       Give newly registered users
+       a reasonable starting value.
+    */
+
+    if(percent < 20){
+
+        percent = 20;
+
+    }
+
+
+    document.getElementById(
+        "profilePercent"
+    ).textContent =
+        percent + "%";
+
+
+    document.getElementById(
+        "profileBar"
+    ).style.width =
+        percent + "%";
+
+}
+
+
+/* ==================================================
+   SEARCH
+================================================== */
+
+function searchJobs(){
+
+    const keyword =
+        document.getElementById(
+            "searchInput"
+        ).value.trim();
+
+
+    const location =
+        document.getElementById(
+            "locationInput"
+        ).value.trim();
+
+
+    const type =
+        document.getElementById(
+            "typeInput"
+        ).value;
+
+
+    const params =
+        new URLSearchParams();
+
+
+    if(keyword){
+
+        params.set(
+            "search",
+            keyword
+        );
+
+    }
+
+
+    if(location){
+
+        params.set(
+            "location",
+            location
+        );
+
+    }
+
+
+    if(type){
+
+        params.set(
+            "type",
+            type
+        );
+
+    }
+
+
+    window.location.href =
+        "jobs.html" +
+        (
+            params.toString()
+            ? "?" + params.toString()
+            : ""
+        );
+
+}
+
+
+/* ==================================================
+   SAVE JOB
+================================================== */
+
+async function saveJob(id){
+
+    if(!currentUser){
+
+        return;
+
+    }
+
 
     try{
 
         const {
-            data,
             error
         } =
         await db
-            .from("applications")
-            .select("id")
-            .eq(
-                "user_id",
-                currentUser.id
-            );
+            .from("saved_jobs")
+            .insert({
+
+                user_id:
+                    currentUser.id,
+
+                job_id:
+                    id
+
+            });
 
 
         if(error){
 
-            console.log(
-                "Applications table not available:",
-                error
-            );
+            /*
+               If saved_jobs table is
+               not created yet.
+            */
 
-            document.getElementById(
-                "applicationsCount"
-            ).textContent =
-                "0";
+            if(
+                error.code === "42P01"
+            ){
 
-            return;
+                alert(
+                    "Saved jobs feature will be available after the saved_jobs table is created."
+                );
+
+                return;
+
+            }
+
+
+            if(
+                error.code === "23505"
+            ){
+
+                alert(
+                    "This job is already saved."
+                );
+
+                return;
+
+            }
+
+
+            throw error;
 
         }
 
 
-        document.getElementById(
-            "applicationsCount"
-        ).textContent =
-            data?.length || 0;
+        alert(
+            "Job saved successfully."
+        );
+
+
+        await loadSavedJobs();
 
     }
     catch(error){
 
-        document.getElementById(
-            "applicationsCount"
-        ).textContent =
-            "0";
+        console.error(error);
+
+        alert(
+            "Unable to save this job."
+        );
 
     }
 
 }
 
 
-/* ==========================================
+/* ==================================================
+   ATTRIBUTE ESCAPE
+================================================== */
+
+function escapeAttribute(value){
+
+    return String(value ?? "")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==================================================
    LOGOUT
-========================================== */
+================================================== */
 
 async function logout(){
 
@@ -1315,14 +2673,15 @@ async function logout(){
 }
 
 
-/* ==========================================
+/* ==================================================
    START
-========================================== */
+================================================== */
 
 init();
 
 </script>
 
+
 </body>
 
-</html>
+    </html>
