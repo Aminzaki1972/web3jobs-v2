@@ -81,9 +81,7 @@ header{
     min-height:72px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 
     gap:20px;
@@ -91,13 +89,11 @@ header{
 
 .brand{
     display:flex;
-
     align-items:center;
 
     color:white;
 
     font-size:21px;
-
     font-weight:800;
 }
 
@@ -106,7 +102,6 @@ header{
     height:40px;
 
     display:grid;
-
     place-items:center;
 
     margin-right:9px;
@@ -127,9 +122,7 @@ header{
 
 nav{
     display:flex;
-
     align-items:center;
-
     gap:18px;
 }
 
@@ -137,7 +130,6 @@ nav a{
     color:#b9c9dc;
 
     font-size:14px;
-
     font-weight:650;
 }
 
@@ -170,7 +162,6 @@ nav a:hover{
 
 .btn-primary{
     background:var(--accent);
-
     color:#06101d;
 }
 
@@ -220,10 +211,9 @@ main{
 
 .user-card{
     display:flex;
-
     align-items:center;
 
-    gap:16px;
+    gap:15px;
 
     padding:22px;
 
@@ -241,32 +231,15 @@ main{
     height:62px;
 
     display:grid;
-
     place-items:center;
 
-    border-radius:50%;
+    border-radius:15px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #122a43,
-            #173958
-        );
+    background:#122a43;
 
     border:1px solid #315777;
 
-    font-size:25px;
-
-    font-weight:800;
-
-    overflow:hidden;
-}
-
-.user-avatar img{
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
+    font-size:24px;
 }
 
 .user-info h2{
@@ -334,7 +307,7 @@ main{
     display:grid;
 
     grid-template-columns:
-        1fr 1.35fr;
+        1.35fr 1fr;
 
     gap:20px;
 }
@@ -380,7 +353,7 @@ main{
 
     gap:12px;
 
-    padding:15px;
+    padding:14px;
 
     background:#0a1728;
 
@@ -398,18 +371,7 @@ main{
 }
 
 .quick-icon{
-    width:38px;
-    height:38px;
-
-    display:grid;
-
-    place-items:center;
-
-    border-radius:10px;
-
-    background:#122a43;
-
-    font-size:19px;
+    font-size:21px;
 }
 
 .quick-action strong{
@@ -426,41 +388,48 @@ main{
 
 
 /* =========================
-   APPLICATIONS
+   JOBS
 ========================= */
 
-.application{
-    padding:16px 0;
+.job{
+    padding:18px 0;
 
-    border-bottom:1px solid #18314c;
+    border-bottom:
+        1px solid #18314c;
 }
 
-.application:last-child{
+.job:first-child{
+    padding-top:0;
+}
+
+.job:last-child{
     border-bottom:0;
 }
 
-.application-title{
-    font-size:17px;
+.job-title{
+    font-size:18px;
 
     font-weight:800;
 
-    margin-bottom:6px;
+    margin-bottom:7px;
 }
 
-.application-company{
-    color:var(--muted);
+.job-company{
+    color:#d7e4f3;
 
     font-size:13px;
 
     margin-bottom:8px;
 }
 
-.application-meta{
+.job-meta{
     display:flex;
 
     flex-wrap:wrap;
 
     gap:7px;
+
+    margin-bottom:10px;
 }
 
 .tag{
@@ -477,10 +446,23 @@ main{
     font-size:11px;
 }
 
+.job-description{
+    color:var(--muted);
 
-/* =========================
-   EMPTY
-========================= */
+    line-height:1.55;
+
+    font-size:13px;
+
+    margin-bottom:13px;
+}
+
+.job-actions{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
 
 .empty{
     text-align:center;
@@ -492,15 +474,21 @@ main{
 
 
 /* =========================
-   LOADING
+   MESSAGE
 ========================= */
 
-.loading{
-    text-align:center;
+.message{
+    margin-top:12px;
 
-    color:var(--muted);
+    font-size:13px;
+}
 
-    padding:30px;
+.success{
+    color:#bbf7d0;
+}
+
+.error{
+    color:#fecaca;
 }
 
 
@@ -572,16 +560,16 @@ Web3Jobs
 Home
 </a>
 
-<a href="jobs.html">
-Explore Jobs
-</a>
-
 <a href="dashboard.html">
 Dashboard
 </a>
 
-<a href="profile.html">
-Profile
+<a href="jobs.html">
+Explore Jobs
+</a>
+
+<a href="applications.html">
+My Applications
 </a>
 
 <button
@@ -617,7 +605,7 @@ My Dashboard
 </h1>
 
 <p>
-Manage your profile, applications and saved jobs.
+Discover Web3 opportunities and manage your applications.
 </p>
 
 </div>
@@ -625,7 +613,7 @@ Manage your profile, applications and saved jobs.
 
 
 <!-- =========================
-     USER
+     USER INFO
 ========================= -->
 
 <div class="user-card">
@@ -643,7 +631,7 @@ id="userAvatar">
 <div class="user-info">
 
 <h2 id="userName">
-Welcome
+User
 </h2>
 
 <p id="userEmail">
@@ -667,11 +655,11 @@ Loading...
 <div class="stat">
 
 <span class="stat-label">
-Applications
+Available Jobs
 </span>
 
 <strong
-id="applicationsCount"
+id="jobsCount"
 class="stat-number">
 
 0
@@ -684,11 +672,11 @@ class="stat-number">
 <div class="stat">
 
 <span class="stat-label">
-Saved Jobs
+My Applications
 </span>
 
 <strong
-id="savedJobsCount"
+id="applicationsCount"
 class="stat-number">
 
 0
@@ -706,8 +694,7 @@ Profile Status
 
 <strong
 id="profileStatus"
-class="stat-number"
-style="font-size:22px;">
+class="stat-number">
 
 Active
 
@@ -725,6 +712,36 @@ Active
 
 <!-- =========================
      LEFT
+========================= -->
+
+<div>
+
+<div class="panel">
+
+<h2>
+Latest Jobs
+</h2>
+
+
+<div id="jobsList">
+
+<div class="empty">
+
+Loading jobs...
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     RIGHT
 ========================= -->
 
 <div>
@@ -764,29 +781,6 @@ Find your next Web3 opportunity
 
 
 <a
-href="profile.html"
-class="quick-action">
-
-<div class="quick-icon">
-👤
-</div>
-
-<div>
-
-<strong>
-My Profile
-</strong>
-
-<span>
-Manage your professional profile
-</span>
-
-</div>
-
-</a>
-
-
-<a
 href="applications.html"
 class="quick-action">
 
@@ -801,51 +795,12 @@ My Applications
 </strong>
 
 <span>
-Track jobs you have applied for
+Track your submitted applications
 </span>
 
 </div>
 
 </a>
-
-
-<a
-href="saved-jobs.html"
-class="quick-action">
-
-<div class="quick-icon">
-❤️
-</div>
-
-<div>
-
-<strong>
-Saved Jobs
-</strong>
-
-<span>
-View jobs you saved for later
-</span>
-
-</div>
-
-</a>
-
-
-</div>
-
-</div>
-
-
-
-<div class="panel">
-
-<h2>
-Account
-</h2>
-
-
-<div class="quick-actions">
 
 
 <a
@@ -853,17 +808,17 @@ href="profile.html"
 class="quick-action">
 
 <div class="quick-icon">
-⚙️
+👤
 </div>
 
 <div>
 
 <strong>
-Account Settings
+My Profile
 </strong>
 
 <span>
-Update your account information
+Manage your personal profile
 </span>
 
 </div>
@@ -871,98 +826,30 @@ Update your account information
 </a>
 
 
-<button
-class="quick-action"
-onclick="logout()"
-style="
-    width:100%;
-    text-align:left;
-    cursor:pointer;
-    color:white;
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Welcome to Web3Jobs
+</h2>
+
+<p style="
+    color:var(--muted);
+    line-height:1.7;
+    font-size:14px;
+    margin:0;
 ">
 
-<div class="quick-icon">
-🚪
-</div>
+Explore Web3 and blockchain jobs,
+discover new opportunities and apply
+directly to positions that match your
+skills.
 
-<div>
-
-<strong>
-Sign Out
-</strong>
-
-<span>
-Sign out of your Web3Jobs account
-</span>
-
-</div>
-
-</button>
-
-
-</div>
-
-</div>
-
-
-</div>
-
-
-
-<!-- =========================
-     RIGHT
-========================= -->
-
-<div>
-
-
-<div class="panel">
-
-<h2>
-Recent Applications
-</h2>
-
-
-<div id="applicationsList">
-
-<div class="loading">
-Loading applications...
-</div>
-
-</div>
-
-
-</div>
-
-
-<div class="panel">
-
-<h2>
-Recommended
-</h2>
-
-
-<div class="empty">
-
-🔎
-
-<br><br>
-
-Explore Web3Jobs to discover
-new opportunities.
-
-<br><br>
-
-<a
-href="jobs.html"
-class="btn btn-primary">
-
-Explore Jobs
-
-</a>
-
-</div>
-
+</p>
 
 </div>
 
@@ -999,7 +886,7 @@ window.supabase.createClient(
 
 
 /* ==========================================
-   CURRENT USER
+   VARIABLES
 ========================================== */
 
 let currentUser = null;
@@ -1047,10 +934,7 @@ async function init(){
        No login
     */
 
-    if(
-        error ||
-        !data?.session
-    ){
+    if(error || !data?.session){
 
         window.location.href =
             "login.html";
@@ -1068,19 +952,14 @@ async function init(){
         currentUser.user_metadata || {};
 
 
-    /*
-       Check account type
-    */
-
     let accountType =
         metadata.account_type ||
         "";
 
 
     /*
-       If account type is not
-       available in metadata,
-       check profiles table.
+       Check profiles table
+       if account type isn't in metadata.
     */
 
     if(!accountType){
@@ -1116,7 +995,7 @@ async function init(){
 
     /*
        IMPORTANT:
-       Companies must use
+       Company accounts must use
        company-dashboard.html
     */
 
@@ -1134,7 +1013,7 @@ async function init(){
 
 
     /*
-       Display user information
+       User information
     */
 
     document.getElementById(
@@ -1147,7 +1026,7 @@ async function init(){
         metadata.full_name ||
         metadata.name ||
         metadata.username ||
-        "Web3Jobs User";
+        "User";
 
 
     document.getElementById(
@@ -1157,50 +1036,25 @@ async function init(){
 
 
     /*
-       Avatar
+       Load data
     */
 
-    const avatarUrl =
-        metadata.avatar_url ||
-        metadata.picture ||
-        "";
-
-
-    if(avatarUrl){
-
-        document.getElementById(
-            "userAvatar"
-        ).innerHTML = `
-
-            <img
-            src="${escapeAttribute(avatarUrl)}"
-            alt="Profile">
-
-        `;
-
-    }
-
-
-    /*
-       Load user data
-    */
+    await loadJobs();
 
     await loadApplications();
-
-    await loadSavedJobs();
 
 }
 
 
 /* ==========================================
-   APPLICATIONS
+   LOAD JOBS
 ========================================== */
 
-async function loadApplications(){
+async function loadJobs(){
 
     const list =
         document.getElementById(
-            "applicationsList"
+            "jobsList"
         );
 
 
@@ -1211,168 +1065,47 @@ async function loadApplications(){
             error
         } =
         await db
-            .from("applications")
+            .from("jobs")
             .select("*")
-            .eq(
-                "user_id",
-                currentUser.id
-            )
             .order(
                 "created_at",
                 {
                     ascending:false
                 }
             )
-            .limit(5);
+            .limit(6);
 
 
         if(error){
 
-            /*
-               If applications table
-               is not ready yet.
-            */
-
-            console.log(error);
-
-            document.getElementById(
-                "applicationsCount"
-            ).textContent =
-                "0";
-
-
-            list.innerHTML = `
-
-                <div class="empty">
-
-                    No applications yet.
-
-                    <br><br>
-
-                    Start exploring jobs
-                    and apply to opportunities.
-
-                </div>
-
-            `;
-
-            return;
+            throw error;
 
         }
 
 
-        const applications =
+        const jobs =
             data || [];
 
 
         document.getElementById(
-            "applicationsCount"
+            "jobsCount"
         ).textContent =
-            applications.length;
+            jobs.length;
 
 
-        if(!applications.length){
-
-            list.innerHTML = `
-
-                <div class="empty">
-
-                    You haven't applied
-                    to any jobs yet.
-
-                    <br><br>
-
-                    <a
-                    href="jobs.html"
-                    class="btn btn-primary">
-
-                    Explore Jobs
-
-                    </a>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        list.innerHTML =
-
-            applications.map(
-                application => {
-
-                    const title =
-                        application.job_title ||
-                        application.title ||
-                        "Job Application";
-
-
-                    const company =
-                        application.company ||
-                        "Web3 Company";
-
-
-                    const status =
-                        application.status ||
-                        "Submitted";
-
-
-                    return `
-
-                    <div class="application">
-
-                        <div class="application-title">
-
-                            ${escapeHtml(title)}
-
-                        </div>
-
-
-                        <div class="application-company">
-
-                            ${escapeHtml(company)}
-
-                        </div>
-
-
-                        <div class="application-meta">
-
-                            <span class="tag">
-
-                                ${escapeHtml(status)}
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    `;
-
-                }
-            )
-            .join("");
-
+        renderJobs(jobs);
 
     }
     catch(error){
 
         console.error(error);
 
-        document.getElementById(
-            "applicationsCount"
-        ).textContent =
-            "0";
-
 
         list.innerHTML = `
 
             <div class="empty">
 
-                Unable to load applications.
+                Unable to load jobs.
 
             </div>
 
@@ -1384,23 +1117,148 @@ async function loadApplications(){
 
 
 /* ==========================================
-   SAVED JOBS
+   RENDER JOBS
 ========================================== */
 
-async function loadSavedJobs(){
+function renderJobs(jobs){
+
+    const list =
+        document.getElementById(
+            "jobsList"
+        );
+
+
+    if(!jobs.length){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                No jobs available yet.
+
+                <br><br>
+
+                Check back soon for new
+                opportunities.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+
+        jobs.map(
+            job => {
+
+                return `
+
+                <div class="job">
+
+
+                    <div class="job-title">
+
+                        ${escapeHtml(
+                            job.title ||
+                            "Untitled Job"
+                        )}
+
+                    </div>
+
+
+                    <div class="job-company">
+
+                        ${escapeHtml(
+                            job.company ||
+                            "Web3 Company"
+                        )}
+
+                    </div>
+
+
+                    <div class="job-meta">
+
+
+                        <span class="tag">
+
+                            ${escapeHtml(
+                                job.location ||
+                                "Remote"
+                            )}
+
+                        </span>
+
+
+                        <span class="tag">
+
+                            ${escapeHtml(
+                                job.type ||
+                                "Full-time"
+                            )}
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="job-description">
+
+                        ${escapeHtml(
+                            (job.description || "")
+                            .slice(0,180)
+                        )}
+
+                        ${job.description &&
+                          job.description.length > 180
+                          ? "..."
+                          : ""}
+
+                    </div>
+
+
+                    <div class="job-actions">
+
+                        <a
+                        class="btn btn-primary"
+                        href="jobs.html">
+
+                        Explore Jobs
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* ==========================================
+   LOAD APPLICATIONS
+========================================== */
+
+async function loadApplications(){
 
     try{
-
-        /*
-           Try common table name.
-        */
 
         const {
             data,
             error
         } =
         await db
-            .from("saved_jobs")
+            .from("applications")
             .select("id")
             .eq(
                 "user_id",
@@ -1410,8 +1268,13 @@ async function loadSavedJobs(){
 
         if(error){
 
+            console.log(
+                "Applications table not available:",
+                error
+            );
+
             document.getElementById(
-                "savedJobsCount"
+                "applicationsCount"
             ).textContent =
                 "0";
 
@@ -1421,7 +1284,7 @@ async function loadSavedJobs(){
 
 
         document.getElementById(
-            "savedJobsCount"
+            "applicationsCount"
         ).textContent =
             data?.length || 0;
 
@@ -1429,30 +1292,11 @@ async function loadSavedJobs(){
     catch(error){
 
         document.getElementById(
-            "savedJobsCount"
+            "applicationsCount"
         ).textContent =
             "0";
 
     }
-
-}
-
-
-/* ==========================================
-   ATTRIBUTE ESCAPE
-========================================== */
-
-function escapeAttribute(value){
-
-    return String(value ?? "")
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
 
 }
 
@@ -1463,17 +1307,7 @@ function escapeAttribute(value){
 
 async function logout(){
 
-    try{
-
-        await db.auth.signOut();
-
-    }
-    catch(error){
-
-        console.error(error);
-
-    }
-
+    await db.auth.signOut();
 
     window.location.href =
         "index.html";
@@ -1491,4 +1325,4 @@ init();
 
 </body>
 
-    </html>
+</html>
