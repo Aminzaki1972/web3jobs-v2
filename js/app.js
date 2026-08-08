@@ -1,14 +1,21 @@
 // ==========================================
 // Web3Jobs - Jobs System
-// Supabase Jobs + Applications
 // ==========================================
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
 
-    const jobsContainer = document.getElementById("jobs-container");
-    const searchInput = document.getElementById("searchInput");
+    const jobsContainer =
+        document.getElementById("jobs-container");
 
-    let allJobs = [];
+    const searchInput =
+        document.getElementById("searchInput");
+
+
+    if (!jobsContainer) {
+        console.error("jobs-container not found.");
+        return;
+    }
+
 
     // ==========================================
     // CHECK SUPABASE
@@ -16,15 +23,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (typeof web3Supabase === "undefined") {
 
-        console.error("web3Supabase is not defined.");
-
-        if (jobsContainer) {
-            jobsContainer.innerHTML = `
-                <p style="text-align:center;color:red;">
-                    Supabase connection is not initialized.
+        jobsContainer.innerHTML = `
+            <div style="
+                text-align:center;
+                padding:30px;
+                color:red;
+            ">
+                <h3>Supabase connection error</h3>
+                <p>
+                    web3Supabase is not defined.
                 </p>
-            `;
-        }
+            </div>
+        `;
 
         return;
     }
@@ -36,51 +46,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function loadJobs() {
 
-        if (!jobsContainer) {
-            return;
-        }
-
         jobsContainer.innerHTML = `
             <p style="text-align:center;">
                 Loading jobs...
             </p>
         `;
 
+
         try {
 
-            console.log("Loading jobs from Supabase...");
-
-            const result = await web3Supabase
-                .from("jobs")
-                .select("*")
-                .order("created_at", {
-                    ascending: false
-                });
-
-            const data = result.data;
-            const error = result.error;
-
-            console.log("Supabase jobs response:", {
-                data: data,
-                error: error
-            });
+            const result =
+                await web3Supabase
+                    .from("jobs")
+                    .select("*");
 
 
-            // ==========================================
-            // SUPABASE ERROR
-            // ==========================================
+            console.log(
+                "SUPABASE RESULT:",
+                result
+            );
 
-            if (error) {
 
-                console.error(
-                    "SUPABASE JOBS ERROR:",
-                    error
-                );
+            // ======================================
+            // ERROR
+            // ======================================
+
+            if (result.error) {
 
                 jobsContainer.innerHTML = `
                     <div style="
                         text-align:center;
-                        padding:25px;
+                        padding:30px;
                         color:red;
                     ">
 
@@ -90,8 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <p>
                             ${escapeHTML(
-                                error.message ||
-                                "Unknown Supabase error"
+                                result.error.message
                             )}
                         </p>
 
@@ -99,11 +94,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             font-size:13px;
                             color:#777;
                         ">
+
                             Code:
                             ${escapeHTML(
-                                error.code ||
+                                result.error.code ||
                                 "N/A"
                             )}
+
                         </p>
 
                     </div>
@@ -113,36 +110,59 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            allJobs = Array.isArray(data)
-                ? data
-                : [];
+            // ======================================
+            // DATA
+            // ======================================
+
+            const jobs =
+                Array.isArray(result.data)
+                    ? result.data
+                    : [];
+
 
             console.log(
-                "Jobs loaded:",
-                allJobs.length
+                "JOBS:",
+                jobs
             );
 
 
-            displayJobs(allJobs);
+            if (jobs.length === 0) {
+
+                jobsContainer.innerHTML = `
+                    <p style="
+                        text-align:center;
+                        padding:30px;
+                    ">
+                        No jobs available yet.
+                    </p>
+                `;
+
+                return;
+            }
+
+
+            displayJobs(jobs);
+
 
         }
 
         catch (error) {
 
             console.error(
-                "LOAD JOBS EXCEPTION:",
+                "JOBS EXCEPTION:",
                 error
             );
+
 
             jobsContainer.innerHTML = `
                 <div style="
                     text-align:center;
-                    padding:25px;
+                    padding:30px;
                     color:red;
                 ">
 
                     <h3>
-                        Failed to connect to jobs database
+                        Failed to connect to database
                     </h3>
 
                     <p>
@@ -166,28 +186,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function displayJobs(jobs) {
 
-        if (!jobsContainer) {
-            return;
-        }
-
-
-        if (!jobs || jobs.length === 0) {
-
-            jobsContainer.innerHTML = `
-                <p style="
-                    text-align:center;
-                    padding:30px;
-                ">
-                    No jobs available yet.
-                </p>
-            `;
-
-            return;
-        }
-
-
-        jobsContainer.innerHTML = jobs
-            .map(function (job) {
+        jobsContainer.innerHTML =
+            jobs.map(function (job) {
 
                 return `
 
@@ -200,33 +200,38 @@ document.addEventListener("DOMContentLoaded", function () {
                             )}
                         </h3>
 
-
                         <p>
-                            <strong>Company:</strong>
+                            <strong>
+                                Company:
+                            </strong>
+
                             ${escapeHTML(
                                 job.company ||
                                 "Not specified"
                             )}
                         </p>
 
-
                         <p>
-                            <strong>Location:</strong>
+                            <strong>
+                                Location:
+                            </strong>
+
                             ${escapeHTML(
                                 job.location ||
                                 "Remote"
                             )}
                         </p>
 
-
                         <p>
-                            <strong>Type:</strong>
+                            <strong>
+                                Type:
+                            </strong>
+
                             ${escapeHTML(
                                 job.type ||
                                 "Not specified"
                             )}
                         </p>
-
 
                         <p>
                             ${escapeHTML(
@@ -235,11 +240,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             )}
                         </p>
 
-
                         <button
                             class="btn apply-btn"
                             type="button"
-                            data-job-id="${escapeHTML(job.id)}"
+                            data-job-id="${escapeHTML(
+                                job.id
+                            )}"
                         >
                             Apply
                         </button>
@@ -248,41 +254,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 `;
 
-            })
-            .join("");
+            }).join("");
 
 
-        // ==========================================
-        // APPLY BUTTONS
-        // ==========================================
+        document
+            .querySelectorAll(".apply-btn")
+            .forEach(function (button) {
 
-        const applyButtons =
-            document.querySelectorAll(".apply-btn");
+                button.addEventListener(
+                    "click",
+                    function () {
 
-
-        applyButtons.forEach(function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    const jobId =
-                        button.getAttribute(
-                            "data-job-id"
+                        applyToJob(
+                            button.getAttribute(
+                                "data-job-id"
+                            )
                         );
 
-                    applyToJob(jobId);
+                    }
+                );
 
-                }
-            );
-
-        });
+            });
 
     }
 
 
     // ==========================================
-    // APPLY TO JOB
+    // APPLY
     // ==========================================
 
     async function applyToJob(jobId) {
@@ -293,34 +291,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 data,
                 error
             } =
-            await web3Supabase.auth.getSession();
+            await web3Supabase
+                .auth
+                .getSession();
 
 
             if (error) {
 
-                console.error(
-                    "Session error:",
-                    error
-                );
-
                 alert(
-                    "Unable to check your login session."
+                    "Unable to check login session."
                 );
 
                 return;
             }
 
 
-            const session =
-                data
-                    ? data.session
-                    : null;
-
-
-            if (!session) {
+            if (!data.session) {
 
                 alert(
-                    "Please login before applying for a job."
+                    "Please login before applying."
                 );
 
                 window.location.href =
@@ -331,41 +320,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             const user =
-                session.user;
+                data.session.user;
 
-
-            // ==========================================
-            // CHECK EXISTING APPLICATION
-            // ==========================================
 
             const {
-                data: existingApplication,
-                error: existingError
+                data: existing,
+                error: checkError
             } =
             await web3Supabase
                 .from("applications")
                 .select("id")
-                .eq("job_id", jobId)
+                .eq("job_id", Number(jobId))
                 .eq("user_id", user.id)
                 .maybeSingle();
 
 
-            if (existingError) {
+            if (checkError) {
 
                 console.error(
-                    "Application check error:",
-                    existingError
+                    "Application check:",
+                    checkError
                 );
 
                 alert(
-                    "Could not check your application."
+                    checkError.message
                 );
 
                 return;
             }
 
 
-            if (existingApplication) {
+            if (existing) {
 
                 alert(
                     "You have already applied for this job."
@@ -374,10 +359,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
-            // ==========================================
-            // INSERT APPLICATION
-            // ==========================================
 
             const {
                 error: insertError
@@ -398,12 +379,11 @@ document.addEventListener("DOMContentLoaded", function () {
             if (insertError) {
 
                 console.error(
-                    "Application insert error:",
+                    "Application insert:",
                     insertError
                 );
 
                 alert(
-                    "Failed to submit your application: " +
                     insertError.message
                 );
 
@@ -425,7 +405,6 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             alert(
-                "Something went wrong: " +
                 error.message
             );
 
@@ -444,71 +423,32 @@ document.addEventListener("DOMContentLoaded", function () {
             "input",
             function () {
 
-                const searchTerm =
+                const term =
                     searchInput.value
                         .toLowerCase()
                         .trim();
 
 
-                if (!searchTerm) {
-
-                    displayJobs(allJobs);
-
-                    return;
-                }
+                const cards =
+                    document.querySelectorAll(
+                        ".job-card"
+                    );
 
 
-                const filteredJobs =
-                    allJobs.filter(function (job) {
+                cards.forEach(function (card) {
 
-                        const title =
-                            String(
-                                job.title || ""
-                            ).toLowerCase();
+                    const text =
+                        card.textContent
+                            .toLowerCase();
 
 
-                        const company =
-                            String(
-                                job.company || ""
-                            ).toLowerCase();
+                    card.style.display =
+                        !term ||
+                        text.includes(term)
+                            ? ""
+                            : "none";
 
-
-                        const location =
-                            String(
-                                job.location || ""
-                            ).toLowerCase();
-
-
-                        const type =
-                            String(
-                                job.type || ""
-                            ).toLowerCase();
-
-
-                        const description =
-                            String(
-                                job.description || ""
-                            ).toLowerCase();
-
-
-                        return (
-
-                            title.includes(searchTerm) ||
-
-                            company.includes(searchTerm) ||
-
-                            location.includes(searchTerm) ||
-
-                            type.includes(searchTerm) ||
-
-                            description.includes(searchTerm)
-
-                        );
-
-                    });
-
-
-                displayJobs(filteredJobs);
+                });
 
             }
         );
@@ -522,7 +462,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function escapeHTML(value) {
 
-        return String(value)
+        return String(value ?? "")
 
             .replace(/&/g, "&amp;")
 
