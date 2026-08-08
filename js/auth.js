@@ -1,8 +1,6 @@
 // ==========================================
 // Web3Jobs Authentication
-// Supabase Auth
 // ==========================================
-
 
 // ==========================================
 // SUPABASE CONFIGURATION
@@ -19,7 +17,7 @@ const SUPABASE_KEY =
 // CREATE SUPABASE CLIENT
 // ==========================================
 
-const { createClient } = supabase;
+const { createClient } = window.supabase;
 
 const supabaseClient =
 createClient(
@@ -35,54 +33,52 @@ createClient(
 async function login() {
 
     const email =
-    document.getElementById("email").value.trim();
+        document.getElementById("email").value.trim();
 
     const password =
-    document.getElementById("password").value;
+        document.getElementById("password").value;
 
     const message =
-    document.getElementById("message");
+        document.getElementById("message");
 
+
+    // Clear message
 
     message.textContent = "";
 
 
-    // ======================================
-    // VALIDATE EMAIL
-    // ======================================
+    // ==========================================
+    // VALIDATE
+    // ==========================================
 
     if (!email) {
 
         message.textContent =
-        "Please enter your email.";
+            "Please enter your email.";
 
         return;
     }
 
 
-    // ======================================
-    // VALIDATE PASSWORD
-    // ======================================
-
     if (!password) {
 
         message.textContent =
-        "Please enter your password.";
+            "Please enter your password.";
 
         return;
     }
 
 
     message.textContent =
-    "Logging in...";
+        "Logging in...";
 
 
     try {
 
 
-        // ======================================
+        // ==========================================
         // SUPABASE LOGIN
-        // ======================================
+        // ==========================================
 
         const {
             data,
@@ -97,9 +93,9 @@ async function login() {
         });
 
 
-        // ======================================
+        // ==========================================
         // LOGIN ERROR
-        // ======================================
+        // ==========================================
 
         if (error) {
 
@@ -109,142 +105,105 @@ async function login() {
             );
 
             message.textContent =
-            error.message;
+                error.message;
 
             return;
         }
 
 
-        // ======================================
-        // USER LOGGED IN
-        // ======================================
+        if (!data || !data.user) {
 
-        if (data && data.user) {
+            message.textContent =
+                "Login failed.";
+
+            return;
+        }
 
 
-            const user =
+        const user =
             data.user;
 
 
-            // ======================================
-            // GET USER PROFILE
-            // ======================================
+        // ==========================================
+        // GET ACCOUNT TYPE
+        // ==========================================
 
-            const {
-                data: profile,
-                error: profileError
-            } =
-            await supabaseClient
-
-                .from("profiles")
-
-                .select("account_type")
-
-                .eq("id", user.id)
-
-                .single();
+        let accountType =
+            user.user_metadata?.account_type;
 
 
-            // ======================================
-            // PROFILE ERROR
-            // ======================================
+        // ==========================================
+        // TRY PROFILES TABLE
+        // ==========================================
 
-            if (profileError) {
+        const {
+            data: profile,
+            error: profileError
+        } =
+        await supabaseClient
 
-                console.error(
-                    "Profile error:",
-                    profileError
-                );
+            .from("profiles")
 
+            .select("account_type")
 
-                /*
-                 * Fallback:
-                 * Read account_type from
-                 * Supabase Auth metadata.
-                 */
+            .eq("id", user.id)
 
-                const accountType =
-                user.user_metadata?.account_type;
+            .maybeSingle();
 
 
-                // ==================================
-                // COMPANY
-                // ==================================
+        if (!profileError && profile) {
 
-                if (
-                    accountType === "company"
-                ) {
+            accountType =
+                profile.account_type;
 
-                    window.location.href =
-                    "company-dashboard.html";
-
-                    return;
-
-                }
+        }
 
 
-                // ==================================
-                // INDIVIDUAL
-                // ==================================
-
-                window.location.href =
-                "dashboard.html";
-
-                return;
-
-            }
+        console.log(
+            "Account type:",
+            accountType
+        );
 
 
-            // ======================================
-            // ACCOUNT TYPE
-            // ======================================
+        // ==========================================
+        // COMPANY
+        // ==========================================
 
-            const accountType =
-            profile?.account_type;
-
-
-            // ======================================
-            // COMPANY DASHBOARD
-            // ======================================
-
-            if (
-                accountType === "company"
-            ) {
-
-                message.textContent =
-                "Login successful!";
-
-                setTimeout(function() {
-
-                    window.location.href =
-                    "company-dashboard.html";
-
-                }, 400);
-
-                return;
-
-            }
-
-
-            // ======================================
-            // INDIVIDUAL DASHBOARD
-            // ======================================
+        if (accountType === "company") {
 
             message.textContent =
-            "Login successful!";
+                "Company login successful!";
 
 
             setTimeout(function() {
 
                 window.location.href =
-                "dashboard.html";
+                    "company-dashboard.html";
 
-            }, 400);
+            }, 500);
 
 
+            return;
         }
 
+
+        // ==========================================
+        // INDIVIDUAL
+        // ==========================================
+
+        message.textContent =
+            "Login successful!";
+
+
+        setTimeout(function() {
+
+            window.location.href =
+                "dashboard.html";
+
+        }, 500);
+
     }
+
 
     catch (error) {
 
@@ -254,7 +213,7 @@ async function login() {
         );
 
         message.textContent =
-        "Login failed. Please try again.";
+            "Login failed. Please try again.";
 
     }
 
@@ -262,7 +221,7 @@ async function login() {
 
 
 // ==========================================
-// CHECK CURRENT USER
+// GET CURRENT USER
 // ==========================================
 
 async function getCurrentUser() {
@@ -290,6 +249,7 @@ async function getCurrentUser() {
         return data.user || null;
 
     }
+
 
     catch (error) {
 
@@ -324,14 +284,14 @@ async function logout() {
             );
 
             return;
-
         }
 
 
         window.location.href =
-        "index.html";
+            "index.html";
 
     }
+
 
     catch (error) {
 
@@ -343,18 +303,18 @@ async function logout() {
 
 
 // ==========================================
-// EXPORT AUTH
+// GLOBAL AUTH OBJECT
 // ==========================================
 
 window.Web3JobsAuth = {
 
     supabase:
-    supabaseClient,
+        supabaseClient,
 
     getCurrentUser:
-    getCurrentUser,
+        getCurrentUser,
 
     logout:
-    logout
+        logout
 
 };
