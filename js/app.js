@@ -1,11 +1,11 @@
 // ==========================================
 // Web3Jobs - Jobs System
-// Supabase Jobs Loader
+// Supabase Jobs + Applications
 // ==========================================
 
 
 // ==========================================
-// JOBS CONTAINER
+// ELEMENTS
 // ==========================================
 
 const jobsContainer =
@@ -23,7 +23,7 @@ let allJobs = [];
 
 
 // ==========================================
-// LOAD JOBS FROM SUPABASE
+// LOAD JOBS
 // ==========================================
 
 async function loadJobs() {
@@ -126,25 +126,37 @@ function displayJobs(jobs) {
             <div class="job-card">
 
                 <h3>
-                    ${escapeHTML(job.title || "Untitled Job")}
+                    ${escapeHTML(
+                        job.title ||
+                        "Untitled Job"
+                    )}
                 </h3>
 
 
                 <p>
                     <strong>Company:</strong>
-                    ${escapeHTML(job.company || "Not specified")}
+                    ${escapeHTML(
+                        job.company ||
+                        "Not specified"
+                    )}
                 </p>
 
 
                 <p>
                     <strong>Location:</strong>
-                    ${escapeHTML(job.location || "Remote")}
+                    ${escapeHTML(
+                        job.location ||
+                        "Remote"
+                    )}
                 </p>
 
 
                 <p>
                     <strong>Type:</strong>
-                    ${escapeHTML(job.type || "Not specified")}
+                    ${escapeHTML(
+                        job.type ||
+                        "Not specified"
+                    )}
                 </p>
 
 
@@ -159,7 +171,7 @@ function displayJobs(jobs) {
                 <button
                     class="btn apply-btn"
                     type="button"
-                    onclick="applyToJob(${job.id})"
+                    data-job-id="${job.id}"
                 >
                     Apply
                 </button>
@@ -169,11 +181,202 @@ function displayJobs(jobs) {
         `;
 
     }).join("");
+
+
+    // Add Apply events
+
+    const applyButtons =
+        document.querySelectorAll(
+            ".apply-btn"
+        );
+
+
+    applyButtons.forEach(function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                const jobId =
+                    button.getAttribute(
+                        "data-job-id"
+                    );
+
+                applyToJob(jobId);
+
+            }
+        );
+
+    });
 }
 
 
 // ==========================================
-// SEARCH JOBS
+// APPLY TO JOB
+// ==========================================
+
+async function applyToJob(jobId) {
+
+    try {
+
+        // Get current logged-in user
+
+        const {
+            data,
+            error
+        } =
+        await web3Supabase
+            .auth
+            .getSession();
+
+
+        if (error) {
+
+            console.error(
+                "Session error:",
+                error
+            );
+
+            alert(
+                "Unable to check your login session."
+            );
+
+            return;
+        }
+
+
+        const session =
+            data
+            ? data.session
+            : null;
+
+
+        // ======================================
+        // USER NOT LOGGED IN
+        // ======================================
+
+        if (!session) {
+
+            alert(
+                "Please login before applying for a job."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+
+        const user =
+            session.user;
+
+
+        // ======================================
+        // CHECK EXISTING APPLICATION
+        // ======================================
+
+        const {
+            data: existingApplication,
+            error: existingError
+        } =
+        await web3Supabase
+            .from("applications")
+            .select("id")
+            .eq("job_id", jobId)
+            .eq("user_id", user.id)
+            .maybeSingle();
+
+
+        if (existingError) {
+
+            console.error(
+                "Application check error:",
+                existingError
+            );
+
+            alert(
+                "Could not check your application."
+            );
+
+            return;
+        }
+
+
+        // Already applied
+
+        if (existingApplication) {
+
+            alert(
+                "You have already applied for this job."
+            );
+
+            return;
+        }
+
+
+        // ======================================
+        // INSERT APPLICATION
+        // ======================================
+
+        const {
+            error: insertError
+        } =
+        await web3Supabase
+            .from("applications")
+            .insert({
+
+                job_id: Number(jobId),
+
+                user_id: user.id,
+
+                status: "pending"
+
+            });
+
+
+        if (insertError) {
+
+            console.error(
+                "Application insert error:",
+                insertError
+            );
+
+            alert(
+                "Failed to submit your application."
+            );
+
+            return;
+        }
+
+
+        // ======================================
+        // SUCCESS
+        // ======================================
+
+        alert(
+            "Your application has been submitted successfully!"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Apply error:",
+            error
+        );
+
+        alert(
+            "Something went wrong. Please try again."
+        );
+
+    }
+}
+
+
+// ==========================================
+// SEARCH
 // ==========================================
 
 if (searchInput) {
@@ -200,37 +403,52 @@ if (searchInput) {
                 allJobs.filter(function(job) {
 
                     const title =
-                        String(job.title || "")
-                            .toLowerCase();
+                        String(
+                            job.title || ""
+                        ).toLowerCase();
 
                     const company =
-                        String(job.company || "")
-                            .toLowerCase();
+                        String(
+                            job.company || ""
+                        ).toLowerCase();
 
                     const location =
-                        String(job.location || "")
-                            .toLowerCase();
+                        String(
+                            job.location || ""
+                        ).toLowerCase();
 
                     const type =
-                        String(job.type || "")
-                            .toLowerCase();
+                        String(
+                            job.type || ""
+                        ).toLowerCase();
 
                     const description =
-                        String(job.description || "")
-                            .toLowerCase();
+                        String(
+                            job.description || ""
+                        ).toLowerCase();
 
 
                     return (
 
-                        title.includes(searchTerm) ||
+                        title.includes(
+                            searchTerm
+                        ) ||
 
-                        company.includes(searchTerm) ||
+                        company.includes(
+                            searchTerm
+                        ) ||
 
-                        location.includes(searchTerm) ||
+                        location.includes(
+                            searchTerm
+                        ) ||
 
-                        type.includes(searchTerm) ||
+                        type.includes(
+                            searchTerm
+                        ) ||
 
-                        description.includes(searchTerm)
+                        description.includes(
+                            searchTerm
+                        )
 
                     );
 
@@ -242,80 +460,6 @@ if (searchInput) {
         }
     );
 
-}
-
-
-// ==========================================
-// APPLY TO JOB
-// ==========================================
-
-async function applyToJob(jobId) {
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-        await web3Supabase.auth.getSession();
-
-
-        if (error) {
-
-            console.error(
-                "Session error:",
-                error
-            );
-
-            window.location.href =
-                "login.html";
-
-            return;
-        }
-
-
-        const session =
-            data
-            ? data.session
-            : null;
-
-
-        // User is not logged in
-
-        if (!session) {
-
-            alert(
-                "Please login or register before applying for a job."
-            );
-
-            window.location.href =
-                "login.html";
-
-            return;
-        }
-
-
-        // User is logged in
-
-        alert(
-            "Application system is ready. We will connect your application to the selected job next."
-        );
-
-        console.log(
-            "Selected Job ID:",
-            jobId
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Apply error:",
-            error
-        );
-
-    }
 }
 
 
@@ -355,7 +499,7 @@ function escapeHTML(value) {
 
 
 // ==========================================
-// START JOB SYSTEM
+// START
 // ==========================================
 
 document.addEventListener(
