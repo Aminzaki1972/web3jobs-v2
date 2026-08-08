@@ -9,7 +9,6 @@
 
     <title>Create Account - Web3Jobs</title>
 
-    <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -72,7 +71,7 @@
 
 
 <!-- =========================
-     Register Section
+     Register
 ========================= -->
 
 <section class="features">
@@ -87,7 +86,9 @@
         <form id="registerForm">
 
 
-            <!-- Account Type -->
+            <!-- =========================
+                 Account Type
+            ========================= -->
 
             <h3>
                 Choose account type
@@ -130,12 +131,15 @@
 
 
 
-            <!-- Email -->
+            <!-- =========================
+                 Email
+            ========================= -->
 
             <input
                 type="email"
                 id="email"
                 placeholder="Email"
+                autocomplete="email"
                 required
                 style="
                     width:100%;
@@ -149,12 +153,15 @@
 
 
 
-            <!-- Password -->
+            <!-- =========================
+                 Password
+            ========================= -->
 
             <input
                 type="password"
                 id="password"
                 placeholder="Password"
+                autocomplete="new-password"
                 minlength="6"
                 required
                 style="
@@ -169,12 +176,15 @@
 
 
 
-            <!-- Confirm Password -->
+            <!-- =========================
+                 Confirm Password
+            ========================= -->
 
             <input
                 type="password"
                 id="confirmPassword"
                 placeholder="Confirm Password"
+                autocomplete="new-password"
                 minlength="6"
                 required
                 style="
@@ -189,11 +199,14 @@
 
 
 
-            <!-- Submit -->
+            <!-- =========================
+                 Submit
+            ========================= -->
 
             <button
                 type="submit"
                 class="btn"
+                id="registerButton"
             >
 
                 Create Account
@@ -205,7 +218,9 @@
 
 
 
-        <!-- Message -->
+        <!-- =========================
+             Message
+        ========================= -->
 
         <p
             id="message"
@@ -214,7 +229,9 @@
 
 
 
-        <!-- Login -->
+        <!-- =========================
+             Login
+        ========================= -->
 
         <p>
 
@@ -254,25 +271,25 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-
 <script>
 
 
-// ========================================
-// Supabase Configuration
-// ========================================
+// =====================================================
+// SUPABASE CONFIGURATION
+// =====================================================
 
 const SUPABASE_URL =
-    "https://uewocyaspztybnvynkbmo.supabase.co";
+    "https://uewocyaspztybnvnkbmo.supabase.co";
 
 
 const SUPABASE_KEY =
     "sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
 
 
-// ========================================
-// Create Supabase Client
-// ========================================
+
+// =====================================================
+// CREATE SUPABASE CLIENT
+// =====================================================
 
 const supabaseClient =
     window.supabase.createClient(
@@ -282,9 +299,9 @@ const supabaseClient =
 
 
 
-// ========================================
-// Register Form
-// ========================================
+// =====================================================
+// ELEMENTS
+// =====================================================
 
 const registerForm =
     document.getElementById("registerForm");
@@ -294,19 +311,26 @@ const message =
     document.getElementById("message");
 
 
+const registerButton =
+    document.getElementById("registerButton");
 
-// ========================================
-// Register
-// ========================================
+
+
+// =====================================================
+// REGISTER
+// =====================================================
 
 registerForm.addEventListener(
     "submit",
     async function(event) {
 
+
         event.preventDefault();
 
 
-        // Get values
+        // =============================================
+        // GET VALUES
+        // =============================================
 
         const email =
             document
@@ -327,18 +351,18 @@ registerForm.addEventListener(
                 .value;
 
 
-        const accountType =
+        const accountTypeElement =
             document.querySelector(
                 'input[name="accountType"]:checked'
             );
 
 
 
-        // ========================================
-        // Validate account type
-        // ========================================
+        // =============================================
+        // CHECK ACCOUNT TYPE
+        // =============================================
 
-        if (!accountType) {
+        if (!accountTypeElement) {
 
             message.textContent =
                 "Please choose Individual or Company.";
@@ -348,10 +372,24 @@ registerForm.addEventListener(
         }
 
 
+        const accountType =
+            accountTypeElement.value;
 
-        // ========================================
-        // Validate password
-        // ========================================
+
+
+        // =============================================
+        // CHECK PASSWORD
+        // =============================================
+
+        if (password.length < 6) {
+
+            message.textContent =
+                "Password must be at least 6 characters.";
+
+            return;
+
+        }
+
 
         if (password !== confirmPassword) {
 
@@ -364,10 +402,17 @@ registerForm.addEventListener(
 
 
 
-        if (password.length < 6) {
+        // =============================================
+        // CHECK ACCOUNT TYPE VALUE
+        // =============================================
+
+        if (
+            accountType !== "individual" &&
+            accountType !== "company"
+        ) {
 
             message.textContent =
-                "Password must be at least 6 characters.";
+                "Invalid account type.";
 
             return;
 
@@ -375,55 +420,60 @@ registerForm.addEventListener(
 
 
 
-        // ========================================
-        // Loading
-        // ========================================
+        // =============================================
+        // LOADING
+        // =============================================
+
+        registerButton.disabled = true;
+
+        registerButton.textContent =
+            "Creating Account...";
 
         message.textContent =
-            "Creating account...";
+            "Creating your account...";
 
 
-
-        // ========================================
-        // Create Supabase Account
-        // ========================================
 
         try {
 
+
+            // =========================================
+            // CREATE SUPABASE ACCOUNT
+            // =========================================
 
             const {
                 data,
                 error
             } =
-                await supabaseClient.auth.signUp({
+            await supabaseClient.auth.signUp({
 
-                    email: email,
+                email: email,
 
-                    password: password,
+                password: password,
 
-                    options: {
+                options: {
 
-                        data: {
+                    data: {
 
-                            account_type:
-                                accountType.value
-
-                        }
+                        account_type:
+                            accountType
 
                     }
 
-                });
+                }
+
+            });
 
 
 
-            // ========================================
-            // Supabase Error
-            // ========================================
+            // =========================================
+            // SUPABASE ERROR
+            // =========================================
 
             if (error) {
 
                 console.error(
-                    "Supabase signup error:",
+                    "Supabase registration error:",
                     error
                 );
 
@@ -432,47 +482,105 @@ registerForm.addEventListener(
                     error.message;
 
 
+                registerButton.disabled =
+                    false;
+
+
+                registerButton.textContent =
+                    "Create Account";
+
+
                 return;
 
             }
 
 
 
-            // ========================================
-            // Success
-            // ========================================
+            // =========================================
+            // USER CREATED
+            // =========================================
 
             if (data && data.user) {
 
+
+                console.log(
+                    "User created:",
+                    data.user
+                );
+
+
+                console.log(
+                    "Account type:",
+                    accountType
+                );
+
+
+                // =====================================
+                // SUCCESS
+                // =====================================
+
                 message.textContent =
-                    "Account created successfully! Please check your email to confirm your account.";
+                    "Account created successfully! " +
+                    "Please check your email to confirm your account.";
 
 
                 registerForm.reset();
 
 
-            } else {
+                registerButton.disabled =
+                    false;
 
-                message.textContent =
-                    "Account creation failed.";
+
+                registerButton.textContent =
+                    "Create Account";
+
+
+                return;
 
             }
 
 
+
+            // =========================================
+            // UNKNOWN RESULT
+            // =========================================
+
+            message.textContent =
+                "Account creation failed.";
+
+
+
+            registerButton.disabled =
+                false;
+
+
+            registerButton.textContent =
+                "Create Account";
+
+
         }
+
 
         catch (error) {
 
 
             console.error(
-                "Connection error:",
+                "Registration connection error:",
                 error
             );
 
 
             message.textContent =
-                "Failed to connect to Supabase. Please try again.";
+                "Registration failed: " +
+                error.message;
 
+
+            registerButton.disabled =
+                false;
+
+
+            registerButton.textContent =
+                "Create Account";
 
         }
 
@@ -485,4 +593,4 @@ registerForm.addEventListener(
 
 </body>
 
-</html>
+    </html>
