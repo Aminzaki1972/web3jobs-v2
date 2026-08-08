@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Company Dashboard - Web3Jobs</title>
+<title>لوحة الشركة - Web3Jobs</title>
 
 <link rel="stylesheet" href="css/style.css">
 
@@ -15,106 +15,196 @@
 
 <style>
 
+/* ==========================================
+   COMPANY DASHBOARD
+========================================== */
+
 .dashboard {
+
     max-width: 900px;
+
     margin: 60px auto;
+
     padding: 30px;
+
 }
+
 
 .dashboard h1 {
+
     text-align: center;
+
     margin-bottom: 10px;
+
 }
+
 
 .dashboard-subtitle {
+
     text-align: center;
+
     margin-bottom: 35px;
+
     opacity: 0.8;
+
 }
+
 
 .company-form {
+
     background: rgba(255,255,255,0.04);
+
     padding: 30px;
+
     border-radius: 15px;
+
     border: 1px solid rgba(0,200,255,0.2);
+
 }
+
 
 .form-group {
+
     margin-bottom: 20px;
+
 }
 
+
 .form-group label {
+
     display: block;
+
     margin-bottom: 8px;
+
     font-weight: bold;
+
 }
+
 
 .form-group input,
 .form-group textarea {
+
     width: 100%;
+
     box-sizing: border-box;
+
     padding: 13px;
+
     border-radius: 8px;
+
     border: 1px solid #444;
+
     background: #111;
+
     color: white;
+
     font-size: 16px;
+
 }
+
 
 .form-group textarea {
+
     min-height: 140px;
+
     resize: vertical;
+
 }
+
 
 .save-btn {
+
     width: 100%;
+
     padding: 14px;
+
     border: none;
+
     border-radius: 8px;
+
     cursor: pointer;
+
     font-size: 17px;
+
     font-weight: bold;
+
     background: #00bcd4;
+
     color: white;
+
 }
+
 
 .save-btn:hover {
+
     opacity: 0.9;
+
 }
+
 
 .save-btn:disabled {
+
     opacity: 0.6;
+
     cursor: not-allowed;
+
 }
+
 
 .message {
+
     text-align: center;
+
     margin-top: 20px;
+
     padding: 12px;
+
     border-radius: 8px;
+
     display: none;
+
 }
+
 
 .error {
+
     background: rgba(255,0,0,0.15);
+
     color: #ff7777;
+
 }
+
 
 .success {
+
     background: rgba(0,255,100,0.15);
+
     color: #66ff99;
+
 }
+
 
 .loading {
+
     text-align: center;
+
     margin: 30px;
+
+    font-size: 18px;
+
 }
 
+
 .user-info {
+
     text-align: center;
+
     margin-bottom: 25px;
+
     opacity: 0.8;
+
 }
+
 
 </style>
 
@@ -123,6 +213,10 @@
 
 <body>
 
+
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <header>
 
@@ -167,169 +261,289 @@
 
 
 
+<!-- ==========================================
+     COMPANY DASHBOARD
+========================================== -->
+
 <main class="dashboard">
+
 
     <h1>
         لوحة الشركة 🏢
     </h1>
 
+
     <p class="dashboard-subtitle">
+
         أنشئ أو حدّث ملف شركتك على Web3Jobs
+
     </p>
 
+
+    <!-- USER INFO -->
+
+    <div
+        id="user-info"
+        class="user-info"
+    ></div>
+
+
+    <!-- LOADING -->
 
     <div
         id="loading"
         class="loading"
     >
+
         جاري التحقق من الحساب...
+
     </div>
 
+
+
+    <!-- DASHBOARD CONTENT -->
 
     <div
         id="dashboard-content"
         style="display:none;"
     >
 
-        <div
-            id="user-info"
-            class="user-info"
-        ></div>
-
 
         <div class="company-form">
 
 
+            <!-- ==================================
+                 COMPANY NAME
+            ================================== -->
+
             <div class="form-group">
 
                 <label for="companyName">
+
                     اسم الشركة
+
                 </label>
 
+
                 <input
+
                     type="text"
+
                     id="companyName"
+
                     placeholder="مثال: Web3Jobs"
+
+                    autocomplete="organization"
+
                 >
 
             </div>
 
 
 
+            <!-- ==================================
+                 DESCRIPTION
+            ================================== -->
+
             <div class="form-group">
 
                 <label for="companyDescription">
+
                     وصف الشركة
+
                 </label>
 
+
                 <textarea
+
                     id="companyDescription"
+
                     placeholder="اكتب نبذة عن الشركة..."
+
                 ></textarea>
 
             </div>
 
 
 
+            <!-- ==================================
+                 WEBSITE
+            ================================== -->
+
             <div class="form-group">
 
                 <label for="companyWebsite">
+
                     الموقع الإلكتروني
+
                 </label>
 
+
                 <input
+
                     type="url"
+
                     id="companyWebsite"
+
                     placeholder="https://example.com"
+
+                    autocomplete="url"
+
                 >
 
             </div>
 
 
+
+            <!-- ==================================
+                 LOCATION
+            ================================== -->
 
             <div class="form-group">
 
                 <label for="companyLocation">
+
                     الموقع
+
                 </label>
 
+
                 <input
+
                     type="text"
+
                     id="companyLocation"
+
                     placeholder="Egypt / Remote / Worldwide"
+
                 >
 
             </div>
 
 
+
+            <!-- ==================================
+                 LOGO
+            ================================== -->
 
             <div class="form-group">
 
                 <label for="companyLogo">
+
                     رابط شعار الشركة
+
                 </label>
 
+
                 <input
+
                     type="url"
+
                     id="companyLogo"
+
                     placeholder="https://example.com/logo.png"
+
                 >
 
             </div>
 
 
 
+            <!-- ==================================
+                 SAVE BUTTON
+            ================================== -->
+
             <button
+
                 id="saveCompany"
+
                 class="save-btn"
+
                 type="button"
+
             >
+
                 حفظ بيانات الشركة
+
             </button>
 
 
+
+            <!-- ==================================
+                 MESSAGE
+            ================================== -->
+
             <div
+
                 id="message"
+
                 class="message"
+
             ></div>
 
 
         </div>
 
+
     </div>
+
 
 </main>
 
 
 
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
 <footer>
 
     <p>
+
         © 2026 Web3Jobs - Web3 Career Platform
+
     </p>
 
 </footer>
 
 
 
+<!-- ==========================================
+     SUPABASE + COMPANY SYSTEM
+========================================== -->
+
 <script>
 
+
 // ==========================================
-// SUPABASE
+// SUPABASE CONFIGURATION
 // ==========================================
 
 const SUPABASE_URL =
-"https://uewocyaspztybnvnkbmo.supabase.co";
+    "https://uewocyaspztybnvnkbmo.supabase.co";
+
 
 const SUPABASE_KEY =
-"sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
+    "sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
+
+
+// ==========================================
+// CREATE SUPABASE CLIENT
+// ==========================================
+
+const { createClient } =
+    window.supabase;
 
 
 const web3Supabase =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    createClient(
+
+        SUPABASE_URL,
+
+        SUPABASE_KEY
+
+    );
+
 
 
 // ==========================================
@@ -337,46 +551,86 @@ supabase.createClient(
 // ==========================================
 
 const loading =
-document.getElementById("loading");
+    document.getElementById("loading");
+
 
 const dashboardContent =
-document.getElementById("dashboard-content");
+    document.getElementById(
+        "dashboard-content"
+    );
 
-const message =
-document.getElementById("message");
-
-const saveButton =
-document.getElementById("saveCompany");
 
 const userInfo =
-document.getElementById("user-info");
+    document.getElementById(
+        "user-info"
+    );
+
+
+const companyName =
+    document.getElementById(
+        "companyName"
+    );
+
+
+const companyDescription =
+    document.getElementById(
+        "companyDescription"
+    );
+
+
+const companyWebsite =
+    document.getElementById(
+        "companyWebsite"
+    );
+
+
+const companyLocation =
+    document.getElementById(
+        "companyLocation"
+    );
+
+
+const companyLogo =
+    document.getElementById(
+        "companyLogo"
+    );
+
+
+const saveCompany =
+    document.getElementById(
+        "saveCompany"
+    );
+
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
 
 
 // ==========================================
 // SHOW MESSAGE
 // ==========================================
 
-function showMessage(text, type) {
+function showMessage(
+    text,
+    type
+) {
 
-    message.textContent = text;
+    message.textContent =
+        text;
+
 
     message.className =
         "message " + type;
 
-    message.style.display = "block";
+
+    message.style.display =
+        "block";
 
 }
 
-
-// ==========================================
-// HIDE MESSAGE
-// ==========================================
-
-function hideMessage() {
-
-    message.style.display = "none";
-
-}
 
 
 // ==========================================
@@ -385,164 +639,222 @@ function hideMessage() {
 
 async function loadCompany() {
 
+
+    loading.style.display =
+        "block";
+
+
+    dashboardContent.style.display =
+        "none";
+
+
     try {
 
-        loading.style.display = "block";
 
-        dashboardContent.style.display = "none";
-
-        hideMessage();
-
-
-        // --------------------------------------
+        // ======================================
         // GET CURRENT USER
-        // --------------------------------------
+        // ======================================
 
         const {
-            data: sessionData,
-            error: sessionError
+
+            data: userData,
+
+            error: userError
+
         } =
-        await web3Supabase.auth.getSession();
+        await web3Supabase
+            .auth
+            .getUser();
 
 
-        if (sessionError) {
+        if (userError) {
 
-            console.error(
-                "Session error:",
-                sessionError
-            );
-
-            throw sessionError;
+            throw userError;
 
         }
 
 
-        const session =
-            sessionData.session;
+        const user =
+            userData.user;
 
 
-        // --------------------------------------
+
+        // ======================================
         // USER NOT LOGGED IN
-        // --------------------------------------
+        // ======================================
 
-        if (!session) {
+        if (!user) {
+
 
             loading.textContent =
                 "يجب تسجيل الدخول أولاً.";
 
-            setTimeout(function() {
 
-                window.location.href =
-                    "login.html";
+            setTimeout(
 
-            }, 1500);
+                function() {
+
+                    window.location.href =
+                        "login.html";
+
+                },
+
+                1500
+
+            );
+
 
             return;
 
         }
 
 
-        const user =
-            session.user;
+
+        // ======================================
+        // SHOW USER
+        // ======================================
+
+        userInfo.textContent =
+            "الحساب: " +
+            (
+                user.email ||
+                user.id
+            );
+
 
 
         console.log(
-            "Logged in user:",
+            "Logged user:",
             user.id
         );
 
 
-        userInfo.textContent =
-            "الحساب: " +
-            (user.email || user.id);
 
-
-        // --------------------------------------
+        // ======================================
         // GET COMPANY
-        // --------------------------------------
+        // ======================================
 
         const {
-            data: companies,
+
+            data: company,
+
             error: companyError
+
         } =
         await web3Supabase
-        .from("companies")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("id", {
-            ascending: false
-        })
-        .limit(1);
 
+            .from("companies")
+
+            .select(
+                "id,user_id,name,description,website,location,logo_url,created_at"
+            )
+
+            .eq(
+                "user_id",
+                user.id
+            )
+
+            .maybeSingle();
+
+
+
+        // ======================================
+        // CHECK ERROR
+        // ======================================
 
         if (companyError) {
+
 
             console.error(
                 "Company fetch error:",
                 companyError
             );
 
+
             throw companyError;
 
         }
 
 
-        // --------------------------------------
+
+        // ======================================
         // COMPANY EXISTS
-        // --------------------------------------
+        // ======================================
 
-        if (
-            companies &&
-            companies.length > 0
-        ) {
-
-            const company =
-                companies[0];
+        if (company) {
 
 
-            document.getElementById(
-                "companyName"
-            ).value =
+            console.log(
+                "Company found:",
+                company
+            );
+
+
+            companyName.value =
                 company.name || "";
 
 
-            document.getElementById(
-                "companyDescription"
-            ).value =
+            companyDescription.value =
                 company.description || "";
 
 
-            document.getElementById(
-                "companyWebsite"
-            ).value =
+            companyWebsite.value =
                 company.website || "";
 
 
-            document.getElementById(
-                "companyLocation"
-            ).value =
+            companyLocation.value =
                 company.location || "";
 
 
-            document.getElementById(
-                "companyLogo"
-            ).value =
+            companyLogo.value =
                 company.logo_url || "";
 
-
-            // Save company ID
-
-            saveButton.dataset.companyId =
-                company.id;
 
         }
 
 
-        // --------------------------------------
-        // SHOW DASHBOARD
-        // --------------------------------------
+        // ======================================
+        // NO COMPANY
+        // ======================================
 
-        loading.style.display = "none";
+        else {
+
+
+            console.log(
+                "No company profile yet."
+            );
+
+
+            companyName.value =
+                "";
+
+
+            companyDescription.value =
+                "";
+
+
+            companyWebsite.value =
+                "";
+
+
+            companyLocation.value =
+                "";
+
+
+            companyLogo.value =
+                "";
+
+        }
+
+
+
+        // ======================================
+        // SHOW DASHBOARD
+        // ======================================
+
+        loading.style.display =
+            "none";
+
 
         dashboardContent.style.display =
             "block";
@@ -550,24 +862,30 @@ async function loadCompany() {
 
     }
 
+
     catch (error) {
 
+
         console.error(
-            "Load company error:",
+            "LOAD COMPANY ERROR:",
             error
         );
 
 
-        loading.style.display = "none";
-
-        dashboardContent.style.display =
-            "block";
+        loading.textContent =
+            "فشل في جلب بيانات الشركة.";
 
 
         showMessage(
+
             "فشل في جلب بيانات الشركة: " +
-            (error.message || "خطأ غير معروف"),
+            (
+                error.message ||
+                "خطأ غير معروف"
+            ),
+
             "error"
+
         );
 
     }
@@ -580,290 +898,366 @@ async function loadCompany() {
 // SAVE COMPANY
 // ==========================================
 
-async function saveCompany() {
+saveCompany.addEventListener(
 
-    try {
+    "click",
 
-        saveButton.disabled = true;
+    async function() {
 
-        saveButton.textContent =
+
+        // ======================================
+        // DISABLE BUTTON
+        // ======================================
+
+        saveCompany.disabled =
+            true;
+
+
+        saveCompany.textContent =
             "جاري الحفظ...";
 
-        hideMessage();
+
+        message.style.display =
+            "none";
 
 
-        // --------------------------------------
-        // GET USER
-        // --------------------------------------
 
-        const {
-            data: sessionData,
-            error: sessionError
-        } =
-        await web3Supabase.auth.getSession();
+        try {
 
 
-        if (sessionError) {
-            throw sessionError;
-        }
-
-
-        const session =
-            sessionData.session;
-
-
-        if (!session) {
-
-            showMessage(
-                "يجب تسجيل الدخول أولاً.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        const user =
-            session.user;
-
-
-        // --------------------------------------
-        // GET FORM DATA
-        // --------------------------------------
-
-        const name =
-            document.getElementById(
-                "companyName"
-            ).value.trim();
-
-
-        const description =
-            document.getElementById(
-                "companyDescription"
-            ).value.trim();
-
-
-        const website =
-            document.getElementById(
-                "companyWebsite"
-            ).value.trim();
-
-
-        const location =
-            document.getElementById(
-                "companyLocation"
-            ).value.trim();
-
-
-        const logo_url =
-            document.getElementById(
-                "companyLogo"
-            ).value.trim();
-
-
-        if (!name) {
-
-            showMessage(
-                "من فضلك اكتب اسم الشركة.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        // --------------------------------------
-        // CHECK EXISTING COMPANY
-        // --------------------------------------
-
-        const {
-            data: existingCompanies,
-            error: checkError
-        } =
-        await web3Supabase
-        .from("companies")
-        .select("id")
-        .eq("user_id", user.id)
-        .order("id", {
-            ascending: false
-        })
-        .limit(1);
-
-
-        if (checkError) {
-            throw checkError;
-        }
-
-
-        // --------------------------------------
-        // UPDATE EXISTING COMPANY
-        // --------------------------------------
-
-        if (
-            existingCompanies &&
-            existingCompanies.length > 0
-        ) {
-
-            const companyId =
-                existingCompanies[0].id;
-
+            // ======================================
+            // GET CURRENT USER
+            // ======================================
 
             const {
-                error: updateError
+
+                data: userData,
+
+                error: userError
+
             } =
             await web3Supabase
-            .from("companies")
-            .update({
-
-                name: name,
-
-                description: description,
-
-                website: website,
-
-                location: location,
-
-                logo_url: logo_url
-
-            })
-            .eq(
-                "id",
-                companyId
-            )
-            .eq(
-                "user_id",
-                user.id
-            );
+                .auth
+                .getUser();
 
 
-            if (updateError) {
-                throw updateError;
+            if (userError) {
+
+                throw userError;
+
             }
 
 
-            saveButton.dataset.companyId =
-                companyId;
+            const user =
+                userData.user;
 
 
-            showMessage(
-                "تم تحديث بيانات الشركة بنجاح ✅",
-                "success"
-            );
 
-        }
+            if (!user) {
+
+                throw new Error(
+                    "يجب تسجيل الدخول أولاً."
+                );
+
+            }
 
 
-        // --------------------------------------
-        // CREATE NEW COMPANY
-        // --------------------------------------
 
-        else {
+            // ======================================
+            // GET FORM DATA
+            // ======================================
+
+            const name =
+                companyName.value.trim();
+
+
+            const description =
+                companyDescription.value.trim();
+
+
+            const website =
+                companyWebsite.value.trim();
+
+
+            const location =
+                companyLocation.value.trim();
+
+
+            const logo_url =
+                companyLogo.value.trim();
+
+
+
+            // ======================================
+            // VALIDATION
+            // ======================================
+
+            if (!name) {
+
+
+                showMessage(
+
+                    "من فضلك اكتب اسم الشركة.",
+
+                    "error"
+
+                );
+
+
+                saveCompany.disabled =
+                    false;
+
+
+                saveCompany.textContent =
+                    "حفظ بيانات الشركة";
+
+
+                return;
+
+            }
+
+
+
+            // ======================================
+            // CHECK EXISTING COMPANY
+            // ======================================
 
             const {
-                data: newCompany,
-                error: insertError
+
+                data: existingCompany,
+
+                error: checkError
+
             } =
             await web3Supabase
-            .from("companies")
-            .insert({
 
-                user_id: user.id,
+                .from("companies")
 
-                name: name,
+                .select("id")
 
-                description: description,
+                .eq(
+                    "user_id",
+                    user.id
+                )
 
-                website: website,
-
-                location: location,
-
-                logo_url: logo_url
-
-            })
-            .select()
-            .limit(1);
+                .maybeSingle();
 
 
-            if (insertError) {
-                throw insertError;
+
+            if (checkError) {
+
+                throw checkError;
+
+            }
+
+
+
+            // ======================================
+            // UPDATE EXISTING COMPANY
+            // ======================================
+
+            if (existingCompany) {
+
+
+                console.log(
+                    "Updating company:",
+                    existingCompany.id
+                );
+
+
+                const {
+
+                    error: updateError
+
+                } =
+                await web3Supabase
+
+                    .from("companies")
+
+                    .update({
+
+                        name:
+                            name,
+
+                        description:
+                            description,
+
+                        website:
+                            website,
+
+                        location:
+                            location,
+
+                        logo_url:
+                            logo_url
+
+                    })
+
+                    .eq(
+                        "id",
+                        existingCompany.id
+                    );
+
+
+                if (updateError) {
+
+                    throw updateError;
+
+                }
+
+
+                showMessage(
+
+                    "تم تحديث بيانات الشركة بنجاح ✅",
+
+                    "success"
+
+                );
+
             }
 
 
-            if (
-                newCompany &&
-                newCompany.length > 0
-            ) {
 
-                saveButton.dataset.companyId =
-                    newCompany[0].id;
+            // ======================================
+            // CREATE NEW COMPANY
+            // ======================================
+
+            else {
+
+
+                console.log(
+                    "Creating new company..."
+                );
+
+
+                const {
+
+                    error: insertError
+
+                } =
+                await web3Supabase
+
+                    .from("companies")
+
+                    .insert({
+
+                        user_id:
+                            user.id,
+
+                        name:
+                            name,
+
+                        description:
+                            description,
+
+                        website:
+                            website,
+
+                        location:
+                            location,
+
+                        logo_url:
+                            logo_url
+
+                    });
+
+
+                if (insertError) {
+
+                    throw insertError;
+
+                }
+
+
+                showMessage(
+
+                    "تم إنشاء ملف الشركة بنجاح ✅",
+
+                    "success"
+
+                );
 
             }
+
+
+        }
+
+
+        catch (error) {
+
+
+            console.error(
+                "SAVE COMPANY ERROR:",
+                error
+            );
 
 
             showMessage(
-                "تم إنشاء ملف الشركة بنجاح ✅",
-                "success"
+
+                "فشل حفظ بيانات الشركة: " +
+                (
+                    error.message ||
+                    "خطأ غير معروف"
+                ),
+
+                "error"
+
             );
 
         }
 
-    }
 
-    catch (error) {
-
-        console.error(
-            "Save company error:",
-            error
-        );
+        finally {
 
 
-        showMessage(
-            "فشل حفظ بيانات الشركة: " +
-            (error.message || "خطأ غير معروف"),
-            "error"
-        );
+            saveCompany.disabled =
+                false;
 
-    }
 
-    finally {
+            saveCompany.textContent =
+                "حفظ بيانات الشركة";
 
-        saveButton.disabled = false;
+        }
 
-        saveButton.textContent =
-            "حفظ بيانات الشركة";
 
     }
 
-}
-
-
-
-// ==========================================
-// BUTTON
-// ==========================================
-
-saveButton.addEventListener(
-    "click",
-    saveCompany
 );
 
 
+
 // ==========================================
-// AUTH STATE
+// AUTH STATE CHANGE
 // ==========================================
 
 web3Supabase.auth.onAuthStateChange(
-    function(event, session) {
+
+    function(
+        event,
+        session
+    ) {
+
 
         console.log(
             "Auth event:",
             event
         );
 
+
+        if (!session) {
+
+
+            window.location.href =
+                "login.html";
+
+
+        }
+
+
     }
+
 );
+
 
 
 // ==========================================
@@ -871,13 +1265,17 @@ web3Supabase.auth.onAuthStateChange(
 // ==========================================
 
 document.addEventListener(
+
     "DOMContentLoaded",
+
     function() {
 
         loadCompany();
 
     }
+
 );
+
 
 </script>
 
