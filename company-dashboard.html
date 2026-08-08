@@ -82,6 +82,11 @@
     opacity: 0.9;
 }
 
+.save-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .message {
     text-align: center;
     margin-top: 20px;
@@ -105,6 +110,12 @@
     margin: 30px;
 }
 
+.user-info {
+    text-align: center;
+    margin-bottom: 25px;
+    opacity: 0.8;
+}
+
 </style>
 
 </head>
@@ -112,10 +123,6 @@
 
 <body>
 
-
-<!-- =========================
-     HEADER
-========================= -->
 
 <header>
 
@@ -160,10 +167,6 @@
 
 
 
-<!-- =========================
-     COMPANY DASHBOARD
-========================= -->
-
 <main class="dashboard">
 
     <h1>
@@ -188,10 +191,14 @@
         style="display:none;"
     >
 
+        <div
+            id="user-info"
+            class="user-info"
+        ></div>
+
+
         <div class="company-form">
 
-
-            <!-- Company Name -->
 
             <div class="form-group">
 
@@ -208,7 +215,6 @@
             </div>
 
 
-            <!-- Description -->
 
             <div class="form-group">
 
@@ -224,7 +230,6 @@
             </div>
 
 
-            <!-- Website -->
 
             <div class="form-group">
 
@@ -241,7 +246,6 @@
             </div>
 
 
-            <!-- Location -->
 
             <div class="form-group">
 
@@ -258,7 +262,6 @@
             </div>
 
 
-            <!-- Logo -->
 
             <div class="form-group">
 
@@ -275,7 +278,6 @@
             </div>
 
 
-            <!-- Save -->
 
             <button
                 id="saveCompany"
@@ -300,10 +302,6 @@
 
 
 
-<!-- =========================
-     FOOTER
-========================= -->
-
 <footer>
 
     <p>
@@ -317,10 +315,573 @@
 <script>
 
 // ==========================================
-// SUPABASE CONFIGURATION
+// SUPABASE
 // ==========================================
 
 const SUPABASE_URL =
 "https://uewocyaspztybnvnkbmo.supabase.co";
 
 const SUPABASE_KEY =
+"sb_publishable_ap9UMOBhdHdIkW0FCD25nA_NurNviS0";
+
+
+const web3Supabase =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// ==========================================
+// ELEMENTS
+// ==========================================
+
+const loading =
+document.getElementById("loading");
+
+const dashboardContent =
+document.getElementById("dashboard-content");
+
+const message =
+document.getElementById("message");
+
+const saveButton =
+document.getElementById("saveCompany");
+
+const userInfo =
+document.getElementById("user-info");
+
+
+// ==========================================
+// SHOW MESSAGE
+// ==========================================
+
+function showMessage(text, type) {
+
+    message.textContent = text;
+
+    message.className =
+        "message " + type;
+
+    message.style.display = "block";
+
+}
+
+
+// ==========================================
+// HIDE MESSAGE
+// ==========================================
+
+function hideMessage() {
+
+    message.style.display = "none";
+
+}
+
+
+// ==========================================
+// LOAD COMPANY
+// ==========================================
+
+async function loadCompany() {
+
+    try {
+
+        loading.style.display = "block";
+
+        dashboardContent.style.display = "none";
+
+        hideMessage();
+
+
+        // --------------------------------------
+        // GET CURRENT USER
+        // --------------------------------------
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+        await web3Supabase.auth.getSession();
+
+
+        if (sessionError) {
+
+            console.error(
+                "Session error:",
+                sessionError
+            );
+
+            throw sessionError;
+
+        }
+
+
+        const session =
+            sessionData.session;
+
+
+        // --------------------------------------
+        // USER NOT LOGGED IN
+        // --------------------------------------
+
+        if (!session) {
+
+            loading.textContent =
+                "يجب تسجيل الدخول أولاً.";
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "login.html";
+
+            }, 1500);
+
+            return;
+
+        }
+
+
+        const user =
+            session.user;
+
+
+        console.log(
+            "Logged in user:",
+            user.id
+        );
+
+
+        userInfo.textContent =
+            "الحساب: " +
+            (user.email || user.id);
+
+
+        // --------------------------------------
+        // GET COMPANY
+        // --------------------------------------
+
+        const {
+            data: companies,
+            error: companyError
+        } =
+        await web3Supabase
+        .from("companies")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("id", {
+            ascending: false
+        })
+        .limit(1);
+
+
+        if (companyError) {
+
+            console.error(
+                "Company fetch error:",
+                companyError
+            );
+
+            throw companyError;
+
+        }
+
+
+        // --------------------------------------
+        // COMPANY EXISTS
+        // --------------------------------------
+
+        if (
+            companies &&
+            companies.length > 0
+        ) {
+
+            const company =
+                companies[0];
+
+
+            document.getElementById(
+                "companyName"
+            ).value =
+                company.name || "";
+
+
+            document.getElementById(
+                "companyDescription"
+            ).value =
+                company.description || "";
+
+
+            document.getElementById(
+                "companyWebsite"
+            ).value =
+                company.website || "";
+
+
+            document.getElementById(
+                "companyLocation"
+            ).value =
+                company.location || "";
+
+
+            document.getElementById(
+                "companyLogo"
+            ).value =
+                company.logo_url || "";
+
+
+            // Save company ID
+
+            saveButton.dataset.companyId =
+                company.id;
+
+        }
+
+
+        // --------------------------------------
+        // SHOW DASHBOARD
+        // --------------------------------------
+
+        loading.style.display = "none";
+
+        dashboardContent.style.display =
+            "block";
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load company error:",
+            error
+        );
+
+
+        loading.style.display = "none";
+
+        dashboardContent.style.display =
+            "block";
+
+
+        showMessage(
+            "فشل في جلب بيانات الشركة: " +
+            (error.message || "خطأ غير معروف"),
+            "error"
+        );
+
+    }
+
+}
+
+
+
+// ==========================================
+// SAVE COMPANY
+// ==========================================
+
+async function saveCompany() {
+
+    try {
+
+        saveButton.disabled = true;
+
+        saveButton.textContent =
+            "جاري الحفظ...";
+
+        hideMessage();
+
+
+        // --------------------------------------
+        // GET USER
+        // --------------------------------------
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+        await web3Supabase.auth.getSession();
+
+
+        if (sessionError) {
+            throw sessionError;
+        }
+
+
+        const session =
+            sessionData.session;
+
+
+        if (!session) {
+
+            showMessage(
+                "يجب تسجيل الدخول أولاً.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const user =
+            session.user;
+
+
+        // --------------------------------------
+        // GET FORM DATA
+        // --------------------------------------
+
+        const name =
+            document.getElementById(
+                "companyName"
+            ).value.trim();
+
+
+        const description =
+            document.getElementById(
+                "companyDescription"
+            ).value.trim();
+
+
+        const website =
+            document.getElementById(
+                "companyWebsite"
+            ).value.trim();
+
+
+        const location =
+            document.getElementById(
+                "companyLocation"
+            ).value.trim();
+
+
+        const logo_url =
+            document.getElementById(
+                "companyLogo"
+            ).value.trim();
+
+
+        if (!name) {
+
+            showMessage(
+                "من فضلك اكتب اسم الشركة.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        // --------------------------------------
+        // CHECK EXISTING COMPANY
+        // --------------------------------------
+
+        const {
+            data: existingCompanies,
+            error: checkError
+        } =
+        await web3Supabase
+        .from("companies")
+        .select("id")
+        .eq("user_id", user.id)
+        .order("id", {
+            ascending: false
+        })
+        .limit(1);
+
+
+        if (checkError) {
+            throw checkError;
+        }
+
+
+        // --------------------------------------
+        // UPDATE EXISTING COMPANY
+        // --------------------------------------
+
+        if (
+            existingCompanies &&
+            existingCompanies.length > 0
+        ) {
+
+            const companyId =
+                existingCompanies[0].id;
+
+
+            const {
+                error: updateError
+            } =
+            await web3Supabase
+            .from("companies")
+            .update({
+
+                name: name,
+
+                description: description,
+
+                website: website,
+
+                location: location,
+
+                logo_url: logo_url
+
+            })
+            .eq(
+                "id",
+                companyId
+            )
+            .eq(
+                "user_id",
+                user.id
+            );
+
+
+            if (updateError) {
+                throw updateError;
+            }
+
+
+            saveButton.dataset.companyId =
+                companyId;
+
+
+            showMessage(
+                "تم تحديث بيانات الشركة بنجاح ✅",
+                "success"
+            );
+
+        }
+
+
+        // --------------------------------------
+        // CREATE NEW COMPANY
+        // --------------------------------------
+
+        else {
+
+            const {
+                data: newCompany,
+                error: insertError
+            } =
+            await web3Supabase
+            .from("companies")
+            .insert({
+
+                user_id: user.id,
+
+                name: name,
+
+                description: description,
+
+                website: website,
+
+                location: location,
+
+                logo_url: logo_url
+
+            })
+            .select()
+            .limit(1);
+
+
+            if (insertError) {
+                throw insertError;
+            }
+
+
+            if (
+                newCompany &&
+                newCompany.length > 0
+            ) {
+
+                saveButton.dataset.companyId =
+                    newCompany[0].id;
+
+            }
+
+
+            showMessage(
+                "تم إنشاء ملف الشركة بنجاح ✅",
+                "success"
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Save company error:",
+            error
+        );
+
+
+        showMessage(
+            "فشل حفظ بيانات الشركة: " +
+            (error.message || "خطأ غير معروف"),
+            "error"
+        );
+
+    }
+
+    finally {
+
+        saveButton.disabled = false;
+
+        saveButton.textContent =
+            "حفظ بيانات الشركة";
+
+    }
+
+}
+
+
+
+// ==========================================
+// BUTTON
+// ==========================================
+
+saveButton.addEventListener(
+    "click",
+    saveCompany
+);
+
+
+// ==========================================
+// AUTH STATE
+// ==========================================
+
+web3Supabase.auth.onAuthStateChange(
+    function(event, session) {
+
+        console.log(
+            "Auth event:",
+            event
+        );
+
+    }
+);
+
+
+// ==========================================
+// START
+// ==========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadCompany();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
